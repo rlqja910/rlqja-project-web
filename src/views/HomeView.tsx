@@ -1,15 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { PORTAL_MENUS } from '../config/menu';
 
+interface MarketPredict {
+  ewy: { current: number; change_amt: number; change_pct: number; };
+  kospi: { current: number; predicted: number; change_amt: number; change_pct: number; };
+  kosdaq: { current: number; predicted: number; change_amt: number; change_pct: number; };
+}
+
 export const HomeView: React.FC = () => {
   const [expandedCats, setExpandedCats] = useState<string[]>(['finance', 'utilities', 'trends']);
   const [marketStatus, setMarketStatus] = useState<{ kr_closed: boolean, us_closed: boolean } | null>(null);
+  const [predictData, setPredictData] = useState<MarketPredict | null>(null);
 
   useEffect(() => {
     fetch('/api/market-status')
       .then(res => res.json())
       .then(data => setMarketStatus(data))
       .catch(err => console.error(err));
+
+    const fetchPredict = () => {
+      fetch('/api/market-predict')
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) setPredictData(data);
+        })
+        .catch(err => console.error(err));
+    };
+    fetchPredict();
+    const interval = setInterval(fetchPredict, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   const toggleCategory = (id: string) => {
@@ -48,6 +67,43 @@ export const HomeView: React.FC = () => {
         <p className="relative text-base sm:text-lg text-slate-400 max-w-2xl mx-auto break-keep">
           투자 분석부터 일상 편의 도구까지, 상상하는 모든 기능이 이곳에 모입니다. 원하는 도구를 선택해보세요!
         </p>
+
+        {predictData && (
+          <div className="mt-8 max-w-3xl mx-auto bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500"></div>
+            <h3 className="text-xl font-bold text-white mb-4 flex items-center justify-center gap-2">
+              <span>🔮 내일의 국장 엿보기 (KOSPI NOW)</span>
+              <span className="flex h-3 w-3 relative ml-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+              </span>
+            </h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-700/50 flex flex-col items-center">
+                <span className="text-slate-400 text-sm font-bold mb-1">코스피 예상</span>
+                <div className="text-2xl font-black text-white">{predictData.kospi.predicted.toFixed(2)}</div>
+                <div className={`text-sm font-bold mt-1 ${predictData.kospi.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                  {predictData.kospi.change_pct >= 0 ? '▲' : '▼'} {Math.abs(predictData.kospi.change_amt).toFixed(2)} ({predictData.kospi.change_pct > 0 ? '+' : ''}{predictData.kospi.change_pct}%)
+                </div>
+              </div>
+              <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-700/50 flex flex-col items-center">
+                <span className="text-slate-400 text-sm font-bold mb-1">코스닥 예상</span>
+                <div className="text-2xl font-black text-white">{predictData.kosdaq.predicted.toFixed(2)}</div>
+                <div className={`text-sm font-bold mt-1 ${predictData.kosdaq.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                  {predictData.kosdaq.change_pct >= 0 ? '▲' : '▼'} {Math.abs(predictData.kosdaq.change_amt).toFixed(2)} ({predictData.kosdaq.change_pct > 0 ? '+' : ''}{predictData.kosdaq.change_pct}%)
+                </div>
+              </div>
+              <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-700/50 flex flex-col items-center">
+                <span className="text-slate-400 text-sm font-bold mb-1">미국 상장 한국 ETF (EWY)</span>
+                <div className="text-2xl font-black text-white">${predictData.ewy.current.toFixed(2)}</div>
+                <div className={`text-sm font-bold mt-1 ${predictData.ewy.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                  {predictData.ewy.change_pct >= 0 ? '▲' : '▼'} {Math.abs(predictData.ewy.change_amt).toFixed(2)} ({predictData.ewy.change_pct > 0 ? '+' : ''}{predictData.ewy.change_pct}%)
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="space-y-8 sm:space-y-12">
