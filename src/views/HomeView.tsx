@@ -68,6 +68,7 @@ export const HomeView: React.FC = () => {
           투자 분석부터 일상 편의 도구까지, 상상하는 모든 기능이 이곳에 모입니다. 원하는 도구를 선택해보세요!
         </p>
 
+        {predictData && (
           <div className="mt-8 max-w-3xl mx-auto bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 sm:p-5 relative flex flex-col items-center gap-4">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500"></div>
             
