@@ -48,10 +48,10 @@ export const KoreLiveView: React.FC = () => {
   const renderCard = (item: TickerData, prefix = '') => {
     const isUp = item.change_pct >= 0;
     const colorClass = isUp ? 'text-red-400' : 'text-blue-400';
-    const isDollar = prefix === '$';
+    const isKrw = prefix === '₩';
     
-    // 달러는 무조건 소숫점 2자리, 원화 등은 값에 따라 유동적 표기
-    const formatOptions = isDollar 
+    // 원화(한국 주식)만 소수점 0자리, 그 외(미주, 지수, 환율, 코인 등)는 무조건 소수점 2자리 강제
+    const formatOptions = !isKrw 
       ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } 
       : { minimumFractionDigits: item.current < 100 ? 2 : 0, maximumFractionDigits: item.current < 100 ? 2 : 0 };
 
