@@ -25,6 +25,7 @@ export function AdminView() {
   const [pin, setPin] = useState('');
   const [stats, setStats] = useState<StatData | null>(null);
   const [topSearches, setTopSearches] = useState<SearchStat[]>([]);
+  const [topPageViews, setTopPageViews] = useState<{endpoint: string, count: number}[]>([]);
   const [recentLogs, setRecentLogs] = useState<AccessLog[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -47,6 +48,9 @@ export function AdminView() {
 
       const searchesRes = await fetch('/api/admin/stats/searches?t=' + new Date().getTime());
       if (searchesRes.ok) setTopSearches(await searchesRes.json());
+
+      const pageViewsRes = await fetch('/api/admin/stats/pageviews?t=' + new Date().getTime());
+      if (pageViewsRes.ok) setTopPageViews(await pageViewsRes.json());
 
       const logsRes = await fetch('/api/admin/logs/recent?t=' + new Date().getTime());
       if (logsRes.ok) setRecentLogs(await logsRes.json());
@@ -106,7 +110,7 @@ export function AdminView() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* 인기 검색어 */}
           <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1">
             <div className="p-5 border-b border-slate-700/50 bg-slate-800/60">
@@ -129,6 +133,32 @@ export function AdminView() {
                 </ul>
               ) : (
                 <div className="p-8 text-center text-slate-500">검색 데이터가 없습니다.</div>
+              )}
+            </div>
+          </div>
+
+          {/* 인기 페이지 접근 횟수 */}
+          <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1">
+            <div className="p-5 border-b border-slate-700/50 bg-slate-800/60">
+              <h2 className="text-lg font-bold">📄 가장 많이 본 페이지</h2>
+            </div>
+            <div className="p-0">
+              {topPageViews.length > 0 ? (
+                <ul className="divide-y divide-slate-700/50">
+                  {topPageViews.map((page, idx) => (
+                    <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-cyan-400' : 'text-slate-500'}`}>{idx + 1}</span>
+                        <span className="font-medium text-slate-200">{page.endpoint}</span>
+                      </div>
+                      <span className="text-cyan-400 font-bold bg-cyan-900/30 px-3 py-1 rounded-full text-sm">
+                        {page.count}회
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="p-8 text-center text-slate-500">통계 데이터가 없습니다.</div>
               )}
             </div>
           </div>
