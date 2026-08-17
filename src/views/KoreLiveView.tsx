@@ -6,6 +6,7 @@ interface TickerData {
   current: number;
   change_amt: number;
   change_pct: number;
+  is_estimated?: boolean;
 }
 
 interface FuturesData {
@@ -47,20 +48,19 @@ export const KoreLiveView: React.FC = () => {
   const renderCard = (item: TickerData, prefix = '') => {
     const isUp = item.change_pct >= 0;
     const colorClass = isUp ? 'text-red-400' : 'text-blue-400';
+    const isEst = item.is_estimated;
 
     return (
-      <div key={item.symbol} className="bg-slate-800/60 hover:bg-slate-700/80 border border-slate-700/50 rounded-xl p-4 transition-colors">
-        <h4 className="font-bold text-slate-300 text-sm mb-2">{item.name}</h4>
-        <div className="flex items-baseline gap-2 mb-1">
-          <span className="text-xl font-black text-white">
+      <div key={item.symbol} className={`relative bg-slate-800/60 hover:bg-slate-700/80 border ${isEst ? 'border-purple-500/30' : 'border-slate-700/50'} rounded-lg p-2.5 transition-colors`}>
+        {isEst && <div className="absolute -top-1.5 -right-1.5 bg-purple-500 text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm">야간 추정</div>}
+        <h4 className="font-bold text-slate-300 text-xs mb-1 truncate pr-6">{item.name.replace(' (추정)', '')}</h4>
+        <div className="flex flex-col mb-1">
+          <span className="text-sm sm:text-base font-black text-white leading-none">
             {prefix}{item.current.toLocaleString(undefined, { minimumFractionDigits: item.current < 100 ? 2 : 0, maximumFractionDigits: item.current < 100 ? 2 : 0 })}
           </span>
-          <span className={`text-sm font-bold ${colorClass}`}>
-            {isUp ? '+' : ''}{item.change_pct.toFixed(1)}%
+          <span className={`text-[11px] font-bold mt-0.5 ${colorClass}`}>
+            {isUp ? '▲' : '▼'}{Math.abs(item.change_pct).toFixed(2)}%
           </span>
-        </div>
-        <div className="text-[11px] text-slate-500 font-medium">
-          {item.symbol.replace('=F', '').replace('=X', '')}
         </div>
       </div>
     );
@@ -73,7 +73,7 @@ export const KoreLiveView: React.FC = () => {
         <h3 className="text-xs font-bold text-slate-500 mb-3 flex items-center gap-2">
           {title} <span className="animate-pulse bg-green-500 w-1.5 h-1.5 rounded-full"></span>
         </h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
           {items.map(item => renderCard(item, prefix))}
         </div>
       </div>
