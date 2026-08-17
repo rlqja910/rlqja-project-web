@@ -69,39 +69,48 @@ export const HomeView: React.FC = () => {
         </p>
 
         {predictData && (
-          <div className="mt-8 max-w-3xl mx-auto bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6 relative overflow-hidden">
+          <div className="mt-8 max-w-4xl mx-auto bg-slate-800/40 border border-slate-700/50 rounded-xl p-3 sm:p-4 relative flex flex-col sm:flex-row items-center justify-between gap-4 overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500"></div>
-            <h3 className="text-xl font-bold text-white mb-4 flex items-center justify-center gap-2">
-              <span>🔮 내일의 국장 엿보기 (KOSPI NOW)</span>
-              <span className="flex h-3 w-3 relative ml-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
-              </span>
-            </h3>
             
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-700/50 flex flex-col items-center">
-                <span className="text-slate-400 text-sm font-bold mb-1">코스피 예상</span>
-                <div className="text-2xl font-black text-white">{predictData.kospi.predicted.toFixed(2)}</div>
-                <div className={`text-sm font-bold mt-1 ${predictData.kospi.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
-                  {predictData.kospi.change_pct >= 0 ? '▲' : '▼'} {Math.abs(predictData.kospi.change_amt).toFixed(2)} ({predictData.kospi.change_pct > 0 ? '+' : ''}{predictData.kospi.change_pct}%)
-                </div>
+            <div className="flex items-center gap-2 text-sm font-bold text-white shrink-0">
+              <span>🔮 내일의 국장(NOW)</span>
+              <span className="flex h-2 w-2 relative ml-1">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+              </span>
+            </div>
+            
+            <div className="flex flex-1 items-center justify-center sm:justify-end gap-3 sm:gap-6 text-xs sm:text-sm whitespace-nowrap overflow-x-auto custom-scrollbar pb-1 sm:pb-0">
+              <div className="flex items-center gap-1.5">
+                <span className="text-slate-400">코스피</span>
+                <span className="font-bold text-white">{predictData.kospi.predicted.toFixed(2)}</span>
+                <span className={`font-bold ${predictData.kospi.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                  {predictData.kospi.change_pct >= 0 ? '▲' : '▼'}{Math.abs(predictData.kospi.change_amt).toFixed(2)}
+                </span>
               </div>
-              <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-700/50 flex flex-col items-center">
-                <span className="text-slate-400 text-sm font-bold mb-1">코스닥 예상</span>
-                <div className="text-2xl font-black text-white">{predictData.kosdaq.predicted.toFixed(2)}</div>
-                <div className={`text-sm font-bold mt-1 ${predictData.kosdaq.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
-                  {predictData.kosdaq.change_pct >= 0 ? '▲' : '▼'} {Math.abs(predictData.kosdaq.change_amt).toFixed(2)} ({predictData.kosdaq.change_pct > 0 ? '+' : ''}{predictData.kosdaq.change_pct}%)
-                </div>
+              <div className="w-px h-3 bg-slate-700"></div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-slate-400">코스닥</span>
+                <span className="font-bold text-white">{predictData.kosdaq.predicted.toFixed(2)}</span>
+                <span className={`font-bold ${predictData.kosdaq.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                  {predictData.kosdaq.change_pct >= 0 ? '▲' : '▼'}{Math.abs(predictData.kosdaq.change_amt).toFixed(2)}
+                </span>
               </div>
-              <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-700/50 flex flex-col items-center">
-                <span className="text-slate-400 text-sm font-bold mb-1">미국 상장 한국 ETF (EWY)</span>
-                <div className="text-2xl font-black text-white">${predictData.ewy.current.toFixed(2)}</div>
-                <div className={`text-sm font-bold mt-1 ${predictData.ewy.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
-                  {predictData.ewy.change_pct >= 0 ? '▲' : '▼'} {Math.abs(predictData.ewy.change_amt).toFixed(2)} ({predictData.ewy.change_pct > 0 ? '+' : ''}{predictData.ewy.change_pct}%)
-                </div>
+              <div className="w-px h-3 bg-slate-700"></div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-slate-400">EWY</span>
+                <span className={`font-bold ${predictData.ewy.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                  {predictData.ewy.change_pct > 0 ? '+' : ''}{predictData.ewy.change_pct}%
+                </span>
               </div>
             </div>
+
+            <button 
+              onClick={() => window.location.hash = 'kore-live'}
+              className="shrink-0 bg-slate-700/50 hover:bg-slate-600 border border-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold text-cyan-300 transition-colors flex items-center gap-1"
+            >
+              KORU LIVE 입장 <span className="text-lg leading-none">›</span>
+            </button>
           </div>
         )}
       </div>
