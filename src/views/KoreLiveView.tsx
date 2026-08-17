@@ -22,23 +22,23 @@ export const KoreLiveView: React.FC = () => {
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchFutures = () => {
-      fetch('/api/market-futures')
-        .then(res => res.json())
-        .then(resData => {
-          if (resData.success) {
-            setData(resData.data);
-            setLastUpdated(new Date());
-          }
-          setIsLoading(false);
-        })
-        .catch(err => {
-          console.error(err);
-          setIsLoading(false);
-        });
-    };
+  const fetchFutures = () => {
+    fetch('/api/market-futures')
+      .then(res => res.json())
+      .then(resData => {
+        if (resData.success) {
+          setData(resData.data);
+          setLastUpdated(new Date());
+        }
+        setIsLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setIsLoading(false);
+      });
+  };
 
+  useEffect(() => {
     fetchFutures();
     const interval = setInterval(fetchFutures, 10000);
     return () => clearInterval(interval);
@@ -86,12 +86,20 @@ export const KoreLiveView: React.FC = () => {
         <div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-1 flex items-center gap-2">
             <span className="bg-cyan-500 text-white text-[10px] px-1.5 py-0.5 rounded-md font-black tracking-widest mr-1">LIVE</span>
-            KORU LIVE
+            나이트 스카우터 (야간 추종 시황)
           </h2>
-          <p className="text-slate-400 text-sm font-medium">전 세계 주요 시황을 가장 빠르게, 다크 테마 감성으로.</p>
+          <p className="text-slate-400 text-sm font-medium">글로벌 야간 선물과 ETF 움직임으로 내일의 국장 추종치를 확인하세요.</p>
         </div>
-        <div className="text-xs font-medium text-slate-500 bg-slate-800/50 px-3 py-1.5 rounded-lg border border-slate-700/50">
-          마지막 업데이트: {lastUpdated.toLocaleTimeString()} (10s)
+        <div className="flex items-center gap-2">
+          <button 
+            onClick={() => { setIsLoading(true); fetchFutures(); }}
+            className="text-xs bg-slate-700 hover:bg-slate-600 text-white px-3 py-1.5 rounded-lg font-bold transition-colors shadow-lg"
+          >
+            🔄 수동 갱신
+          </button>
+          <div className="text-xs font-medium text-slate-500 bg-slate-800/50 px-3 py-1.5 rounded-lg border border-slate-700/50">
+            업데이트: {lastUpdated.toLocaleTimeString()}
+          </div>
         </div>
       </div>
 

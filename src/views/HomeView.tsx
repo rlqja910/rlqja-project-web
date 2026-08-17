@@ -109,7 +109,7 @@ export const HomeView: React.FC = () => {
               onClick={() => window.location.hash = 'kore-live'}
               className="shrink-0 bg-slate-700/50 hover:bg-slate-600 border border-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold text-cyan-300 transition-colors flex items-center gap-1"
             >
-              KORU LIVE 입장 <span className="text-lg leading-none">›</span>
+              글로벌 야간 추종 시세 보기 <span className="text-lg leading-none">›</span>
             </button>
           </div>
         )}
