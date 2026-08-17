@@ -68,11 +68,10 @@ export const HomeView: React.FC = () => {
           투자 분석부터 일상 편의 도구까지, 상상하는 모든 기능이 이곳에 모입니다. 원하는 도구를 선택해보세요!
         </p>
 
-        {predictData && (
-          <div className="mt-8 max-w-4xl mx-auto bg-slate-800/40 border border-slate-700/50 rounded-xl p-3 sm:p-4 relative flex flex-col sm:flex-row items-center justify-between gap-4 overflow-hidden">
+          <div className="mt-8 max-w-3xl mx-auto bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 sm:p-5 relative flex flex-col items-center gap-4">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500"></div>
             
-            <div className="flex items-center gap-2 text-sm font-bold text-white shrink-0">
+            <div className="flex items-center gap-2 text-sm sm:text-base font-bold text-white">
               <span>🔮 내일의 국장(NOW)</span>
               <span className="flex h-2 w-2 relative ml-1">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
@@ -80,7 +79,7 @@ export const HomeView: React.FC = () => {
               </span>
             </div>
             
-            <div className="flex flex-1 items-center justify-center sm:justify-end gap-3 sm:gap-6 text-xs sm:text-sm whitespace-nowrap overflow-x-auto custom-scrollbar pb-1 sm:pb-0">
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-sm sm:text-base">
               <div className="flex items-center gap-1.5">
                 <span className="text-slate-400">코스피</span>
                 <span className="font-bold text-white">{predictData.kospi.predicted.toFixed(2)}</span>
@@ -88,7 +87,7 @@ export const HomeView: React.FC = () => {
                   {predictData.kospi.change_pct >= 0 ? '▲' : '▼'}{Math.abs(predictData.kospi.change_amt).toFixed(2)}
                 </span>
               </div>
-              <div className="w-px h-3 bg-slate-700"></div>
+              <div className="hidden sm:block w-px h-3 bg-slate-700"></div>
               <div className="flex items-center gap-1.5">
                 <span className="text-slate-400">코스닥</span>
                 <span className="font-bold text-white">{predictData.kosdaq.predicted.toFixed(2)}</span>
@@ -96,7 +95,7 @@ export const HomeView: React.FC = () => {
                   {predictData.kosdaq.change_pct >= 0 ? '▲' : '▼'}{Math.abs(predictData.kosdaq.change_amt).toFixed(2)}
                 </span>
               </div>
-              <div className="w-px h-3 bg-slate-700"></div>
+              <div className="hidden sm:block w-px h-3 bg-slate-700"></div>
               <div className="flex items-center gap-1.5">
                 <span className="text-slate-400">EWY</span>
                 <span className={`font-bold ${predictData.ewy.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
@@ -107,7 +106,7 @@ export const HomeView: React.FC = () => {
 
             <button 
               onClick={() => window.location.hash = 'kore-live'}
-              className="shrink-0 bg-slate-700/50 hover:bg-slate-600 border border-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold text-cyan-300 transition-colors flex items-center gap-1"
+              className="mt-2 bg-slate-700/50 hover:bg-slate-600 border border-slate-600 px-4 py-2 rounded-lg text-sm font-bold text-cyan-300 transition-colors flex items-center gap-1 shadow-lg"
             >
               글로벌 야간 추종 시세 보기 <span className="text-lg leading-none">›</span>
             </button>
