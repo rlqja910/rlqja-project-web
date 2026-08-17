@@ -9,8 +9,11 @@ interface TickerData {
 }
 
 interface FuturesData {
+  kr_stocks: TickerData[];
+  etf: TickerData[];
+  us_stocks: TickerData[];
   indices: TickerData[];
-  tech: TickerData[];
+  fx_commodities: TickerData[];
   crypto: TickerData[];
 }
 
@@ -41,90 +44,72 @@ export const KoreLiveView: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const renderCard = (item: TickerData) => {
+  const renderCard = (item: TickerData, prefix = '') => {
     const isUp = item.change_pct >= 0;
     const colorClass = isUp ? 'text-red-400' : 'text-blue-400';
-    const bgClass = isUp ? 'bg-red-500/10 border-red-500/20' : 'bg-blue-500/10 border-blue-500/20';
 
     return (
-      <div key={item.symbol} className={`relative p-5 rounded-2xl border ${bgClass} transition-all hover:bg-slate-800/80 hover:border-slate-600`}>
-        <div className="flex justify-between items-start mb-4">
-          <div>
-            <h4 className="font-bold text-white text-base sm:text-lg">{item.name}</h4>
-            <span className="text-xs text-slate-500 font-medium">{item.symbol.replace('=F', '')}</span>
-          </div>
-          <div className={`flex items-center justify-center w-8 h-8 rounded-full ${isUp ? 'bg-red-500/20 text-red-400' : 'bg-blue-500/20 text-blue-400'}`}>
-            {isUp ? '▲' : '▼'}
-          </div>
-        </div>
-        
-        <div className="flex items-baseline gap-2">
-          <span className="text-2xl sm:text-3xl font-black text-white">
-            {item.symbol.includes('BTC') ? '$' : ''}{item.current.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+      <div key={item.symbol} className="bg-slate-800/60 hover:bg-slate-700/80 border border-slate-700/50 rounded-xl p-4 transition-colors">
+        <h4 className="font-bold text-slate-300 text-sm mb-2">{item.name}</h4>
+        <div className="flex items-baseline gap-2 mb-1">
+          <span className="text-xl font-black text-white">
+            {prefix}{item.current.toLocaleString(undefined, { minimumFractionDigits: item.current < 100 ? 2 : 0, maximumFractionDigits: item.current < 100 ? 2 : 0 })}
+          </span>
+          <span className={`text-sm font-bold ${colorClass}`}>
+            {isUp ? '+' : ''}{item.change_pct.toFixed(1)}%
           </span>
         </div>
-        
-        <div className={`mt-2 font-bold text-sm sm:text-base ${colorClass}`}>
-          {isUp ? '+' : ''}{item.change_amt.toFixed(2)} ({isUp ? '+' : ''}{item.change_pct.toFixed(2)}%)
+        <div className="text-[11px] text-slate-500 font-medium">
+          {item.symbol.replace('=F', '').replace('=X', '')}
+        </div>
+      </div>
+    );
+  };
+
+  const renderSection = (title: string, items: TickerData[], prefix = '') => {
+    if (!items || items.length === 0) return null;
+    return (
+      <div className="mb-6">
+        <h3 className="text-xs font-bold text-slate-500 mb-3 flex items-center gap-2">
+          {title} <span className="animate-pulse bg-green-500 w-1.5 h-1.5 rounded-full"></span>
+        </h3>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+          {items.map(item => renderCard(item, prefix))}
         </div>
       </div>
     );
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 animate-in fade-in duration-500">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-slate-800 pb-6">
+    <div className="w-full mx-auto space-y-6 animate-in fade-in duration-500">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-slate-800 pb-4">
         <div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 flex items-center gap-3">
-            <span className="relative flex h-4 w-4">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-4 w-4 bg-green-500"></span>
-            </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-1 flex items-center gap-2">
+            <span className="bg-cyan-500 text-white text-[10px] px-1.5 py-0.5 rounded-md font-black tracking-widest mr-1">LIVE</span>
             KORU LIVE
           </h2>
-          <p className="text-slate-400 font-medium">전 세계 주요 지수와 메가테크 종목의 실시간/야간 시황을 한눈에 확인하세요.</p>
+          <p className="text-slate-400 text-sm font-medium">전 세계 주요 시황을 가장 빠르게, 다크 테마 감성으로.</p>
         </div>
         <div className="text-xs font-medium text-slate-500 bg-slate-800/50 px-3 py-1.5 rounded-lg border border-slate-700/50">
-          마지막 업데이트: {lastUpdated.toLocaleTimeString()} (10초 자동 갱신)
+          마지막 업데이트: {lastUpdated.toLocaleTimeString()} (10s)
         </div>
       </div>
 
       {isLoading && !data ? (
         <div className="flex flex-col justify-center items-center h-64 space-y-4">
-          <div className="w-12 h-12 border-4 border-slate-700 border-t-cyan-500 rounded-full animate-spin"></div>
-          <p className="text-slate-400 font-bold">글로벌 시황 데이터를 수집 중입니다...</p>
+          <div className="w-10 h-10 border-4 border-slate-700 border-t-cyan-500 rounded-full animate-spin"></div>
         </div>
       ) : data ? (
-        <div className="space-y-10">
-          <section>
-            <h3 className="text-xl font-bold text-slate-200 mb-4 flex items-center gap-2">
-              <span className="text-2xl">🌐</span> 글로벌 지수 선물
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {data.indices.map(renderCard)}
-            </div>
-          </section>
-
-          <section>
-            <h3 className="text-xl font-bold text-slate-200 mb-4 flex items-center gap-2">
-              <span className="text-2xl">🚀</span> 빅테크 핫스탁 (프리마켓/실시간)
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {data.tech.map(renderCard)}
-            </div>
-          </section>
-
-          <section>
-            <h3 className="text-xl font-bold text-slate-200 mb-4 flex items-center gap-2">
-              <span className="text-2xl">💎</span> 암호화폐
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {data.crypto.map(renderCard)}
-            </div>
-          </section>
+        <div className="space-y-2">
+          {renderSection("KR한국 주식", data.kr_stocks, "₩")}
+          {renderSection("ETF", data.etf)}
+          {renderSection("미국 주식", data.us_stocks, "$")}
+          {renderSection("지수", data.indices)}
+          {renderSection("환율 / 원자재", data.fx_commodities)}
+          {renderSection("가상화폐", data.crypto)}
         </div>
       ) : (
-        <div className="text-center py-20 text-red-400">데이터를 불러오는 데 실패했습니다.</div>
+        <div className="text-center py-20 text-red-400">데이터 로드 실패</div>
       )}
     </div>
   );
