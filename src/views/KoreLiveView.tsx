@@ -94,7 +94,7 @@ export const KoreLiveView: React.FC = () => {
         <div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-2 flex items-center gap-3 drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]">
             <span className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-[10px] px-2 py-1 rounded-md font-black tracking-widest shadow-lg animate-pulse">LIVE</span>
-            NIGHT PRICE
+            GLOBAL MARKET TRACKER
           </h2>
           <p className="text-slate-400 text-sm font-medium">
             글로벌 마켓 연동 24시간 실시간 시황 보드 <br />
