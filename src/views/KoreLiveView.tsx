@@ -61,7 +61,7 @@ export const KoreLiveView: React.FC = () => {
 
     return (
       <div key={item.symbol} className="group relative bg-[#0f172a]/80 backdrop-blur-md hover:bg-[#1e293b] border border-slate-700/50 hover:border-cyan-500/50 rounded-xl p-3 transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(6,182,212,0.25)]">
-        <h4 className="font-bold text-slate-300 text-xs mb-1.5 truncate group-hover:text-cyan-400 transition-colors">{item.name}</h4>
+        <h4 className="font-bold text-slate-300 text-xs mb-1.5 break-words leading-snug group-hover:text-cyan-400 transition-colors">{item.name}</h4>
         <div className="flex flex-col mb-1">
           <span className="text-[15px] sm:text-lg font-black text-white tracking-tight leading-none mb-1">
             {finalPrefix}{item.current.toLocaleString(undefined, formatOptions)}
