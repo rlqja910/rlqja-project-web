@@ -45,10 +45,14 @@ export const KoreLiveView: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const renderCard = (item: TickerData, prefix = '') => {
+  const renderCard = (item: TickerData, sectionPrefix = '') => {
     const isUp = item.change_pct >= 0;
     const colorClass = isUp ? 'text-red-400' : 'text-blue-400';
-    const isKrw = prefix === '₩';
+    
+    // 심볼이 .KS 또는 .KQ로 끝나면 무조건 한국 주식/ETF이므로 원화 기호 사용
+    const isKorean = item.symbol.endsWith('.KS') || item.symbol.endsWith('.KQ');
+    const finalPrefix = isKorean ? '₩' : sectionPrefix;
+    const isKrw = finalPrefix === '₩';
     
     // 원화(한국 주식)만 소수점 0자리, 그 외(미주, 지수, 환율, 코인 등)는 무조건 소수점 2자리 강제
     const formatOptions = !isKrw 
@@ -60,7 +64,7 @@ export const KoreLiveView: React.FC = () => {
         <h4 className="font-bold text-slate-300 text-xs mb-1.5 truncate group-hover:text-cyan-400 transition-colors">{item.name}</h4>
         <div className="flex flex-col mb-1">
           <span className="text-[15px] sm:text-lg font-black text-white tracking-tight leading-none mb-1">
-            {prefix}{item.current.toLocaleString(undefined, formatOptions)}
+            {finalPrefix}{item.current.toLocaleString(undefined, formatOptions)}
           </span>
           <span className={`text-[11px] font-bold mt-0.5 flex items-center gap-0.5 ${colorClass}`}>
             {isUp ? '▲' : '▼'} {Math.abs(item.change_pct).toFixed(2)}%
