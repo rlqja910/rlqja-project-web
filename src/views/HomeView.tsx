@@ -83,17 +83,17 @@ export const HomeView: React.FC = () => {
             <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 sm:gap-6 text-xs sm:text-base w-full px-1">
               <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
                 <span className="text-slate-400">코스피</span>
-                <span className="font-bold text-white">{predictData.kospi.predicted.toFixed(2)}</span>
+                <span className="font-bold text-white">{predictData.kospi.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 <span className={`font-bold ${predictData.kospi.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
-                  {predictData.kospi.change_pct >= 0 ? '▲' : '▼'}{Math.abs(predictData.kospi.change_amt).toFixed(2)}
+                  {predictData.kospi.change_pct >= 0 ? '▲' : '▼'}{Math.abs(predictData.kospi.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
               </div>
               <div className="hidden sm:block w-px h-3 bg-slate-700"></div>
               <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
                 <span className="text-slate-400">코스닥</span>
-                <span className="font-bold text-white">{predictData.kosdaq.predicted.toFixed(2)}</span>
+                <span className="font-bold text-white">{predictData.kosdaq.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 <span className={`font-bold ${predictData.kosdaq.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
-                  {predictData.kosdaq.change_pct >= 0 ? '▲' : '▼'}{Math.abs(predictData.kosdaq.change_amt).toFixed(2)}
+                  {predictData.kosdaq.change_pct >= 0 ? '▲' : '▼'}{Math.abs(predictData.kosdaq.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
               </div>
               <div className="hidden sm:block w-px h-3 bg-slate-700"></div>
