@@ -263,7 +263,7 @@ function App() {
           <div className="hidden md:block"></div>
           
           <div className="flex items-center gap-4 text-xs sm:text-sm font-medium">
-            <div className="bg-slate-800/40 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl border border-slate-700/30 flex gap-3 sm:gap-4 text-slate-300">
+            <div className="hidden bg-slate-800/40 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl border border-slate-700/30 gap-3 sm:gap-4 text-slate-300">
               <div>오늘 방문자: <span className="text-cyan-400 font-bold">{visitorStats.todayVisitors}</span></div>
               <div className="w-px bg-slate-700/50"></div>
               <div>총 방문자: <span className="text-purple-400 font-bold">{visitorStats.totalVisitors}</span></div>
