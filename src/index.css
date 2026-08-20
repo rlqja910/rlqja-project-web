@@ -25,16 +25,16 @@ body {
   20%, 40%, 60%, 80% { transform: translate(10px, 10px) rotate(1deg); }
 }
 
-@keyframes cookie-explode-left {
-  0% { transform: translate(0, 0) rotate(0deg) scale(1); filter: brightness(1); }
-  10% { transform: translate(-50px, -50px) rotate(-45deg) scale(1.1); filter: brightness(2); } /* Impact flash */
-  100% { transform: translate(-300px, 300px) rotate(-720deg) scale(0); opacity: 0; }
+@keyframes cookie-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
 }
 
-@keyframes cookie-explode-right {
-  0% { transform: translate(0, 0) rotate(0deg) scale(1); filter: brightness(1); }
-  10% { transform: translate(50px, -50px) rotate(45deg) scale(1.1); filter: brightness(2); }
-  100% { transform: translate(300px, 300px) rotate(720deg) scale(0); opacity: 0; }
+@keyframes cookie-charge {
+  0% { transform: scale(1) rotate(0deg); }
+  10%, 30%, 50%, 70%, 90% { transform: scale(0.95) rotate(-2deg); }
+  20%, 40%, 60%, 80% { transform: scale(0.95) rotate(2deg); }
+  100% { transform: scale(0) rotate(180deg); opacity: 0; }
 }
 
 @keyframes flash-bang {
@@ -44,9 +44,9 @@ body {
 }
 
 @keyframes paper-reveal {
-  0% { transform: translateY(100px) scale(0); opacity: 0; filter: blur(10px); }
-  50% { transform: translateY(-20px) scale(1.1); opacity: 1; filter: blur(0px); }
-  100% { transform: translateY(0) scale(1); opacity: 1; }
+  0% { transform: translateY(100px) scale(0) rotateX(45deg); opacity: 0; filter: blur(10px); }
+  50% { transform: translateY(-20px) scale(1.05) rotateX(0deg); opacity: 1; filter: blur(0px); }
+  100% { transform: translateY(0) scale(1) rotateX(0deg); opacity: 1; }
 }
 
 @keyframes particle-fly {
@@ -54,20 +54,16 @@ body {
   100% { transform: translate(var(--tx), var(--ty)) scale(0) rotate(var(--rot)); opacity: 0; }
 }
 
-.animate-hammer-extreme {
-  animation: hammer-smash 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+.animate-cookie-float {
+  animation: cookie-float 3s ease-in-out infinite;
+}
+
+.animate-cookie-charge {
+  animation: cookie-charge 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
 .animate-screen-shake {
   animation: screen-shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-}
-
-.animate-explode-left {
-  animation: cookie-explode-left 0.8s cubic-bezier(0.175, 0.885, 0.32, 1) forwards;
-}
-
-.animate-explode-right {
-  animation: cookie-explode-right 0.8s cubic-bezier(0.175, 0.885, 0.32, 1) forwards;
 }
 
 .animate-paper-reveal {
