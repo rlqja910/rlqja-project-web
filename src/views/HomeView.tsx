@@ -13,13 +13,13 @@ export const HomeView: React.FC = () => {
   const [predictData, setPredictData] = useState<MarketPredict | null>(null);
 
   useEffect(() => {
-    fetch('/api/market-status')
+    fetch('/api/market-status?t=' + new Date().getTime(), { cache: 'no-store' })
       .then(res => res.json())
       .then(data => setMarketStatus(data))
       .catch(err => console.error(err));
 
     const fetchPredict = () => {
-      fetch('/api/market-predict')
+      fetch('/api/market-predict?t=' + new Date().getTime(), { cache: 'no-store' })
         .then(res => res.json())
         .then(data => {
           if (data.success) setPredictData(data);
