@@ -15,7 +15,7 @@ export const HomeView: React.FC = () => {
   const [predictData, setPredictData] = useState<MarketPredict | null>(null);
   const [fearAndGreed, setFearAndGreed] = useState<{ value: number, classification: string } | null>(null);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
-  const { isMagaMode, toggleMagaMode } = useMagaMode();
+  const { isMagaMode } = useMagaMode();
 
   const displayPredictData = isMagaMode && predictData ? {
     ...predictData,
