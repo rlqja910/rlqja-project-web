@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -7,4 +8,56 @@
 
 body {
   @apply bg-gray-50 text-gray-900 antialiased;
+}
+
+@keyframes hammer-swing {
+  0% { transform: rotate(0deg) translate(0, 0); }
+  30% { transform: rotate(-45deg) translate(-20px, -20px); }
+  60% { transform: rotate(45deg) translate(-100px, 100px); }
+  100% { transform: rotate(0deg) translate(0, 0); }
+}
+
+@keyframes cookie-shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px) rotate(-2deg); }
+  20%, 40%, 60%, 80% { transform: translateX(5px) rotate(2deg); }
+}
+
+@keyframes cookie-crack-left {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(-30px, 20px) rotate(-15deg); opacity: 0; }
+}
+
+@keyframes cookie-crack-right {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(30px, 20px) rotate(15deg); opacity: 0; }
+}
+
+@keyframes paper-slide {
+  0% { transform: translateY(50px) scale(0.5); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.animate-hammer {
+  animation: hammer-swing 0.8s ease-in-out forwards;
+}
+
+.animate-shake {
+  animation: cookie-shake 0.4s ease-in-out;
+}
+
+.animate-crack-left {
+  animation: cookie-crack-left 0.5s ease-out forwards;
+}
+
+.animate-crack-right {
+  animation: cookie-crack-right 0.5s ease-out forwards;
+}
+
+.animate-paper {
+  animation: paper-slide 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.font-pen {
+  font-family: 'Nanum Pen Script', cursive;
 }
