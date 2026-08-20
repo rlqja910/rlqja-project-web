@@ -4,11 +4,10 @@ import { useMagaMode } from '../hooks/useMagaMode';
 export const StockReportView: React.FC<{
   posts: any[];
   isLoading: boolean;
-  isFetching: boolean;
   visibleCount: number;
   setVisibleCount: React.Dispatch<React.SetStateAction<number>>;
   setSelectedPost: React.Dispatch<React.SetStateAction<any>>;
-}> = ({ posts, isLoading, isFetching, visibleCount, setVisibleCount, setSelectedPost }) => {
+}> = ({ posts, isLoading, visibleCount, setVisibleCount, setSelectedPost }) => {
   const { isMagaMode } = useMagaMode();
 
   const renderMagaContent = (content: string) => {

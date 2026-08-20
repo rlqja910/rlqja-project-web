@@ -325,7 +325,6 @@ function App() {
             <StockReportView 
               posts={posts} 
               isLoading={isLoading} 
-              isFetching={isFetching} 
               visibleCount={visibleCount} 
               setVisibleCount={setVisibleCount} 
               setSelectedPost={setSelectedPost} 
@@ -442,7 +441,7 @@ function App() {
                     취소
                   </button>
                   <button
-                    onClick={handleForceFetch}
+                    onClick={() => handleForceFetch()}
                     className="flex-1 py-3 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-medium hover:from-cyan-500 hover:to-blue-500 transition-colors"
                   >
                     인증 확인
