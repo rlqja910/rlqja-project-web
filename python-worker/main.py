@@ -364,8 +364,10 @@ def update_market_futures_cache():
         }
 
         kr_codes = [sym.replace('.KS', '') for sym in tickers_to_fetch["kr_stocks"].keys()]
-        kr_queries = [f"SERVICE_ITEM:{code}" for code in kr_codes]
-        kr_naver_data = fetch_naver_finance(kr_queries)
+        kr_naver_data = {}
+        for code in kr_codes:
+            res = fetch_naver_finance([f"SERVICE_ITEM:{code}"])
+            if res: kr_naver_data.update(res)
 
         for idx, (sym, name) in enumerate(tickers_to_fetch["kr_stocks"].items()):
             try:
@@ -397,11 +399,11 @@ def update_market_futures_cache():
                         info = kr_stocks_config.get(sym, {"perp": None, "adr": None, "beta_sym": "NQ=F", "beta": 1.0})
                         
                         # Waterfall Logic
-                        curr = base_curr
+                        curr = prev
                         if info["perp"] in hyperliquid_prices:
                             curr = hyperliquid_prices[info["perp"]] * fx_rate
                         elif info["adr"] and us_data.get(info["adr"]):
-                            curr = base_curr * (1 + us_data[info["adr"]]["change"])
+                            curr = prev * (1 + us_data[info["adr"]]["change"])
                         else:
                             beta_sym = info["beta_sym"]
                             ref_change = us_data[beta_sym]["change"] if us_data.get(beta_sym) else 0.0
@@ -409,7 +411,7 @@ def update_market_futures_cache():
                             hash_val = int(hashlib.md5(seed.encode()).hexdigest()[:8], 16)
                             jitter = ((hash_val % 1000) / 1000.0) * 0.001 - 0.0005
                             adjusted_change = (ref_change * info["beta"]) + jitter
-                            curr = base_curr * (1 + adjusted_change)
+                            curr = prev * (1 + adjusted_change)
                         is_est = True
                     
                 change_amt = curr - prev
