@@ -58,16 +58,6 @@ export const HomeView: React.FC = () => {
     <section className="space-y-8 animate-in fade-in duration-500">
       <div className="text-center space-y-4 pt-2 pb-6 sm:pt-4 sm:pb-8 relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] sm:w-[800px] h-64 bg-purple-600/10 rounded-[100%] blur-3xl pointer-events-none"></div>
-        {marketStatus && (
-          <div className="flex justify-center gap-4 mb-4">
-            <span className={`px-3 py-1 text-xs font-bold rounded-full ${marketStatus.kr_closed ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-green-500/20 text-green-400 border border-green-500/30'}`}>
-              🇰🇷 한국증시: {marketStatus.kr_closed ? '휴장' : '개장'}
-            </span>
-            <span className={`px-3 py-1 text-xs font-bold rounded-full ${marketStatus.us_closed ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-green-500/20 text-green-400 border border-green-500/30'}`}>
-              🇺🇸 미국증시: {marketStatus.us_closed ? '휴장' : '개장'}
-            </span>
-          </div>
-        )}
         <h2 className="relative text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight break-keep tracking-tight">
           당신의 모든 것을 위한 <br />
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">
@@ -78,8 +68,19 @@ export const HomeView: React.FC = () => {
           실시간 글로벌 금융 데이터부터 AI 심층 분석까지, 당신의 투자를 한 차원 끌어올립니다.
         </p>
 
+        {marketStatus && (
+          <div className="flex justify-center gap-4 mt-8 mb-2">
+            <span className={`px-3 py-1 text-xs font-bold rounded-full ${marketStatus.kr_closed ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-green-500/20 text-green-400 border border-green-500/30'}`}>
+              한국증시: {marketStatus.kr_closed ? '휴장' : '개장'}
+            </span>
+            <span className={`px-3 py-1 text-xs font-bold rounded-full ${marketStatus.us_closed ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-green-500/20 text-green-400 border border-green-500/30'}`}>
+              미국증시: {marketStatus.us_closed ? '휴장' : '개장'}
+            </span>
+          </div>
+        )}
+
         {predictData && (
-          <div className="mt-5 max-w-3xl mx-auto bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 sm:p-5 relative flex flex-col items-center gap-4">
+          <div className="mt-2 max-w-3xl mx-auto bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 sm:p-5 relative flex flex-col items-center gap-4">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500"></div>
             
             <div className="flex items-center gap-2 text-sm sm:text-base font-bold text-white">
