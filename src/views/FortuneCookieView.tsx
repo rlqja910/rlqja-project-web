@@ -8,14 +8,22 @@ export const FortuneCookieView: React.FC = () => {
   const handleSmash = () => {
     if (step !== 'idle') return;
 
-    // 1. Pick a random fortune
-    const randomFortune = FORTUNES[Math.floor(Math.random() * FORTUNES.length)];
-    setFortuneText(randomFortune);
+    const todayStr = new Date().toLocaleDateString('ko-KR');
+    const savedFortune = localStorage.getItem('korekore_fortune_text');
+    const savedDate = localStorage.getItem('korekore_fortune_date');
 
-    // 2. Start smashing animation
+    let fortuneToDisplay = '';
+    if (savedDate === todayStr && savedFortune) {
+      fortuneToDisplay = savedFortune;
+    } else {
+      fortuneToDisplay = FORTUNES[Math.floor(Math.random() * FORTUNES.length)];
+      localStorage.setItem('korekore_fortune_text', fortuneToDisplay);
+      localStorage.setItem('korekore_fortune_date', todayStr);
+    }
+
+    setFortuneText(fortuneToDisplay);
     setStep('smashing');
 
-    // 3. After hammer hits (0.8s), crack the cookie
     setTimeout(() => {
       setStep('cracked');
     }, 800);
@@ -23,7 +31,6 @@ export const FortuneCookieView: React.FC = () => {
 
   const handleReset = () => {
     setStep('idle');
-    setFortuneText('');
   };
 
   return (
@@ -92,12 +99,17 @@ export const FortuneCookieView: React.FC = () => {
       </div>
 
       {step === 'cracked' && (
-        <button 
-          onClick={handleReset}
-          className="mt-10 px-8 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white font-bold rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-500 fill-mode-both"
-        >
-          새로운 쿠키 부수기 🔨
-        </button>
+        <div className="mt-12 flex flex-col items-center animate-in fade-in slide-in-from-bottom-5 duration-700 delay-500 fill-mode-both">
+          <button 
+            onClick={handleReset}
+            className="px-8 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white font-bold rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95"
+          >
+            다시 부수기 🔨
+          </button>
+          <p className="mt-4 text-xs font-medium text-slate-500">
+            * 오늘의 운세는 하루에 한 번만 바뀝니다. (내일 다시 오세요!)
+          </p>
+        </div>
       )}
 
       {/* Backdrop glow */}
