@@ -52,6 +52,22 @@ async def get_market_status():
         "us_closed": us_is_holiday
     }
 
+@app.get("/api/fear-and-greed")
+async def get_fear_and_greed():
+    try:
+        response = requests.get('https://api.alternative.me/fng/', timeout=5)
+        data = response.json()
+        if 'data' in data and len(data['data']) > 0:
+            item = data['data'][0]
+            return {
+                "success": True,
+                "value": int(item['value']),
+                "classification": item['value_classification']
+            }
+        return {"success": False, "error": "Invalid data format"}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
 import time
 predict_cache = {"time": 0, "data": None}
 
