@@ -73,7 +73,7 @@ export const HomeView: React.FC = () => {
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500"></div>
             
             <div className="flex items-center gap-2 text-sm sm:text-base font-bold text-white">
-              <span>🔮 내일의 국장(NOW)</span>
+              <span>🔮 국장 라이브 예측</span>
               <span className="flex h-2 w-2 relative ml-1">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
@@ -109,7 +109,7 @@ export const HomeView: React.FC = () => {
               onClick={() => window.location.hash = 'kore-live'}
               className="mt-2 bg-slate-700/50 hover:bg-slate-600 border border-slate-600 px-4 py-2 rounded-lg text-sm font-bold text-cyan-300 transition-colors flex items-center gap-1 shadow-lg"
             >
-              글로벌 야간 추종 시세 보기 <span className="text-lg leading-none">›</span>
+              한국 주식 24h 라이브 <span className="text-lg leading-none">›</span>
             </button>
           </div>
         )}
