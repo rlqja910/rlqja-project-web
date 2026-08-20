@@ -83,10 +83,10 @@ export const FortuneCookieView: React.FC = () => {
         {/* Premium Fortune Cookie Image */}
         {step !== 'cracked' && (
           <div 
-            className={`relative z-30 w-64 h-64 sm:w-80 sm:h-80 cursor-pointer transition-all select-none rounded-full overflow-hidden shadow-[0_0_50px_rgba(34,211,238,0.2)] ${
-              step === 'idle' ? 'animate-cookie-float hover:scale-105 hover:shadow-[0_0_80px_rgba(34,211,238,0.4)]' : ''
+            className={`relative z-30 w-64 h-64 sm:w-80 sm:h-80 cursor-pointer select-none rounded-full overflow-hidden shadow-[0_0_50px_rgba(34,211,238,0.2)] ${
+              step === 'idle' ? 'animate-cookie-float transition-all hover:scale-105 hover:shadow-[0_0_80px_rgba(34,211,238,0.4)]' : ''
             } ${
-              step === 'smashing' ? 'animate-cookie-charge brightness-150 saturate-200' : ''
+              step === 'smashing' ? 'animate-cookie-charge' : ''
             }`}
             onClick={handleSmash}
           >
@@ -96,7 +96,7 @@ export const FortuneCookieView: React.FC = () => {
               className="w-full h-full object-cover mix-blend-lighten"
             />
             {/* Inner glow over image */}
-            <div className={`absolute inset-0 rounded-full transition-opacity duration-500 pointer-events-none ${step === 'smashing' ? 'bg-cyan-400/40 animate-pulse' : 'bg-transparent'}`}></div>
+            <div className={`absolute inset-0 rounded-full transition-opacity duration-1000 pointer-events-none ${step === 'smashing' ? 'bg-cyan-400/20' : 'bg-transparent'}`}></div>
           </div>
         )}
 
@@ -104,15 +104,15 @@ export const FortuneCookieView: React.FC = () => {
 
       {step === 'cracked' && (
         <div className="mt-16 flex flex-col items-center animate-in fade-in slide-in-from-bottom-5 duration-700 delay-700 fill-mode-both">
+          <p className="mb-4 text-[13px] font-medium text-slate-500">
+            * 멘트는 하루 한 번만 바뀝니다. 같은 메시지가 나오더라도 당신의 운명입니다.
+          </p>
           <button 
             onClick={handleReset}
             className="px-10 py-3.5 bg-gradient-to-r from-slate-800 to-slate-700 hover:from-slate-700 hover:to-slate-600 text-cyan-400 font-bold rounded-full shadow-[0_0_20px_rgba(34,211,238,0.2)] transition-all hover:scale-105 active:scale-95 border border-slate-600"
           >
             운명의 시간 다시 돌리기 ⏳
           </button>
-          <p className="mt-4 text-[13px] font-medium text-slate-500">
-            * 멘트는 하루 한 번만 바뀝니다. 같은 메시지가 나오더라도 당신의 운명입니다.
-          </p>
         </div>
       )}
 
