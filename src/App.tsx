@@ -62,6 +62,7 @@ function App() {
   const [visitorStats, setVisitorStats] = useState({ totalVisitors: 0, todayVisitors: 0 });
   const [, setLogoClicks] = useState(0);
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
+  const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
 
   const handleLogoClick = () => {
     handleTabChange('home');
@@ -84,8 +85,11 @@ function App() {
       if (res.ok) {
         const data = await res.json();
         setVisitorStats(data);
+      } else {
+        setIsMaintenanceMode(true);
       }
     } catch (e) {
+      setIsMaintenanceMode(true);
       console.error('Failed to fetch stats:', e);
     }
   };
@@ -173,6 +177,31 @@ function App() {
 
   if (isAdminUnlocked) {
     return <AdminView />;
+  }
+
+  if (isMaintenanceMode) {
+    return (
+      <div className="min-h-screen bg-[#0B0F19] text-slate-300 font-sans flex items-center justify-center p-4">
+        <div className="text-center space-y-6">
+          <div className="w-24 h-24 bg-slate-800/50 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-slate-700/50 shadow-2xl">
+            <span className="text-5xl animate-bounce">🛠️</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">서비스 점검 중</h1>
+          <p className="text-slate-400 max-w-md mx-auto leading-relaxed text-sm sm:text-base">
+            더 나은 KOREKORE를 위해 시스템 점검을 진행하고 있습니다.<br />
+            잠시 후 다시 접속해 주세요.
+          </p>
+          <div className="pt-8">
+            <button 
+              onClick={() => window.location.reload()} 
+              className="px-6 py-3 rounded-xl bg-slate-800 text-cyan-400 font-semibold hover:bg-slate-700 transition-colors border border-slate-700/50 shadow-lg"
+            >
+              새로고침
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
