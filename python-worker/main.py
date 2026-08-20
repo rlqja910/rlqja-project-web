@@ -308,7 +308,9 @@ def update_market_futures_cache():
                         if live_date > last_daily_date:
                             prev = float(hd_clean.iloc[-1])
                         else:
-                            if last_time >= datetime.time(16, 0):
+                            if category in ["fx_commodities", "crypto"]:
+                                prev = float(hd_clean.iloc[-2] if len(hd_clean) >= 2 else hd_clean.iloc[-1])
+                            elif last_time >= datetime.time(16, 0):
                                 prev = float(hl_clean.iloc[-1])
                             else:
                                 prev = float(hd_clean.iloc[-2] if len(hd_clean) >= 2 else hd_clean.iloc[-1])

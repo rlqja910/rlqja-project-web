@@ -73,25 +73,25 @@ export const HomeView: React.FC = () => {
             KOREKORE 
           </span>
         </h2>
-        <p className="relative text-base sm:text-lg text-slate-400 max-w-2xl mx-auto break-keep">
-          투자 분석부터 일상 편의 도구까지, 상상하는 모든 기능이 이곳에 모입니다. 원하는 도구를 선택해보세요!
+        <p className="relative text-base sm:text-lg text-slate-400 max-w-2xl mx-auto break-keep mt-2 font-medium">
+          실시간 글로벌 금융 데이터부터 AI 심층 분석까지, 당신의 투자를 한 차원 끌어올립니다.
         </p>
 
         {fearAndGreed && (
-          <div className="mt-8 max-w-sm mx-auto bg-slate-900/80 border border-slate-700/50 rounded-2xl p-4 sm:p-5 relative overflow-hidden shadow-xl group">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-yellow-500 to-green-500"></div>
+          <div className="mt-8 mx-auto inline-flex items-center gap-6 bg-slate-900/60 border border-slate-700/50 rounded-full px-6 py-3 relative overflow-hidden shadow-xl backdrop-blur-sm">
+            <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 opacity-50"></div>
             
-            <div className="flex flex-col items-center">
-              <h3 className="text-[11px] sm:text-xs font-black text-slate-400 tracking-widest mb-1 uppercase">글로벌 위험자산 선호도 (Crypto)</h3>
-              <div className="text-[10px] text-slate-500 mb-2">공포 탐욕 지수 (Fear & Greed Index)</div>
-              
-              <div className="relative flex items-center justify-center mb-3">
-                <div className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
-                  {fearAndGreed.value}
-                </div>
+            <div className="flex flex-col items-start shrink-0">
+              <h3 className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">글로벌 위험자산 투심</h3>
+              <div className="text-xl sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-sm">
+                {fearAndGreed.value}
               </div>
+            </div>
 
-              <div className="w-full h-2 sm:h-2.5 bg-slate-800 rounded-full overflow-hidden relative mb-2">
+            <div className="w-px h-8 bg-slate-700/50 hidden sm:block"></div>
+
+            <div className="flex flex-col gap-1.5 w-32 sm:w-48">
+              <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden relative">
                 <div 
                   className={`absolute top-0 left-0 h-full rounded-full transition-all duration-1000 ease-out ${
                     fearAndGreed.value <= 25 ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]' :
@@ -103,31 +103,31 @@ export const HomeView: React.FC = () => {
                   style={{ width: `${Math.min(Math.max(fearAndGreed.value, 0), 100)}%` }}
                 />
               </div>
-
-              <div className="flex justify-between w-full text-[9px] font-bold text-slate-500 px-1 mb-2">
-                <span>0 (공포)</span>
-                <span>50 (중립)</span>
-                <span>100 (탐욕)</span>
+              <div className="flex justify-between w-full text-[9px] font-bold text-slate-500 px-0.5">
+                <span>공포</span>
+                <span>탐욕</span>
               </div>
+            </div>
 
-              <div className={`mt-1 px-4 py-1.5 rounded-full font-black text-xs sm:text-sm border backdrop-blur-sm ${
-                fearAndGreed.value <= 25 ? 'bg-red-500/20 text-red-400 border-red-500/30' :
-                fearAndGreed.value <= 45 ? 'bg-orange-500/20 text-orange-400 border-orange-500/30' :
-                fearAndGreed.value <= 55 ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' :
-                fearAndGreed.value <= 75 ? 'bg-lime-500/20 text-lime-400 border-lime-500/30' :
-                'bg-green-500/20 text-green-400 border-green-500/30'
-              }`}>
-                {
-                  fearAndGreed.value <= 25 ? '😱 극단적 공포 (Extreme Fear)' :
-                  fearAndGreed.value <= 45 ? '😨 공포 (Fear)' :
-                  fearAndGreed.value <= 55 ? '😐 중립 (Neutral)' :
-                  fearAndGreed.value <= 75 ? '😏 탐욕 (Greed)' :
-                  '🤑 극단적 탐욕 (Extreme Greed)'
-                }
-              </div>
+            <div className={`shrink-0 px-3 py-1 rounded-full font-black text-[10px] sm:text-xs border ${
+              fearAndGreed.value <= 25 ? 'bg-red-500/10 text-red-400 border-red-500/20' :
+              fearAndGreed.value <= 45 ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' :
+              fearAndGreed.value <= 55 ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' :
+              fearAndGreed.value <= 75 ? 'bg-lime-500/10 text-lime-400 border-lime-500/20' :
+              'bg-green-500/10 text-green-400 border-green-500/20'
+            }`}>
+              {
+                fearAndGreed.value <= 25 ? '😱 극단적 공포' :
+                fearAndGreed.value <= 45 ? '😨 공포' :
+                fearAndGreed.value <= 55 ? '😐 중립' :
+                fearAndGreed.value <= 75 ? '😏 탐욕' :
+                '🤑 극단적 탐욕'
+              }
             </div>
           </div>
         )}
+
+
 
         {predictData && (
           <div className="mt-8 max-w-3xl mx-auto bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 sm:p-5 relative flex flex-col items-center gap-4">
