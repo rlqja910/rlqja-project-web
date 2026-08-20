@@ -19,10 +19,10 @@ export const HomeView: React.FC = () => {
 
   const displayPredictData = isMagaMode && predictData ? {
     ...predictData,
-    kospi: { ...predictData.kospi, change_pct: 30.5, change_amt: 825.4 },
-    kosdaq: { ...predictData.kosdaq, change_pct: 45.2, change_amt: 340.2 },
-    ewy: { ...predictData.ewy, change_pct: 75.8 },
-    usdkrw: predictData.usdkrw ? { ...predictData.usdkrw, change_pct: -15.5 } : undefined
+    kospi: { ...predictData.kospi, predicted: 3500.25, change_pct: 30.5, change_amt: 825.4 },
+    kosdaq: { ...predictData.kosdaq, predicted: 1250.80, change_pct: 45.2, change_amt: 340.2 },
+    ewy: { ...predictData.ewy, current: 89.50, change_pct: 75.8, change_amt: 38.4 },
+    usdkrw: predictData.usdkrw ? { ...predictData.usdkrw, current: 1150.50, change_pct: -15.5, change_amt: -210.5 } : undefined
   } : predictData;
 
   const displayFearAndGreed = isMagaMode ? { value: 100, classification: 'Extreme Greed' } : fearAndGreed;
@@ -66,6 +66,7 @@ export const HomeView: React.FC = () => {
     window.location.hash = id;
   };
 
+  return (
     <section className="space-y-8 animate-in fade-in duration-500 relative">
       {isMagaMode && (
         <div className="absolute inset-0 bg-gradient-to-b from-red-600/10 to-transparent pointer-events-none rounded-3xl mix-blend-color-dodge animate-pulse z-0 blur-xl"></div>

@@ -14,10 +14,11 @@ export const StockReportView: React.FC<{
 
   const renderMagaContent = (content: string) => {
     if (!isMagaMode) return content;
-    let redContent = content.replace(/(하락|약세|부진|급락|조정|폭락)/g, '🚀초급등');
-    redContent = redContent.replace(/(상승|강세|급등|폭등)/g, '🔥🔥미친 폭등');
+    let redContent = content.replace(/(하락|약세|부진|급락|조정|폭락|둔화|위기)/g, '🚀초급등');
+    redContent = redContent.replace(/(상승|강세|급등|폭등|호조)/g, '🔥🔥미친 폭등');
     redContent = redContent.replace(/-\d+\.?\d*%/g, '+399.9% (떡상!)');
-    redContent = redContent.replace(/\d+\.?\d*%/g, '+299.9%');
+    redContent = redContent.replace(/\+?\d+\.?\d*%/g, '+299.9%');
+    redContent = redContent.replace(/\b\d{1,3}(,\d{3})+(\.\d+)?\b/g, '99,999.99'); // Replace numbers like 2,340.50
     return (
       <span className="text-red-400 font-bold block bg-red-950/40 p-3 rounded-lg border border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.3)] animate-pulse">
         {redContent}
