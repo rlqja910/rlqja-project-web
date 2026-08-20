@@ -220,7 +220,7 @@ function App() {
           onClick={toggleMagaMode}
           className={`px-4 py-2 rounded-full font-black text-xs sm:text-sm shadow-2xl transition-all border ${isMagaMode ? 'bg-red-600 text-white border-red-400 animate-pulse scale-110 shadow-[0_0_40px_rgba(220,38,38,1)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700 hover:text-white'}`}
         >
-          {isMagaMode ? '🧊 대가리 봉합 (현실복귀)' : '🚀 무지성 불장 ON'}
+          {isMagaMode ? '🧊 찬물 샤워 (현실복귀)' : '🚀 무지성 불장 ON'}
         </button>
       </div>
       <aside className="w-64 border-r border-slate-800 bg-[#0B0F19] hidden md:flex flex-col shrink-0 h-screen sticky top-0 overflow-y-auto custom-scrollbar">
