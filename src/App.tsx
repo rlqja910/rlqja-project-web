@@ -132,9 +132,9 @@ function App() {
     }
   };
 
-  const handleForceFetch = async () => {
-    if (adminPassword !== '1223') {
-      alert("비밀번호가 일치하지 않습니다.");
+  const handleForceFetch = async (bypassAuth = false) => {
+    if (!bypassAuth && adminPassword !== '2026') {
+      alert("관리자 비밀번호가 틀렸습니다.");
       return;
     }
 
@@ -182,7 +182,7 @@ function App() {
   };
 
   if (isAdminUnlocked) {
-    return <AdminView />;
+    return <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} />;
   }
 
   if (isMaintenanceMode) {
@@ -318,6 +318,7 @@ function App() {
         </header>
 
         <div className="p-4 sm:p-8 pb-40 md:pb-8 max-w-6xl mx-auto w-full">
+          {activeTab === 'admin' && <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} />}
           {activeTab === 'home' && <HomeView />}
           {activeTab === 'scouter' && <ScouterView />}
           {activeTab === 'report' && (
@@ -328,7 +329,6 @@ function App() {
               visibleCount={visibleCount} 
               setVisibleCount={setVisibleCount} 
               setSelectedPost={setSelectedPost} 
-              setIsAuthModalOpen={setIsAuthModalOpen} 
             />
           )}
           {activeTab === 'patchnotes' && <PatchNotesView patchNotes={patchNotes} />}

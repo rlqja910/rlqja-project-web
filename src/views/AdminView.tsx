@@ -20,7 +20,7 @@ interface AccessLog {
   createdAt: string;
 }
 
-export function AdminView() {
+export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => void, isFetching?: boolean }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [pin, setPin] = useState('');
   const [stats, setStats] = useState<StatData | null>(null);
@@ -90,12 +90,23 @@ export function AdminView() {
       <div className="max-w-6xl mx-auto space-y-8">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-black text-cyan-400">관리자 대시보드</h1>
-          <button 
-            onClick={fetchAdminData}
-            className="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg text-sm transition-colors flex items-center gap-2"
-          >
-            {isLoading ? '새로고침 중...' : '새로고침'}
-          </button>
+          <div className="flex gap-3">
+            {onForceFetch && (
+              <button 
+                onClick={onForceFetch}
+                disabled={isFetching}
+                className="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-lg text-sm font-bold shadow-lg transition-colors disabled:opacity-50"
+              >
+                {isFetching ? '수집 중...' : '새 리포트 강제 생성'}
+              </button>
+            )}
+            <button 
+              onClick={fetchAdminData}
+              className="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg text-sm transition-colors flex items-center gap-2"
+            >
+              {isLoading ? '새로고침 중...' : '새로고침'}
+            </button>
+          </div>
         </div>
 
         {/* 방문자 수 요약 */}

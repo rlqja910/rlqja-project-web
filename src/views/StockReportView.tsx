@@ -8,8 +8,7 @@ export const StockReportView: React.FC<{
   visibleCount: number;
   setVisibleCount: React.Dispatch<React.SetStateAction<number>>;
   setSelectedPost: React.Dispatch<React.SetStateAction<any>>;
-  setIsAuthModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ posts, isLoading, isFetching, visibleCount, setVisibleCount, setSelectedPost, setIsAuthModalOpen }) => {
+}> = ({ posts, isLoading, isFetching, visibleCount, setVisibleCount, setSelectedPost }) => {
   const { isMagaMode } = useMagaMode();
 
   const renderMagaContent = (content: string) => {
@@ -47,15 +46,6 @@ export const StockReportView: React.FC<{
           <p className="text-base sm:text-lg text-slate-400 leading-relaxed break-keep">
             KOREKORE가 하루 3번, 7시 12시 20시에 핵심 뉴스만 선별하여 증시 동향, 수급, 그리고 주목할 섹터를 한눈에 보기 쉽게 요약해 드립니다.
           </p>
-          <div className="flex gap-4 pt-2">
-            <button
-              onClick={() => setIsAuthModalOpen(true)}
-              disabled={isFetching}
-              className={`w-full sm:w-auto px-6 py-3.5 rounded-xl text-white font-semibold shadow-lg transition-all active:scale-95 flex justify-center items-center gap-2 disabled:opacity-50 ${isMagaMode ? 'bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 shadow-red-500/25 animate-pulse' : 'bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 shadow-cyan-500/25'}`}
-            >
-              {isFetching ? '심층 분석 수집 중...' : '새 리포트 생성하기'}
-            </button>
-          </div>
         </div>
       </section>
 

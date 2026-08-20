@@ -694,28 +694,33 @@ def process_scout(job_id: str, stockName: str):
     try:
         jobs[job_id] = {"status": "running"}
 
-        ticker_prompt = (
-            f"'{stockName}' 기업의 Yahoo Finance 티커와 사람들이 일반적으로 부르는 친숙하고 짧은 기업명(주식회사 등 꼬리표 제외)을 JSON으로만 출력해. 마크다운 금지.\n"
-            "한국 유가증권(코스피) 종목은 .KS, 코스닥 종목은 .KQ 접미사를 반드시 붙여야 해.\n"
-            "만약 사용자가 입력한 문자열이 영문 알파벳(예: AAPL, SOXL, KORU)으로만 구성되어 있다면, 그것을 무조건 미국 주식/ETF의 티커로 우선 간주하고 분석해. 억지로 발음이 비슷한 한국 기업(예: KORU -> 코루파마)으로 왜곡하지 마.\n"
-            "예시:\n"
-            '  삼성전자주식회사 -> {"ticker":"005930.KS","realName":"삼성전자"}\n'
-            '  에스엠씨지(유리용기회사) -> {"ticker":"460870.KQ","realName":"에스엠씨지"}\n'
-            '  엔비디아 -> {"ticker":"NVDA","realName":"NVIDIA"}\n'
-            '  KORU -> {"ticker":"KORU","realName":"Direxion Daily South Korea Bull 3X Shares"}\n'
-            f'출력: {{"ticker":"티커","realName":"짧은기업명"}}'
-        )
-        ticker_res = model.generate_content(ticker_prompt)
-        t_text = ticker_res.text.strip()
-        t_text = re.sub(r'^```(?:json)?\s*', '', t_text, flags=re.IGNORECASE)
-        t_text = re.sub(r'\s*```$', '', t_text).strip()
-        try:
-            t_json = json.loads(t_text)
-            ticker = t_json.get("ticker", "").strip().upper()
-            real_stock_name = t_json.get("realName", stockName).strip()
-        except:
-            ticker = t_text.strip().upper()
-            real_stock_name = stockName
+        lower_stock = stockName.strip().lower().replace(" ", "")
+        if lower_stock in ["스페이스x", "스엑", "spacex"]:
+            ticker = "SPCX"
+            real_stock_name = "SpaceX"
+        else:
+            ticker_prompt = (
+                f"'{stockName}' 기업의 Yahoo Finance 티커와 사람들이 일반적으로 부르는 친숙하고 짧은 기업명(주식회사 등 꼬리표 제외)을 JSON으로만 출력해. 마크다운 금지.\n"
+                "한국 유가증권(코스피) 종목은 .KS, 코스닥 종목은 .KQ 접미사를 반드시 붙여야 해.\n"
+                "만약 사용자가 입력한 문자열이 영문 알파벳(예: AAPL, SOXL, KORU)으로만 구성되어 있다면, 그것을 무조건 미국 주식/ETF의 티커로 우선 간주하고 분석해. 억지로 발음이 비슷한 한국 기업(예: KORU -> 코루파마)으로 왜곡하지 마.\n"
+                "예시:\n"
+                '  삼성전자주식회사 -> {"ticker":"005930.KS","realName":"삼성전자"}\n'
+                '  에스엠씨지(유리용기회사) -> {"ticker":"460870.KQ","realName":"에스엠씨지"}\n'
+                '  엔비디아 -> {"ticker":"NVDA","realName":"NVIDIA"}\n'
+                '  KORU -> {"ticker":"KORU","realName":"Direxion Daily South Korea Bull 3X Shares"}\n'
+                f'출력: {{"ticker":"티커","realName":"짧은기업명"}}'
+            )
+            ticker_res = model.generate_content(ticker_prompt)
+            t_text = ticker_res.text.strip()
+            t_text = re.sub(r'^```(?:json)?\s*', '', t_text, flags=re.IGNORECASE)
+            t_text = re.sub(r'\s*```$', '', t_text).strip()
+            try:
+                t_json = json.loads(t_text)
+                ticker = t_json.get("ticker", "").strip().upper()
+                real_stock_name = t_json.get("realName", stockName).strip()
+            except:
+                ticker = t_text.strip().upper()
+                real_stock_name = stockName
 
         stock = yf.Ticker(ticker)
         hist = stock.history(period="1y")
