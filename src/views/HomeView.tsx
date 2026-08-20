@@ -78,38 +78,39 @@ export const HomeView: React.FC = () => {
         </p>
 
         {fearAndGreed && (
-          <div className="mt-8 max-w-xl mx-auto bg-slate-900/80 border border-slate-700/50 rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-2xl group">
+          <div className="mt-8 max-w-sm mx-auto bg-slate-900/80 border border-slate-700/50 rounded-2xl p-4 sm:p-5 relative overflow-hidden shadow-xl group">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-yellow-500 to-green-500"></div>
             
             <div className="flex flex-col items-center">
-              <h3 className="text-sm font-black text-slate-400 tracking-widest mb-2 uppercase">Fear & Greed Index</h3>
+              <h3 className="text-[11px] sm:text-xs font-black text-slate-400 tracking-widest mb-1 uppercase">글로벌 위험자산 선호도 (Crypto)</h3>
+              <div className="text-[10px] text-slate-500 mb-2">공포 탐욕 지수 (Fear & Greed Index)</div>
               
-              <div className="relative flex items-center justify-center mb-4 mt-2">
-                <div className="text-6xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+              <div className="relative flex items-center justify-center mb-3">
+                <div className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
                   {fearAndGreed.value}
                 </div>
               </div>
 
-              <div className="w-full h-3 sm:h-4 bg-slate-800 rounded-full overflow-hidden relative mb-4">
+              <div className="w-full h-2 sm:h-2.5 bg-slate-800 rounded-full overflow-hidden relative mb-2">
                 <div 
                   className={`absolute top-0 left-0 h-full rounded-full transition-all duration-1000 ease-out ${
-                    fearAndGreed.value <= 25 ? 'bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.8)]' :
-                    fearAndGreed.value <= 45 ? 'bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.8)]' :
-                    fearAndGreed.value <= 55 ? 'bg-yellow-500 shadow-[0_0_10px_rgba(234,179,8,0.8)]' :
-                    fearAndGreed.value <= 75 ? 'bg-lime-500 shadow-[0_0_10px_rgba(132,204,22,0.8)]' :
-                    'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.8)]'
+                    fearAndGreed.value <= 25 ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]' :
+                    fearAndGreed.value <= 45 ? 'bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.8)]' :
+                    fearAndGreed.value <= 55 ? 'bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.8)]' :
+                    fearAndGreed.value <= 75 ? 'bg-lime-500 shadow-[0_0_8px_rgba(132,204,22,0.8)]' :
+                    'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]'
                   }`}
                   style={{ width: `${Math.min(Math.max(fearAndGreed.value, 0), 100)}%` }}
                 />
               </div>
 
-              <div className="flex justify-between w-full text-[10px] sm:text-xs font-bold text-slate-500 px-1 mb-2">
+              <div className="flex justify-between w-full text-[9px] font-bold text-slate-500 px-1 mb-2">
                 <span>0 (공포)</span>
                 <span>50 (중립)</span>
                 <span>100 (탐욕)</span>
               </div>
 
-              <div className={`mt-2 px-6 py-2 rounded-full font-black text-sm sm:text-base border backdrop-blur-sm ${
+              <div className={`mt-1 px-4 py-1.5 rounded-full font-black text-xs sm:text-sm border backdrop-blur-sm ${
                 fearAndGreed.value <= 25 ? 'bg-red-500/20 text-red-400 border-red-500/30' :
                 fearAndGreed.value <= 45 ? 'bg-orange-500/20 text-orange-400 border-orange-500/30' :
                 fearAndGreed.value <= 55 ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' :
