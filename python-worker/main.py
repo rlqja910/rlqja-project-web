@@ -401,21 +401,28 @@ def update_market_futures_cache():
                     prev = float(n_data.get('pcv', n_data.get('sv', 0)))
                     is_est = False
                 else:
-                    # 장이 닫혀있을 때 기본 prev는 전일 종가(pcv)여야 프리장 등락률이 계산됨
-                    prev = float(n_data.get('pcv', n_data.get('sv', 0)))
                     base_curr = float(n_data.get('nv', 0))
+                    prev = float(n_data.get('pcv', n_data.get('sv', 0))) # 기본 기준가는 전일 종가
                     
                     nxt = n_data.get('nxtOverMarketPriceInfo')
                     
-                    if nxt and nxt.get('overMarketStatus') == 'OPEN' and nxt.get('overPrice'):
-                        over_price_str = nxt['overPrice'].replace(',', '')
-                        curr = float(over_price_str) if over_price_str.replace('.', '').isdigit() else base_curr
-                        is_est = False
-                    elif not is_estimation_window:
-                        # 프리장(08:00~09:00) 등 추정 시간이 아니면, 실제 현재가(nv)를 그대로 사용
-                        curr = base_curr
+                    if not is_estimation_window:
+                        # 08:00 ~ 09:00 프리장(장전 시간외)
+                        if nxt and nxt.get('overMarketStatus') == 'OPEN' and nxt.get('overPrice'):
+                            over_price_str = nxt['overPrice'].replace(',', '')
+                            curr = float(over_price_str) if over_price_str.replace('.', '').isdigit() else base_curr
+                        else:
+                            curr = base_curr
                         is_est = False
                     else:
+                        # 18:00 ~ 08:00 글로벌 야간 추종
+                        # 야간 추종의 기준(0%)은 정규장 종가가 아니라 오늘장 최종 마감가(시간외 단일가 종가)
+                        prev = base_curr
+                        if nxt and nxt.get('overMarketStatus') == 'CLOSE' and nxt.get('overPrice'):
+                            over_price_str = nxt['overPrice'].replace(',', '')
+                            if over_price_str.replace('.', '').isdigit():
+                                prev = float(over_price_str)
+                                
                         info = kr_stocks_config.get(sym, {"perp": None, "adr": None, "beta_sym": "NQ=F", "beta": 1.0})
                         
                         # Waterfall Logic
