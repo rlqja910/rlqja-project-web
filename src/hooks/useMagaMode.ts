@@ -5,7 +5,10 @@ export const useMagaMode = () => {
   const [isMagaMode, setIsMagaMode] = useState(magaStore.get());
 
   useEffect(() => {
-    return magaStore.subscribe(setIsMagaMode);
+    const unsubscribe = magaStore.subscribe(setIsMagaMode);
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   return {
