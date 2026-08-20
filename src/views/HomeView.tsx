@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PORTAL_MENUS } from '../config/menu';
+import { useMagaMode } from '../hooks/useMagaMode';
 
 interface MarketPredict {
   ewy: { current: number; change_amt: number; change_pct: number; };
@@ -14,6 +15,17 @@ export const HomeView: React.FC = () => {
   const [predictData, setPredictData] = useState<MarketPredict | null>(null);
   const [fearAndGreed, setFearAndGreed] = useState<{ value: number, classification: string } | null>(null);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+  const { isMagaMode, toggleMagaMode } = useMagaMode();
+
+  const displayPredictData = isMagaMode && predictData ? {
+    ...predictData,
+    kospi: { ...predictData.kospi, change_pct: 30.5, change_amt: 825.4 },
+    kosdaq: { ...predictData.kosdaq, change_pct: 45.2, change_amt: 340.2 },
+    ewy: { ...predictData.ewy, change_pct: 75.8 },
+    usdkrw: predictData.usdkrw ? { ...predictData.usdkrw, change_pct: -15.5 } : undefined
+  } : predictData;
+
+  const displayFearAndGreed = isMagaMode ? { value: 100, classification: 'Extreme Greed' } : fearAndGreed;
 
   useEffect(() => {
     fetch('/api/market-status?t=' + new Date().getTime(), { cache: 'no-store' })
@@ -55,8 +67,16 @@ export const HomeView: React.FC = () => {
   };
 
   return (
-    <section className="space-y-8 animate-in fade-in duration-500">
+    <section className={`space-y-8 animate-in fade-in duration-500 ${isMagaMode ? 'hue-rotate-[-45deg]' : ''}`}>
       <div className="text-center space-y-4 pt-2 pb-6 sm:pt-4 sm:pb-8 relative">
+        <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-50">
+          <button 
+            onClick={toggleMagaMode}
+            className={`px-3 py-1.5 rounded-full font-black text-xs sm:text-sm shadow-xl transition-all border ${isMagaMode ? 'bg-red-600 text-white border-red-400 animate-pulse scale-110 shadow-[0_0_15px_rgba(220,38,38,0.8)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-white'}`}
+          >
+            {isMagaMode ? '🦅 MAGA ON' : 'MAGA 끄기'}
+          </button>
+        </div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] sm:w-[800px] h-64 bg-purple-600/10 rounded-[100%] blur-3xl pointer-events-none"></div>
         {marketStatus && (
           <div className="flex justify-center gap-4 mb-4">
@@ -78,49 +98,49 @@ export const HomeView: React.FC = () => {
           실시간 글로벌 금융 데이터부터 AI 심층 분석까지, 당신의 투자를 한 차원 끌어올립니다.
         </p>
 
-        {predictData && (
-          <div className="mt-2 max-w-3xl mx-auto bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 sm:p-5 relative flex flex-col items-center gap-4">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500"></div>
+        {displayPredictData && (
+          <div className={`mt-2 max-w-3xl mx-auto bg-slate-800/40 border ${isMagaMode ? 'border-red-500 shadow-[0_0_20px_rgba(220,38,38,0.3)]' : 'border-slate-700/50'} rounded-xl p-4 sm:p-5 relative flex flex-col items-center gap-4 transition-all duration-500`}>
+            <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${isMagaMode ? 'from-red-600 via-orange-500 to-yellow-500' : 'from-cyan-400 via-blue-500 to-purple-500'}`}></div>
             
             <div className="flex items-center gap-2 text-sm sm:text-base font-bold text-white">
               <span>🔮 국장 라이브 예측</span>
               <span className="flex h-2 w-2 relative ml-1">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${isMagaMode ? 'bg-red-400' : 'bg-cyan-400'} opacity-75`}></span>
+                <span className={`relative inline-flex rounded-full h-2 w-2 ${isMagaMode ? 'bg-red-500' : 'bg-cyan-500'}`}></span>
               </span>
             </div>
             
             <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 sm:gap-6 text-xs sm:text-base w-full px-1">
               <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
                 <span className="text-slate-400">코스피</span>
-                <span className="font-bold text-white">{predictData.kospi.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                <span className={`font-bold ${predictData.kospi.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
-                  {predictData.kospi.change_pct >= 0 ? '▲' : '▼'}{Math.abs(predictData.kospi.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                <span className="font-bold text-white">{displayPredictData.kospi.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className={`font-bold ${displayPredictData.kospi.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                  {displayPredictData.kospi.change_pct >= 0 ? '▲' : '▼'}{Math.abs(displayPredictData.kospi.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
               </div>
               <div className="hidden sm:block w-px h-3 bg-slate-700"></div>
               <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
                 <span className="text-slate-400">코스닥</span>
-                <span className="font-bold text-white">{predictData.kosdaq.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                <span className={`font-bold ${predictData.kosdaq.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
-                  {predictData.kosdaq.change_pct >= 0 ? '▲' : '▼'}{Math.abs(predictData.kosdaq.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                <span className="font-bold text-white">{displayPredictData.kosdaq.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className={`font-bold ${displayPredictData.kosdaq.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                  {displayPredictData.kosdaq.change_pct >= 0 ? '▲' : '▼'}{Math.abs(displayPredictData.kosdaq.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
               </div>
               <div className="hidden sm:block w-px h-3 bg-slate-700"></div>
               <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
                 <span className="text-slate-400">EWY</span>
-                <span className={`font-bold ${predictData.ewy.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
-                  {predictData.ewy.change_pct > 0 ? '+' : ''}{predictData.ewy.change_pct}%
+                <span className={`font-bold ${displayPredictData.ewy.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                  {displayPredictData.ewy.change_pct > 0 ? '+' : ''}{displayPredictData.ewy.change_pct}%
                 </span>
               </div>
-              {predictData.usdkrw && (
+              {displayPredictData.usdkrw && (
                 <>
                   <div className="hidden sm:block w-px h-3 bg-slate-700"></div>
                   <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
                     <span className="text-slate-400">환율</span>
-                    <span className="font-bold text-white">{predictData.usdkrw.current.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                    <span className={`font-bold ${predictData.usdkrw.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
-                      {predictData.usdkrw.change_pct > 0 ? '+' : ''}{predictData.usdkrw.change_pct}%
+                    <span className="font-bold text-white">{displayPredictData.usdkrw.current.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    <span className={`font-bold ${displayPredictData.usdkrw.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                      {displayPredictData.usdkrw.change_pct > 0 ? '+' : ''}{displayPredictData.usdkrw.change_pct}%
                     </span>
                   </div>
                 </>
@@ -136,10 +156,10 @@ export const HomeView: React.FC = () => {
           </div>
         )}
 
-        {fearAndGreed && (
+        {displayFearAndGreed && (
           <div className="mt-5 flex flex-col items-center gap-4">
             {/* Fear & Greed Index */}
-            <div className="inline-flex items-center gap-6 bg-slate-900/60 border border-slate-700/50 rounded-full px-6 py-3 relative overflow-hidden shadow-xl backdrop-blur-sm">
+            <div className={`inline-flex items-center gap-6 bg-slate-900/60 border ${isMagaMode ? 'border-red-500 shadow-[0_0_20px_rgba(220,38,38,0.4)] scale-105' : 'border-slate-700/50'} rounded-full px-6 py-3 relative overflow-hidden shadow-xl backdrop-blur-sm transition-all duration-500`}>
               <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 opacity-50"></div>
               
               <div className="flex flex-col items-start shrink-0">
@@ -153,8 +173,8 @@ export const HomeView: React.FC = () => {
                   <span className="text-[10px] font-black text-white leading-none">?</span>
                 </button>
               </h3>
-                <div className="text-xl sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-sm">
-                  {fearAndGreed.value}
+                <div className={`text-xl sm:text-2xl font-black text-transparent bg-clip-text ${isMagaMode ? 'bg-gradient-to-b from-red-400 to-red-600' : 'bg-gradient-to-b from-white to-slate-400'} drop-shadow-sm transition-all`}>
+                  {displayFearAndGreed.value}
                 </div>
               </div>
 
@@ -164,13 +184,13 @@ export const HomeView: React.FC = () => {
                 <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden relative">
                   <div 
                     className={`absolute top-0 left-0 h-full rounded-full transition-all duration-1000 ease-out ${
-                      fearAndGreed.value <= 25 ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]' :
-                      fearAndGreed.value <= 45 ? 'bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.8)]' :
-                      fearAndGreed.value <= 55 ? 'bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.8)]' :
-                      fearAndGreed.value <= 75 ? 'bg-lime-500 shadow-[0_0_8px_rgba(132,204,22,0.8)]' :
+                      displayFearAndGreed.value <= 25 ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]' :
+                      displayFearAndGreed.value <= 45 ? 'bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.8)]' :
+                      displayFearAndGreed.value <= 55 ? 'bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.8)]' :
+                      displayFearAndGreed.value <= 75 ? 'bg-lime-500 shadow-[0_0_8px_rgba(132,204,22,0.8)]' :
                       'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]'
                     }`}
-                    style={{ width: `${Math.min(Math.max(fearAndGreed.value, 0), 100)}%` }}
+                    style={{ width: `${Math.min(Math.max(displayFearAndGreed.value, 0), 100)}%` }}
                   />
                 </div>
                 <div className="flex justify-between w-full text-[9px] font-bold text-slate-500 px-0.5">
@@ -180,24 +200,25 @@ export const HomeView: React.FC = () => {
               </div>
 
               <div className={`shrink-0 px-4 py-1.5 rounded-full font-black text-sm sm:text-base border shadow-sm ${
-                fearAndGreed.value <= 25 ? 'bg-red-500/10 text-red-400 border-red-500/30' :
-                fearAndGreed.value <= 45 ? 'bg-orange-500/10 text-orange-400 border-orange-500/30' :
-                fearAndGreed.value <= 55 ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30' :
-                fearAndGreed.value <= 75 ? 'bg-lime-500/10 text-lime-400 border-lime-500/30' :
+                displayFearAndGreed.value <= 25 ? 'bg-red-500/10 text-red-400 border-red-500/30' :
+                displayFearAndGreed.value <= 45 ? 'bg-orange-500/10 text-orange-400 border-orange-500/30' :
+                displayFearAndGreed.value <= 55 ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30' :
+                displayFearAndGreed.value <= 75 ? 'bg-lime-500/10 text-lime-400 border-lime-500/30' :
                 'bg-green-500/10 text-green-400 border-green-500/30'
-              }`}>
+              } ${isMagaMode ? 'bg-green-500 text-white animate-bounce' : ''}`}>
                 {
-                  fearAndGreed.value <= 25 ? '😱 극단적 공포' :
-                  fearAndGreed.value <= 45 ? '😨 공포' :
-                  fearAndGreed.value <= 55 ? '😐 중립' :
-                  fearAndGreed.value <= 75 ? '😏 탐욕' :
+                  isMagaMode ? '🤑 가즈아아앗!' :
+                  displayFearAndGreed.value <= 25 ? '😱 극단적 공포' :
+                  displayFearAndGreed.value <= 45 ? '😨 공포' :
+                  displayFearAndGreed.value <= 55 ? '😐 중립' :
+                  displayFearAndGreed.value <= 75 ? '😏 탐욕' :
                   '🤑 극단적 탐욕'
                 }
               </div>
             </div>
 
             {/* Pentagon Pizza Index */}
-            <div className="inline-flex items-center gap-2.5 bg-slate-900/60 border border-slate-700/50 rounded-full px-5 py-2.5 shadow-xl backdrop-blur-sm cursor-help" title="지정학적 위기(공포)가 커지면 펜타곤 야근이 늘어나 피자 배달이 급증한다는 금융권 밈 지수">
+            <div className={`inline-flex items-center gap-2.5 bg-slate-900/60 border ${isMagaMode ? 'border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.3)]' : 'border-slate-700/50'} rounded-full px-5 py-2.5 shadow-xl backdrop-blur-sm cursor-help transition-all`} title="지정학적 위기(공포)가 커지면 펜타곤 야근이 늘어나 피자 배달이 급증한다는 금융권 밈 지수">
               <h3 className="text-[10px] font-bold text-slate-400 tracking-tight flex items-center gap-1.5">
                 펜타곤 야근(피자) 지수
                 <button 
@@ -211,7 +232,7 @@ export const HomeView: React.FC = () => {
               <div className="flex gap-0.5 ml-1">
                 {[...Array(5)].map((_, i) => (
                   <span key={i} className={`text-base transition-all duration-500 ${
-                    i < (fearAndGreed.value <= 25 ? 5 : fearAndGreed.value <= 45 ? 3 : fearAndGreed.value <= 55 ? 2 : 1) 
+                    i < (displayFearAndGreed.value <= 25 ? 5 : displayFearAndGreed.value <= 45 ? 3 : displayFearAndGreed.value <= 55 ? 2 : 1) 
                     ? 'opacity-100 scale-110 drop-shadow-[0_0_4px_rgba(239,68,68,0.8)]' 
                     : 'opacity-20 grayscale'
                   }`}>🍕</span>

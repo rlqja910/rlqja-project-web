@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { useMagaMode } from '../hooks/useMagaMode';
 
 export const StockReportView: React.FC<{
   posts: any[];
@@ -10,9 +10,11 @@ export const StockReportView: React.FC<{
   setSelectedPost: React.Dispatch<React.SetStateAction<any>>;
   setIsAuthModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ posts, isLoading, isFetching, visibleCount, setVisibleCount, setSelectedPost, setIsAuthModalOpen }) => {
+  const { isMagaMode } = useMagaMode();
+
   return (
     <>
-      <section className="relative rounded-3xl p-6 sm:p-10 overflow-hidden bg-gradient-to-br from-slate-900 to-slate-900 border border-slate-800/60 shadow-2xl">
+      <section className={`relative rounded-3xl p-6 sm:p-10 overflow-hidden bg-gradient-to-br from-slate-900 to-slate-900 border ${isMagaMode ? 'border-red-600/60 shadow-[0_0_50px_rgba(220,38,38,0.3)] hue-rotate-[-45deg]' : 'border-slate-800/60 shadow-2xl'} transition-all duration-500`}>
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 sm:w-96 h-64 sm:h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 sm:w-80 h-64 sm:h-80 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -28,7 +30,7 @@ export const StockReportView: React.FC<{
             <button
               onClick={() => setIsAuthModalOpen(true)}
               disabled={isFetching}
-              className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold shadow-lg shadow-cyan-500/25 transition-all active:scale-95 flex justify-center items-center gap-2 disabled:opacity-50"
+              className={`w-full sm:w-auto px-6 py-3.5 rounded-xl text-white font-semibold shadow-lg transition-all active:scale-95 flex justify-center items-center gap-2 disabled:opacity-50 ${isMagaMode ? 'bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 shadow-red-500/25 animate-pulse' : 'bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 shadow-cyan-500/25'}`}
             >
               {isFetching ? '심층 분석 수집 중...' : '새 리포트 생성하기'}
             </button>
@@ -36,13 +38,11 @@ export const StockReportView: React.FC<{
         </div>
       </section>
 
-
-
       <section className="space-y-6">
         <div className="flex items-center justify-between px-1">
           <h3 className="text-xl sm:text-2xl font-bold text-white">최신 리포트 피드</h3>
           <div className="text-xs sm:text-sm text-slate-500 flex items-center gap-2 bg-slate-900/50 px-3 py-1.5 rounded-full border border-slate-800">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span className={`w-2 h-2 rounded-full ${isMagaMode ? 'bg-red-500 animate-bounce' : 'bg-emerald-500 animate-pulse'}`}></span>
             실시간 동기화
           </div>
         </div>
@@ -58,11 +58,13 @@ export const StockReportView: React.FC<{
                 <div
                   key={post.id}
                   onClick={() => setSelectedPost(post)}
-                  className="group p-5 sm:p-6 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 hover:border-cyan-500/30 transition-all cursor-pointer shadow-lg hover:shadow-cyan-500/10 active:scale-[0.98] sm:active:scale-100"
+                  className={`group p-5 sm:p-6 rounded-2xl bg-slate-900/80 backdrop-blur-sm border transition-all cursor-pointer shadow-lg active:scale-[0.98] sm:active:scale-100 ${isMagaMode ? 'border-red-900/50 hover:border-red-500 hover:shadow-[0_0_15px_rgba(220,38,38,0.2)]' : 'border-slate-800 hover:border-cyan-500/30 hover:shadow-cyan-500/10'}`}
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <h4 className="text-base sm:text-lg font-bold text-slate-100 group-hover:text-cyan-300 transition-colors break-keep">{post.title}</h4>
+                      <h4 className={`text-base sm:text-lg font-bold break-keep transition-colors ${isMagaMode ? 'text-red-500 drop-shadow-[0_0_5px_rgba(239,68,68,0.8)] animate-pulse' : 'text-slate-100 group-hover:text-cyan-300'}`}>
+                        {isMagaMode ? `🚀 [초강력 떡상] ${post.title}` : post.title}
+                      </h4>
                     </div>
                   </div>
 
