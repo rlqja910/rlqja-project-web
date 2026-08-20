@@ -34,7 +34,7 @@ export const FortuneCookieView: React.FC = () => {
   };
 
   return (
-    <section className="space-y-6 animate-in fade-in duration-500 py-10 relative max-w-4xl mx-auto flex flex-col items-center min-h-[70vh] justify-center">
+    <section className={`space-y-6 animate-in fade-in duration-500 py-10 relative max-w-4xl mx-auto flex flex-col items-center min-h-[70vh] justify-center ${step === 'cracked' ? 'animate-screen-shake' : ''}`}>
       <div className="text-center space-y-4 mb-10">
         <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
           오늘의 주식 포춘쿠키 🥠
@@ -46,10 +46,35 @@ export const FortuneCookieView: React.FC = () => {
 
       <div className="relative w-full max-w-md aspect-square flex items-center justify-center">
         
+        {/* Flash Effect */}
+        {step === 'cracked' && (
+          <div className="absolute inset-0 z-40 bg-white rounded-full animate-flash pointer-events-none mix-blend-overlay"></div>
+        )}
+
+        {/* Particles */}
+        {step === 'cracked' && (
+          <>
+            {[...Array(12)].map((_, i) => (
+              <div 
+                key={i} 
+                className="absolute z-30 w-4 h-4 bg-yellow-600 rounded-sm particle pointer-events-none"
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  '--tx': `${(Math.random() - 0.5) * 400}px`,
+                  '--ty': `${(Math.random() - 0.5) * 400}px`,
+                  '--rot': `${(Math.random() - 0.5) * 720}deg`,
+                  backgroundColor: Math.random() > 0.5 ? '#d97706' : '#b45309'
+                } as React.CSSProperties}
+              ></div>
+            ))}
+          </>
+        )}
+        
         {/* Paper Fortune */}
         {step === 'cracked' && (
-          <div className="absolute z-10 w-4/5 max-w-sm aspect-video bg-[#fdf6e3] shadow-2xl rounded-sm p-6 flex items-center justify-center animate-paper border-2 border-[#d4c4a8]">
-            <p className="text-3xl sm:text-4xl text-slate-800 text-center font-pen leading-relaxed break-keep">
+          <div className="absolute z-10 w-4/5 max-w-sm aspect-video bg-[#fdf6e3] shadow-2xl rounded-sm p-6 flex items-center justify-center animate-paper-reveal border-2 border-[#d4c4a8]">
+            <p className="text-3xl sm:text-4xl text-slate-800 text-center font-pen leading-relaxed break-keep drop-shadow-sm">
               {fortuneText}
             </p>
           </div>
@@ -59,7 +84,7 @@ export const FortuneCookieView: React.FC = () => {
         {step !== 'cracked' && (
           <div 
             className={`absolute z-30 text-[100px] sm:text-[150px] top-[-50px] right-[-30px] transition-transform origin-bottom-left ${
-              step === 'smashing' ? 'animate-hammer' : 'translate-x-10 -translate-y-10 rotate-12 opacity-80 cursor-pointer hover:scale-110 hover:opacity-100'
+              step === 'smashing' ? 'animate-hammer-extreme' : 'translate-x-10 -translate-y-10 rotate-12 opacity-80 cursor-pointer hover:scale-110 hover:opacity-100'
             }`}
             onClick={handleSmash}
           >
@@ -70,7 +95,7 @@ export const FortuneCookieView: React.FC = () => {
         {/* Fortune Cookie Base */}
         <div 
           className={`relative z-20 text-[150px] sm:text-[200px] cursor-pointer drop-shadow-2xl transition-all select-none ${
-            step === 'idle' ? 'hover:scale-110' : ''
+            step === 'idle' ? 'hover:scale-110 hover:drop-shadow-[0_0_30px_rgba(234,179,8,0.5)]' : ''
           }`}
           onClick={handleSmash}
         >
@@ -78,7 +103,7 @@ export const FortuneCookieView: React.FC = () => {
           <div className={`absolute top-0 left-0 w-1/2 overflow-hidden ${
             step === 'smashing' ? 'animate-shake' : ''
           } ${
-            step === 'cracked' ? 'animate-crack-left' : ''
+            step === 'cracked' ? 'animate-explode-left' : ''
           }`}>
             <div className="w-[200%]">🥠</div>
           </div>
@@ -87,7 +112,7 @@ export const FortuneCookieView: React.FC = () => {
           <div className={`absolute top-0 right-0 w-1/2 overflow-hidden ${
             step === 'smashing' ? 'animate-shake' : ''
           } ${
-            step === 'cracked' ? 'animate-crack-right' : ''
+            step === 'cracked' ? 'animate-explode-right' : ''
           }`}>
             <div className="w-[200%] -translate-x-1/2">🥠</div>
           </div>
