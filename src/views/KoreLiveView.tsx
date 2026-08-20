@@ -64,7 +64,7 @@ export const KoreLiveView: React.FC = () => {
         <h4 className="font-bold text-slate-300 text-xs mb-1.5 break-words leading-snug group-hover:text-cyan-400 transition-colors">{item.name}</h4>
         <div className="flex flex-col mb-1">
           <span className="text-[15px] sm:text-lg font-black text-white tracking-tight leading-none mb-1">
-            {finalPrefix}{item.current.toLocaleString(undefined, formatOptions)}
+            {!isKrw ? finalPrefix : ''}{item.current.toLocaleString(undefined, formatOptions)}{isKrw ? '원' : ''}
           </span>
           <span className={`text-[11px] font-bold mt-0.5 flex items-center gap-0.5 ${colorClass}`}>
             {isUp ? '▲' : '▼'} {Math.abs(item.change_pct).toFixed(2)}%
