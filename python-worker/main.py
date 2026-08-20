@@ -82,6 +82,7 @@ async def get_market_predict():
         ks_item = next((x for x in data["indices"] if x["symbol"] == "^KS11"), None)
         kq_item = next((x for x in data["indices"] if x["symbol"] == "^KQ11"), None)
         ewy_item = next((x for x in data["etf"] if x["symbol"] == "EWY"), None)
+        usdkrw_item = next((x for x in data["fx_commodities"] if x["symbol"] == "USDKRW=X"), None)
 
         if not (ks_item and kq_item and ewy_item):
             return {"success": False, "error": "Data missing in cache"}
@@ -93,6 +94,11 @@ async def get_market_predict():
                 "change_amt": ewy_item["change_amt"],
                 "change_pct": ewy_item["change_pct"]
             },
+            "usdkrw": {
+                "current": usdkrw_item["current"],
+                "change_amt": usdkrw_item["change_amt"],
+                "change_pct": usdkrw_item["change_pct"]
+            } if usdkrw_item else {"current": 0, "change_amt": 0, "change_pct": 0},
             "kospi": {
                 "current": round(ks_item["current"] - ks_item["change_amt"], 2),
                 "predicted": ks_item["current"],

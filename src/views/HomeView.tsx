@@ -3,6 +3,7 @@ import { PORTAL_MENUS } from '../config/menu';
 
 interface MarketPredict {
   ewy: { current: number; change_amt: number; change_pct: number; };
+  usdkrw: { current: number; change_amt: number; change_pct: number; };
   kospi: { current: number; predicted: number; change_amt: number; change_pct: number; };
   kosdaq: { current: number; predicted: number; change_amt: number; change_pct: number; };
 }
@@ -162,6 +163,18 @@ export const HomeView: React.FC = () => {
                   {predictData.ewy.change_pct > 0 ? '+' : ''}{predictData.ewy.change_pct}%
                 </span>
               </div>
+              {predictData.usdkrw && (
+                <>
+                  <div className="hidden sm:block w-px h-3 bg-slate-700"></div>
+                  <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+                    <span className="text-slate-400">환율</span>
+                    <span className="font-bold text-white">{predictData.usdkrw.current.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    <span className={`font-bold ${predictData.usdkrw.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                      {predictData.usdkrw.change_pct > 0 ? '+' : ''}{predictData.usdkrw.change_pct}%
+                    </span>
+                  </div>
+                </>
+              )}
             </div>
 
             <button 
