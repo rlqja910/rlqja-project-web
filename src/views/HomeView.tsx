@@ -54,8 +54,8 @@ export const HomeView: React.FC = () => {
   };
 
   return (
-    <section className="space-y-10 animate-in fade-in duration-500">
-      <div className="text-center space-y-4 py-8 sm:py-12 relative">
+    <section className="space-y-8 animate-in fade-in duration-500">
+      <div className="text-center space-y-4 pt-2 pb-6 sm:pt-4 sm:pb-8 relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] sm:w-[800px] h-64 bg-purple-600/10 rounded-[100%] blur-3xl pointer-events-none"></div>
         {marketStatus && (
           <div className="flex justify-center gap-4 mb-4">
@@ -78,7 +78,7 @@ export const HomeView: React.FC = () => {
         </p>
 
         {fearAndGreed && (
-          <div className="mt-8 mx-auto inline-flex items-center gap-6 bg-slate-900/60 border border-slate-700/50 rounded-full px-6 py-3 relative overflow-hidden shadow-xl backdrop-blur-sm">
+          <div className="mt-5 mx-auto inline-flex items-center gap-6 bg-slate-900/60 border border-slate-700/50 rounded-full px-6 py-3 relative overflow-hidden shadow-xl backdrop-blur-sm">
             <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 opacity-50"></div>
             
             <div className="flex flex-col items-start shrink-0">
@@ -130,7 +130,7 @@ export const HomeView: React.FC = () => {
 
 
         {predictData && (
-          <div className="mt-8 max-w-3xl mx-auto bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 sm:p-5 relative flex flex-col items-center gap-4">
+          <div className="mt-5 max-w-3xl mx-auto bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 sm:p-5 relative flex flex-col items-center gap-4">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500"></div>
             
             <div className="flex items-center gap-2 text-sm sm:text-base font-bold text-white">
