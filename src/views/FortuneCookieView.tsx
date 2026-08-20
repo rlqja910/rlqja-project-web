@@ -26,7 +26,7 @@ export const FortuneCookieView: React.FC = () => {
 
     setTimeout(() => {
       setStep('cracked');
-    }, 800);
+    }, 1400); // 1.4s charge time before crack
   };
 
   const handleReset = () => {
@@ -34,7 +34,7 @@ export const FortuneCookieView: React.FC = () => {
   };
 
   return (
-    <section className={`space-y-6 animate-in fade-in duration-700 py-10 relative max-w-4xl mx-auto flex flex-col items-center min-h-[70vh] justify-center ${step === 'cracked' ? 'animate-screen-shake' : ''}`}>
+    <section className={`space-y-6 animate-in fade-in duration-700 py-10 relative max-w-4xl mx-auto flex flex-col items-center min-h-[70vh] justify-center`}>
       <div className="text-center space-y-4 mb-12">
         <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
           운명의 <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600">골든 포춘쿠키</span> ✨
@@ -46,9 +46,9 @@ export const FortuneCookieView: React.FC = () => {
 
       <div className="relative w-full max-w-md aspect-square flex items-center justify-center">
         
-        {/* Massive Flash Explosion */}
+        {/* Soft Golden Flash Explosion */}
         {step === 'cracked' && (
-          <div className="absolute inset-0 z-50 bg-cyan-200 rounded-full animate-flash pointer-events-none mix-blend-screen shadow-[0_0_150px_rgba(34,211,238,1)]"></div>
+          <div className="absolute inset-0 z-50 bg-yellow-300/30 rounded-full animate-flash pointer-events-none mix-blend-screen"></div>
         )}
 
         {/* Explosion Particles */}
