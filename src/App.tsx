@@ -145,7 +145,7 @@ function App() {
         throw new Error("서버에서 에러를 응답했습니다.");
       }
 
-      const initialPostsLength = posts.length;
+      const initialLatestPostId = posts.length > 0 ? posts[0].id : null;
       let attempts = 0;
       
       const pollInterval = setInterval(async () => {
@@ -154,12 +154,14 @@ function App() {
           const res = await fetch('/api/posts?t=' + new Date().getTime(), { cache: 'no-store' });
           const data = await res.json();
           
-          if (data.length > initialPostsLength || attempts >= 40) {
+          const hasNewPost = data.length > 0 && data[0].id !== initialLatestPostId;
+          
+          if (hasNewPost || attempts >= 40) {
             clearInterval(pollInterval);
             setPosts(data);
             setIsFetching(false);
             setIsAuthModalOpen(false);
-            if (data.length <= initialPostsLength) {
+            if (!hasNewPost) {
               alert("AI 분석이 지연되고 있습니다. 백그라운드에서 계속 작성 중이니 1~2분 뒤에 새로고침 해주세요!");
             }
           }
