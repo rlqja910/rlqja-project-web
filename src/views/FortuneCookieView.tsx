@@ -26,7 +26,7 @@ export const FortuneCookieView: React.FC = () => {
 
     setTimeout(() => {
       setStep('cracked');
-    }, 1400); // 1.4s charge time before crack
+    }, 2400); // 2.4s charge time before crack
   };
 
   const handleReset = () => {
@@ -35,7 +35,7 @@ export const FortuneCookieView: React.FC = () => {
 
   return (
     <section className={`space-y-6 animate-in fade-in duration-700 py-10 relative max-w-4xl mx-auto flex flex-col items-center min-h-[70vh] justify-center`}>
-      <div className="text-center space-y-4 mb-12">
+      <div className="text-center space-y-4 mb-8">
         <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
           운명의 <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600">골든 포춘쿠키</span> ✨
         </h2>
@@ -44,7 +44,7 @@ export const FortuneCookieView: React.FC = () => {
         </p>
       </div>
 
-      <div className="relative w-full max-w-md aspect-square flex items-center justify-center">
+      <div className="relative w-full max-w-md h-64 sm:h-80 flex items-center justify-center">
         
         {/* Soft Golden Flash Explosion */}
         {step === 'cracked' && (
@@ -103,7 +103,7 @@ export const FortuneCookieView: React.FC = () => {
       </div>
 
       {step === 'cracked' && (
-        <div className="mt-16 flex flex-col items-center animate-in fade-in slide-in-from-bottom-5 duration-700 delay-700 fill-mode-both">
+        <div className="mt-8 flex flex-col items-center animate-in fade-in slide-in-from-bottom-5 duration-700 delay-700 fill-mode-both">
           <p className="mb-4 text-[13px] font-medium text-slate-500">
             * 멘트는 하루 한 번만 바뀝니다. 같은 메시지가 나오더라도 당신의 운명입니다.
           </p>

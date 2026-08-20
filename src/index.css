@@ -31,10 +31,8 @@ body {
 }
 
 @keyframes cookie-charge {
-  0% { transform: scale(1) translateY(0); filter: brightness(1) drop-shadow(0 0 0 rgba(234, 179, 8, 0)); }
-  50% { transform: scale(0.9) translateY(-10px); filter: brightness(1.2) drop-shadow(0 0 50px rgba(234, 179, 8, 0.5)); }
-  90% { transform: scale(0.8) translateY(0); filter: brightness(1.5) drop-shadow(0 0 100px rgba(234, 179, 8, 0.8)); opacity: 1; }
-  100% { transform: scale(0) rotate(90deg); opacity: 0; filter: brightness(2); }
+  0% { transform: scale(1) translateY(0); filter: brightness(1) drop-shadow(0 0 0 rgba(234, 179, 8, 0)); opacity: 1; }
+  100% { transform: scale(0.6) translateY(-20px); filter: brightness(2) drop-shadow(0 0 120px rgba(234, 179, 8, 1)); opacity: 1; }
 }
 
 @keyframes flash-bang {
@@ -59,7 +57,7 @@ body {
 }
 
 .animate-cookie-charge {
-  animation: cookie-charge 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: cookie-charge 2.5s ease-in-out forwards;
 }
 
 .animate-screen-shake {
