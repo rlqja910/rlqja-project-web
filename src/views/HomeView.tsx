@@ -179,12 +179,12 @@ export const HomeView: React.FC = () => {
                 </div>
               </div>
 
-              <div className={`shrink-0 px-3 py-1 rounded-full font-black text-[10px] sm:text-xs border ${
-                fearAndGreed.value <= 25 ? 'bg-red-500/10 text-red-400 border-red-500/20' :
-                fearAndGreed.value <= 45 ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' :
-                fearAndGreed.value <= 55 ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' :
-                fearAndGreed.value <= 75 ? 'bg-lime-500/10 text-lime-400 border-lime-500/20' :
-                'bg-green-500/10 text-green-400 border-green-500/20'
+              <div className={`shrink-0 px-4 py-1.5 rounded-full font-black text-sm sm:text-base border shadow-sm ${
+                fearAndGreed.value <= 25 ? 'bg-red-500/10 text-red-400 border-red-500/30' :
+                fearAndGreed.value <= 45 ? 'bg-orange-500/10 text-orange-400 border-orange-500/30' :
+                fearAndGreed.value <= 55 ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30' :
+                fearAndGreed.value <= 75 ? 'bg-lime-500/10 text-lime-400 border-lime-500/30' :
+                'bg-green-500/10 text-green-400 border-green-500/30'
               }`}>
                 {
                   fearAndGreed.value <= 25 ? '😱 극단적 공포' :
