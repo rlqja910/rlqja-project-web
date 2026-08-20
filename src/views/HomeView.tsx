@@ -78,8 +78,66 @@ export const HomeView: React.FC = () => {
           실시간 글로벌 금융 데이터부터 AI 심층 분석까지, 당신의 투자를 한 차원 끌어올립니다.
         </p>
 
+        {predictData && (
+          <div className="mt-5 max-w-3xl mx-auto bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 sm:p-5 relative flex flex-col items-center gap-4">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500"></div>
+            
+            <div className="flex items-center gap-2 text-sm sm:text-base font-bold text-white">
+              <span>🔮 국장 라이브 예측</span>
+              <span className="flex h-2 w-2 relative ml-1">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+              </span>
+            </div>
+            
+            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 sm:gap-6 text-xs sm:text-base w-full px-1">
+              <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+                <span className="text-slate-400">코스피</span>
+                <span className="font-bold text-white">{predictData.kospi.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className={`font-bold ${predictData.kospi.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                  {predictData.kospi.change_pct >= 0 ? '▲' : '▼'}{Math.abs(predictData.kospi.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </span>
+              </div>
+              <div className="hidden sm:block w-px h-3 bg-slate-700"></div>
+              <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+                <span className="text-slate-400">코스닥</span>
+                <span className="font-bold text-white">{predictData.kosdaq.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className={`font-bold ${predictData.kosdaq.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                  {predictData.kosdaq.change_pct >= 0 ? '▲' : '▼'}{Math.abs(predictData.kosdaq.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </span>
+              </div>
+              <div className="hidden sm:block w-px h-3 bg-slate-700"></div>
+              <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+                <span className="text-slate-400">EWY</span>
+                <span className={`font-bold ${predictData.ewy.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                  {predictData.ewy.change_pct > 0 ? '+' : ''}{predictData.ewy.change_pct}%
+                </span>
+              </div>
+              {predictData.usdkrw && (
+                <>
+                  <div className="hidden sm:block w-px h-3 bg-slate-700"></div>
+                  <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+                    <span className="text-slate-400">환율</span>
+                    <span className="font-bold text-white">{predictData.usdkrw.current.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    <span className={`font-bold ${predictData.usdkrw.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                      {predictData.usdkrw.change_pct > 0 ? '+' : ''}{predictData.usdkrw.change_pct}%
+                    </span>
+                  </div>
+                </>
+              )}
+            </div>
+
+            <button 
+              onClick={() => window.location.hash = 'kore-live'}
+              className="mt-2 bg-slate-700/50 hover:bg-slate-600 border border-slate-600 px-4 py-2 rounded-lg text-sm font-bold text-cyan-300 transition-colors flex items-center gap-1 shadow-lg"
+            >
+              한국 주식 24h 라이브 <span className="text-lg leading-none">›</span>
+            </button>
+          </div>
+        )}
+
         {fearAndGreed && (
-          <div className="mt-5 flex flex-wrap justify-center items-center gap-4">
+          <div className="mt-5 flex flex-col items-center gap-4">
             {/* Fear & Greed Index */}
             <div className="inline-flex items-center gap-6 bg-slate-900/60 border border-slate-700/50 rounded-full px-6 py-3 relative overflow-hidden shadow-xl backdrop-blur-sm">
               <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 opacity-50"></div>
@@ -139,7 +197,7 @@ export const HomeView: React.FC = () => {
             </div>
 
             {/* Pentagon Pizza Index */}
-            <div className="inline-flex items-center gap-2.5 bg-slate-900/60 border border-slate-700/50 rounded-full px-4 py-2 shadow-xl backdrop-blur-sm cursor-help" title="지정학적 위기(공포)가 커지면 펜타곤 야근이 늘어나 피자 배달이 급증한다는 금융권 밈 지수">
+            <div className="inline-flex items-center gap-2.5 bg-slate-900/60 border border-slate-700/50 rounded-full px-5 py-2.5 shadow-xl backdrop-blur-sm cursor-help" title="지정학적 위기(공포)가 커지면 펜타곤 야근이 늘어나 피자 배달이 급증한다는 금융권 밈 지수">
               <h3 className="text-[10px] font-bold text-slate-400 tracking-tight flex items-center gap-1.5">
                 펜타곤 야근(피자) 지수
                 <button 
@@ -150,9 +208,9 @@ export const HomeView: React.FC = () => {
                   <span className="text-[10px] font-black text-white leading-none">?</span>
                 </button>
               </h3>
-              <div className="flex gap-0.5">
+              <div className="flex gap-0.5 ml-1">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i} className={`text-sm transition-all duration-500 ${
+                  <span key={i} className={`text-base transition-all duration-500 ${
                     i < (fearAndGreed.value <= 25 ? 5 : fearAndGreed.value <= 45 ? 3 : fearAndGreed.value <= 55 ? 2 : 1) 
                     ? 'opacity-100 scale-110 drop-shadow-[0_0_4px_rgba(239,68,68,0.8)]' 
                     : 'opacity-20 grayscale'
@@ -162,56 +220,6 @@ export const HomeView: React.FC = () => {
             </div>
           </div>
         )}
-
-
-
-        {predictData && (
-          <div className="mt-5 max-w-3xl mx-auto bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 sm:p-5 relative flex flex-col items-center gap-4">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500"></div>
-            
-            <div className="flex items-center gap-2 text-sm sm:text-base font-bold text-white">
-              <span>🔮 국장 라이브 예측</span>
-              <span className="flex h-2 w-2 relative ml-1">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-              </span>
-            </div>
-            
-            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 sm:gap-6 text-xs sm:text-base w-full px-1">
-              <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
-                <span className="text-slate-400">코스피</span>
-                <span className="font-bold text-white">{predictData.kospi.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                <span className={`font-bold ${predictData.kospi.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
-                  {predictData.kospi.change_pct >= 0 ? '▲' : '▼'}{Math.abs(predictData.kospi.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </span>
-              </div>
-              <div className="hidden sm:block w-px h-3 bg-slate-700"></div>
-              <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
-                <span className="text-slate-400">코스닥</span>
-                <span className="font-bold text-white">{predictData.kosdaq.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                <span className={`font-bold ${predictData.kosdaq.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
-                  {predictData.kosdaq.change_pct >= 0 ? '▲' : '▼'}{Math.abs(predictData.kosdaq.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </span>
-              </div>
-              <div className="hidden sm:block w-px h-3 bg-slate-700"></div>
-              <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
-                <span className="text-slate-400">EWY</span>
-                <span className={`font-bold ${predictData.ewy.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
-                  {predictData.ewy.change_pct > 0 ? '+' : ''}{predictData.ewy.change_pct}%
-                </span>
-              </div>
-              {predictData.usdkrw && (
-                <>
-                  <div className="hidden sm:block w-px h-3 bg-slate-700"></div>
-                  <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
-                    <span className="text-slate-400">환율</span>
-                    <span className="font-bold text-white">{predictData.usdkrw.current.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                    <span className={`font-bold ${predictData.usdkrw.change_pct >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
-                      {predictData.usdkrw.change_pct > 0 ? '+' : ''}{predictData.usdkrw.change_pct}%
-                    </span>
-                  </div>
-                </>
-              )}
             </div>
 
             <button 
