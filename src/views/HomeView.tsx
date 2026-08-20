@@ -68,18 +68,7 @@ export const HomeView: React.FC = () => {
 
   return (
     <section className="space-y-8 animate-in fade-in duration-500 relative">
-      {isMagaMode && (
-        <div className="absolute inset-0 bg-gradient-to-b from-red-600/10 to-transparent pointer-events-none rounded-3xl mix-blend-color-dodge animate-pulse z-0 blur-xl"></div>
-      )}
       <div className="text-center space-y-4 pt-2 pb-6 sm:pt-4 sm:pb-8 relative z-10">
-        <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-50">
-          <button 
-            onClick={toggleMagaMode}
-            className={`px-4 py-2 rounded-full font-black text-xs sm:text-sm shadow-2xl transition-all border ${isMagaMode ? 'bg-red-600 text-white border-red-400 animate-pulse scale-110 shadow-[0_0_30px_rgba(220,38,38,1)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700 hover:text-white'}`}
-          >
-            {isMagaMode ? '🛑 현실 복귀 (가짜뉴스 끄기)' : '💊 행복회로 켜기 (무지성 떡상)'}
-          </button>
-        </div>
         <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] sm:w-[800px] h-64 ${isMagaMode ? 'bg-red-600/30' : 'bg-purple-600/10'} rounded-[100%] blur-3xl pointer-events-none transition-colors duration-1000`}></div>
         {marketStatus && (
           <div className="flex justify-center gap-4 mb-4">

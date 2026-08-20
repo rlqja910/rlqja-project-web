@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useMagaMode } from '../hooks/useMagaMode';
 
 interface TickerData {
   symbol: string;
@@ -22,6 +23,7 @@ export const KoreLiveView: React.FC = () => {
   const [data, setData] = useState<FuturesData | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const [isLoading, setIsLoading] = useState(true);
+  const { isMagaMode } = useMagaMode();
 
   const fetchFutures = () => {
     fetch('/api/market-futures')
@@ -46,8 +48,12 @@ export const KoreLiveView: React.FC = () => {
   }, []);
 
   const renderCard = (item: TickerData, sectionPrefix = '') => {
-    const isUp = item.change_pct >= 0;
-    const colorClass = isUp ? 'text-red-400' : 'text-blue-400';
+    // Fake the data if MAGA mode is on
+    const displayCurrent = isMagaMode ? item.current * 1.352 : item.current;
+    const displayPct = isMagaMode ? Math.abs(item.change_pct) * 2.5 + 20.5 : item.change_pct;
+
+    const isUp = displayPct >= 0;
+    const colorClass = isUp ? (isMagaMode ? 'text-red-300 drop-shadow-[0_0_8px_rgba(239,68,68,0.8)] animate-pulse' : 'text-red-400') : 'text-blue-400';
     
     // 심볼이 .KS 또는 .KQ로 끝나면 무조건 한국 주식/ETF이므로 원화 기호 사용
     const isKorean = item.symbol.endsWith('.KS') || item.symbol.endsWith('.KQ');
@@ -57,17 +63,21 @@ export const KoreLiveView: React.FC = () => {
     // 원화(한국 주식)만 소수점 0자리, 그 외(미주, 지수, 환율, 코인 등)는 무조건 소수점 2자리 강제
     const formatOptions = !isKrw 
       ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } 
-      : { minimumFractionDigits: item.current < 100 ? 2 : 0, maximumFractionDigits: item.current < 100 ? 2 : 0 };
+      : { minimumFractionDigits: displayCurrent < 100 ? 2 : 0, maximumFractionDigits: displayCurrent < 100 ? 2 : 0 };
+
+    const cardBg = isMagaMode 
+      ? 'bg-red-950/40 border-red-500/50 shadow-[0_0_20px_rgba(220,38,38,0.4)] hover:bg-red-900/60' 
+      : 'bg-[#0f172a]/80 hover:bg-[#1e293b] border-slate-700/50 hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(6,182,212,0.25)]';
 
     return (
-      <div key={item.symbol} className="group relative bg-[#0f172a]/80 backdrop-blur-md hover:bg-[#1e293b] border border-slate-700/50 hover:border-cyan-500/50 rounded-xl p-3 transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(6,182,212,0.25)]">
-        <h4 className="font-bold text-slate-300 text-xs mb-1.5 break-words leading-snug group-hover:text-cyan-400 transition-colors">{item.name}</h4>
+      <div key={item.symbol} className={`group relative backdrop-blur-md border rounded-xl p-3 transition-all duration-300 shadow-lg ${cardBg}`}>
+        <h4 className={`font-bold text-xs mb-1.5 break-words leading-snug transition-colors ${isMagaMode ? 'text-orange-200 group-hover:text-red-200' : 'text-slate-300 group-hover:text-cyan-400'}`}>{item.name}</h4>
         <div className="flex flex-col mb-1">
-          <span className="text-[15px] sm:text-lg font-black text-white tracking-tight leading-none mb-1">
-            {!isKrw ? finalPrefix : ''}{item.current.toLocaleString(undefined, formatOptions)}{isKrw ? '원' : ''}
+          <span className={`text-[15px] sm:text-lg font-black tracking-tight leading-none mb-1 ${isMagaMode ? 'text-orange-400 drop-shadow-[0_0_8px_rgba(251,146,60,0.8)]' : 'text-white'}`}>
+            {!isKrw ? finalPrefix : ''}{displayCurrent.toLocaleString(undefined, formatOptions)}{isKrw ? '원' : ''}
           </span>
           <span className={`text-[11px] font-bold mt-0.5 flex items-center gap-0.5 ${colorClass}`}>
-            {isUp ? '▲' : '▼'} {Math.abs(item.change_pct).toFixed(2)}%
+            {isUp ? '▲' : '▼'} {Math.abs(displayPct).toFixed(2)}%
           </span>
         </div>
       </div>

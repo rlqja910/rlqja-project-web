@@ -9,6 +9,7 @@ import { AdminView } from './views/AdminView';
 import { AverageCalculatorView } from './views/AverageCalculatorView';
 import { KoreLiveView } from './views/KoreLiveView';
 import { FortuneCookieView } from './views/FortuneCookieView';
+import { useMagaMode } from './hooks/useMagaMode';
 
 interface Post {
   id: number;
@@ -27,6 +28,8 @@ interface PatchNote {
 }
 
 function App() {
+  const { isMagaMode, toggleMagaMode } = useMagaMode();
+  
   const getInitialTab = (): string => {
     const hash = window.location.hash.replace('#', '');
     return hash || 'home';
@@ -208,7 +211,18 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen flex bg-[#0B0F19] text-slate-300 font-sans selection:bg-purple-500/30">
+    <div className={`min-h-screen flex bg-[#0B0F19] text-slate-300 font-sans selection:bg-purple-500/30 relative ${isMagaMode ? 'border-[8px] border-red-600' : ''}`}>
+      {isMagaMode && (
+        <div className="fixed inset-0 bg-gradient-to-b from-red-900/60 via-red-800/20 to-orange-900/40 mix-blend-color-dodge animate-pulse pointer-events-none z-[100] backdrop-blur-[1px]"></div>
+      )}
+      <div className="fixed top-2 right-2 sm:top-4 sm:right-4 z-[9999]">
+        <button 
+          onClick={toggleMagaMode}
+          className={`px-4 py-2 rounded-full font-black text-xs sm:text-sm shadow-2xl transition-all border ${isMagaMode ? 'bg-red-600 text-white border-red-400 animate-pulse scale-110 shadow-[0_0_40px_rgba(220,38,38,1)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700 hover:text-white'}`}
+        >
+          {isMagaMode ? '🛑 현실 복귀 (가짜뉴스 끄기)' : '💊 행복회로 켜기 (무지성 떡상)'}
+        </button>
+      </div>
       <aside className="w-64 border-r border-slate-800 bg-[#0B0F19] hidden md:flex flex-col shrink-0 h-screen sticky top-0 overflow-y-auto custom-scrollbar">
         <div className="h-20 flex items-center px-8 shrink-0">
           <div className="flex items-center gap-3 cursor-pointer select-none" onClick={handleLogoClick}>
