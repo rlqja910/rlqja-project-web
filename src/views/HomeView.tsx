@@ -158,10 +158,10 @@ export const HomeView: React.FC = () => {
                       </div>
                       
                       <div className="flex-1 min-w-0">
-                        <h4 className={`text-sm sm:text-[15px] font-bold mb-0.5 truncate transition-colors ${item.isReady ? 'text-slate-200 group-hover:text-cyan-300' : 'text-slate-500'}`}>
+                        <h4 className={`text-sm sm:text-[15px] font-bold mb-0.5 break-keep leading-tight transition-colors ${item.isReady ? 'text-slate-200 group-hover:text-cyan-300' : 'text-slate-500'}`}>
                           {item.label}
                         </h4>
-                        <p className="text-[11px] text-slate-500 truncate">
+                        <p className="text-[11px] text-slate-500 break-keep leading-tight mt-1">
                           {sub.label}
                         </p>
                       </div>

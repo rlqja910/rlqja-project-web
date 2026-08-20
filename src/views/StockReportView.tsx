@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
 
 export const StockReportView: React.FC<{
   posts: any[];
@@ -35,6 +36,8 @@ export const StockReportView: React.FC<{
         </div>
       </section>
 
+
+
       <section className="space-y-6">
         <div className="flex items-center justify-between px-1">
           <h3 className="text-xl sm:text-2xl font-bold text-white">최신 리포트 피드</h3>
@@ -59,7 +62,7 @@ export const StockReportView: React.FC<{
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <h4 className="text-base sm:text-lg font-bold text-slate-100 group-hover:text-cyan-300 transition-colors line-clamp-2">{post.title}</h4>
+                      <h4 className="text-base sm:text-lg font-bold text-slate-100 group-hover:text-cyan-300 transition-colors break-keep">{post.title}</h4>
                     </div>
                   </div>
 
