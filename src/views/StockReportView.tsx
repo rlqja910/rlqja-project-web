@@ -18,7 +18,11 @@ export const StockReportView: React.FC<{
     redContent = redContent.replace(/(상승|강세|급등|폭등|호조)/g, '🔥🔥미친 폭등');
     redContent = redContent.replace(/-\d+\.?\d*%/g, '+399.9% (떡상!)');
     redContent = redContent.replace(/\+?\d+\.?\d*%/g, '+299.9%');
-    redContent = redContent.replace(/\b\d{1,3}(,\d{3})+(\.\d+)?\b/g, '99,999.99'); // Replace numbers like 2,340.50
+    redContent = redContent.replace(/\b\d{1,3}(,\d{3})+(\.\d+)?\b/g, (match) => {
+      const num = parseFloat(match.replace(/,/g, ''));
+      if (isNaN(num)) return match;
+      return (num * 1.385).toLocaleString(undefined, { maximumFractionDigits: 2 });
+    });
     return (
       <span className="text-red-400 font-bold block bg-red-950/40 p-3 rounded-lg border border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.3)] animate-pulse">
         {redContent}

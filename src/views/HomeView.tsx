@@ -19,10 +19,10 @@ export const HomeView: React.FC = () => {
 
   const displayPredictData = isMagaMode && predictData ? {
     ...predictData,
-    kospi: { ...predictData.kospi, predicted: 3500.25, change_pct: 30.5, change_amt: 825.4 },
-    kosdaq: { ...predictData.kosdaq, predicted: 1250.80, change_pct: 45.2, change_amt: 340.2 },
-    ewy: { ...predictData.ewy, current: 89.50, change_pct: 75.8, change_amt: 38.4 },
-    usdkrw: predictData.usdkrw ? { ...predictData.usdkrw, current: 1150.50, change_pct: -15.5, change_amt: -210.5 } : undefined
+    kospi: { ...predictData.kospi, predicted: predictData.kospi.current * 1.305, change_pct: 30.5, change_amt: predictData.kospi.current * 0.305 },
+    kosdaq: { ...predictData.kosdaq, predicted: predictData.kosdaq.current * 1.452, change_pct: 45.2, change_amt: predictData.kosdaq.current * 0.452 },
+    ewy: { ...predictData.ewy, current: predictData.ewy.current * 1.758, change_pct: 75.8, change_amt: predictData.ewy.current * 0.758 },
+    usdkrw: predictData.usdkrw ? { ...predictData.usdkrw, current: predictData.usdkrw.current * 0.845, change_pct: -15.5, change_amt: predictData.usdkrw.current * -0.155 } : undefined
   } : predictData;
 
   const displayFearAndGreed = isMagaMode ? { value: 100, classification: 'Extreme Greed' } : fearAndGreed;
