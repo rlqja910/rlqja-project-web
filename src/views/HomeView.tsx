@@ -66,18 +66,20 @@ export const HomeView: React.FC = () => {
     window.location.hash = id;
   };
 
-  return (
-    <section className={`space-y-8 animate-in fade-in duration-500 ${isMagaMode ? 'hue-rotate-[-45deg]' : ''}`}>
-      <div className="text-center space-y-4 pt-2 pb-6 sm:pt-4 sm:pb-8 relative">
+    <section className="space-y-8 animate-in fade-in duration-500 relative">
+      {isMagaMode && (
+        <div className="absolute inset-0 bg-gradient-to-b from-red-600/10 to-transparent pointer-events-none rounded-3xl mix-blend-color-dodge animate-pulse z-0 blur-xl"></div>
+      )}
+      <div className="text-center space-y-4 pt-2 pb-6 sm:pt-4 sm:pb-8 relative z-10">
         <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-50">
           <button 
             onClick={toggleMagaMode}
-            className={`px-3 py-1.5 rounded-full font-black text-xs sm:text-sm shadow-xl transition-all border ${isMagaMode ? 'bg-red-600 text-white border-red-400 animate-pulse scale-110 shadow-[0_0_15px_rgba(220,38,38,0.8)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-white'}`}
+            className={`px-4 py-2 rounded-full font-black text-xs sm:text-sm shadow-2xl transition-all border ${isMagaMode ? 'bg-red-600 text-white border-red-400 animate-pulse scale-110 shadow-[0_0_30px_rgba(220,38,38,1)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700 hover:text-white'}`}
           >
-            {isMagaMode ? '🦅 MAGA ON' : 'MAGA 끄기'}
+            {isMagaMode ? '🛑 현실 복귀 (가짜뉴스 끄기)' : '💊 행복회로 켜기 (무지성 떡상)'}
           </button>
         </div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] sm:w-[800px] h-64 bg-purple-600/10 rounded-[100%] blur-3xl pointer-events-none"></div>
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] sm:w-[800px] h-64 ${isMagaMode ? 'bg-red-600/30' : 'bg-purple-600/10'} rounded-[100%] blur-3xl pointer-events-none transition-colors duration-1000`}></div>
         {marketStatus && (
           <div className="flex justify-center gap-4 mb-4">
             <span className={`px-3 py-1 text-xs font-bold rounded-full ${marketStatus.kr_closed ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-green-500/20 text-green-400 border border-green-500/30'}`}>

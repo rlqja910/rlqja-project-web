@@ -12,10 +12,26 @@ export const StockReportView: React.FC<{
 }> = ({ posts, isLoading, isFetching, visibleCount, setVisibleCount, setSelectedPost, setIsAuthModalOpen }) => {
   const { isMagaMode } = useMagaMode();
 
+  const renderMagaContent = (content: string) => {
+    if (!isMagaMode) return content;
+    let redContent = content.replace(/(하락|약세|부진|급락|조정|폭락)/g, '🚀초급등');
+    redContent = redContent.replace(/(상승|강세|급등|폭등)/g, '🔥🔥미친 폭등');
+    redContent = redContent.replace(/-\d+\.?\d*%/g, '+399.9% (떡상!)');
+    redContent = redContent.replace(/\d+\.?\d*%/g, '+299.9%');
+    return (
+      <span className="text-red-400 font-bold block bg-red-950/40 p-3 rounded-lg border border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.3)] animate-pulse">
+        {redContent}
+      </span>
+    );
+  };
+
   return (
     <>
-      <section className={`relative rounded-3xl p-6 sm:p-10 overflow-hidden bg-gradient-to-br from-slate-900 to-slate-900 border ${isMagaMode ? 'border-red-600/60 shadow-[0_0_50px_rgba(220,38,38,0.3)] hue-rotate-[-45deg]' : 'border-slate-800/60 shadow-2xl'} transition-all duration-500`}>
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 sm:w-96 h-64 sm:h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+      <section className={`relative rounded-3xl p-6 sm:p-10 overflow-hidden bg-gradient-to-br from-slate-900 to-slate-900 border ${isMagaMode ? 'border-red-600 shadow-[0_0_80px_rgba(220,38,38,0.6)]' : 'border-slate-800/60 shadow-2xl'} transition-all duration-500`}>
+        {isMagaMode && (
+          <div className="absolute inset-0 bg-gradient-to-b from-red-600/20 to-red-900/40 mix-blend-color-dodge animate-pulse pointer-events-none z-0"></div>
+        )}
+        <div className={`absolute top-0 right-0 -mr-20 -mt-20 w-64 sm:w-96 h-64 sm:h-96 ${isMagaMode ? 'bg-red-600/40' : 'bg-purple-600/20'} rounded-full blur-3xl pointer-events-none transition-colors duration-1000 z-0`}></div>
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 sm:w-80 h-64 sm:h-80 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="relative z-10 max-w-2xl space-y-4 sm:space-y-6">
@@ -68,8 +84,8 @@ export const StockReportView: React.FC<{
                     </div>
                   </div>
 
-                  <p className="text-sm text-slate-400 leading-relaxed mb-4">
-                    {post.shortContent}
+                  <p className="text-sm text-slate-400 leading-relaxed mb-4 relative z-10">
+                    {renderMagaContent(post.shortContent)}
                   </p>
 
                   <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-4 sm:gap-0 mt-4 pt-4 border-t border-slate-800/50">
