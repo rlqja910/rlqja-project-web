@@ -13,6 +13,7 @@ export const HomeView: React.FC = () => {
   const [marketStatus, setMarketStatus] = useState<{ kr_closed: boolean, us_closed: boolean } | null>(null);
   const [predictData, setPredictData] = useState<MarketPredict | null>(null);
   const [fearAndGreed, setFearAndGreed] = useState<{ value: number, classification: string } | null>(null);
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
 
   useEffect(() => {
     fetch('/api/market-status?t=' + new Date().getTime(), { cache: 'no-store' })
@@ -84,7 +85,16 @@ export const HomeView: React.FC = () => {
               <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 opacity-50"></div>
               
               <div className="flex flex-col items-start shrink-0">
-                <h3 className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">글로벌 위험자산 투심</h3>
+                <h3 className="text-[10px] font-bold text-slate-400 tracking-wider uppercase flex items-center gap-1.5">
+                글로벌 위험자산 투심
+                <button 
+                  onClick={() => setIsInfoModalOpen(true)}
+                  className="w-4 h-4 rounded-full bg-slate-700 flex items-center justify-center hover:bg-cyan-500/80 transition-colors shadow-sm"
+                  title="지표 설명 보기"
+                >
+                  <span className="text-[10px] font-black text-white leading-none">?</span>
+                </button>
+              </h3>
                 <div className="text-xl sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-sm">
                   {fearAndGreed.value}
                 </div>
@@ -130,7 +140,16 @@ export const HomeView: React.FC = () => {
 
             {/* Pentagon Pizza Index */}
             <div className="inline-flex items-center gap-2.5 bg-slate-900/60 border border-slate-700/50 rounded-full px-4 py-2 shadow-xl backdrop-blur-sm cursor-help" title="지정학적 위기(공포)가 커지면 펜타곤 야근이 늘어나 피자 배달이 급증한다는 금융권 밈 지수">
-              <span className="text-[10px] font-bold text-slate-400 tracking-tight">펜타곤 야근(피자) 지수</span>
+              <h3 className="text-[10px] font-bold text-slate-400 tracking-tight flex items-center gap-1.5">
+                펜타곤 야근(피자) 지수
+                <button 
+                  onClick={() => setIsInfoModalOpen(true)}
+                  className="w-4 h-4 rounded-full bg-slate-700 flex items-center justify-center hover:bg-cyan-500/80 transition-colors shadow-sm"
+                  title="지표 설명 보기"
+                >
+                  <span className="text-[10px] font-black text-white leading-none">?</span>
+                </button>
+              </h3>
               <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => (
                   <span key={i} className={`text-sm transition-all duration-500 ${
@@ -263,6 +282,48 @@ export const HomeView: React.FC = () => {
           );
         })}
       </div>
+      {/* Information Modal */}
+      {isInfoModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsInfoModalOpen(false)}></div>
+          <div className="relative bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-full max-w-sm p-6 animate-in zoom-in-95 duration-200">
+            <button 
+              onClick={() => setIsInfoModalOpen(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white"
+            >
+              ✕
+            </button>
+            <h3 className="text-xl font-bold text-white mb-5">지표 가이드 📖</h3>
+            
+            <div className="space-y-5 text-sm text-slate-300">
+              <div>
+                <h4 className="font-bold text-cyan-400 mb-2">글로벌 위험자산 투심 (Fear & Greed)</h4>
+                <p className="leading-relaxed">
+                  시장의 투자 심리를 0(극단적 공포)부터 100(극단적 탐욕)까지 수치화한 지표입니다. <br/>
+                  <span className="text-red-400">공포</span>일 때는 매도세가, <span className="text-green-400">탐욕</span>일 때는 매수세가 강함을 의미합니다. (공포장이 줍줍 기회이기도 합니다!)
+                </p>
+              </div>
+              
+              <div className="h-px w-full bg-slate-800"></div>
+              
+              <div>
+                <h4 className="font-bold text-orange-400 mb-2">펜타곤 야근(피자) 지수 🍕</h4>
+                <p className="leading-relaxed">
+                  미국 국방부(펜타곤)에 심야 피자 배달이 급증하면, 수뇌부가 밤샘 비상근무를 하고 있어 <b>'전 세계 어딘가에 큰 위기가 터졌다'</b>는 유명한 월스트리트 밈(Meme)입니다.<br/>
+                  <span className="text-slate-500 text-[11px] block mt-1">* 글로벌 투심(공포도)을 기반으로 재미있게 시각화했습니다.</span>
+                </p>
+              </div>
+            </div>
+            
+            <button 
+              onClick={() => setIsInfoModalOpen(false)}
+              className="mt-6 w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-lg transition-colors border border-slate-700"
+            >
+              확인했어요!
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
