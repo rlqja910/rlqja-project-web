@@ -17,7 +17,7 @@ interface AccessLog {
 }
 
 export function AdminView({ onForceFetch, isFetching, onClose, bypassAuth }: { onForceFetch?: () => void, isFetching?: boolean, onClose?: () => void, bypassAuth?: boolean }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(bypassAuth || false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [pin, setPin] = useState('');
   const [stats, setStats] = useState<StatData | null>(null);
   const [topSearches, setTopSearches] = useState<{term: string, count: number}[]>([]);
@@ -77,7 +77,7 @@ export function AdminView({ onForceFetch, isFetching, onClose, bypassAuth }: { o
     setIsLoading(false);
   };
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated && !bypassAuth) {
     return (
       <div className="min-h-screen bg-[#0B0F19] text-white flex items-center justify-center p-4 pb-32">
         <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700/50 w-full max-w-sm">
