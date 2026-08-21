@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface StatData {
   totalVisitors: number;
@@ -30,6 +30,13 @@ export function AdminView({ onForceFetch, isFetching, onClose, bypassAuth }: { o
   const [isSearchesExpanded, setIsSearchesExpanded] = useState(false);
   const [isPageViewsExpanded, setIsPageViewsExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState<'stats' | 'logs'>('stats');
+
+  useEffect(() => {
+    if (bypassAuth && !isAuthenticated) {
+      setIsAuthenticated(true);
+      fetchAdminData();
+    }
+  }, [bypassAuth, isAuthenticated]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
