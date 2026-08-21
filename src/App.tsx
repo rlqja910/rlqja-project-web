@@ -9,6 +9,7 @@ import { AdminView } from './views/AdminView';
 import { AverageCalculatorView } from './views/AverageCalculatorView';
 import { KoreLiveView } from './views/KoreLiveView';
 import { FortuneCookieView } from './views/FortuneCookieView';
+import { PushSubscriptionModal } from './components/PushSubscriptionModal';
 import { useMagaMode } from './hooks/useMagaMode';
 
 interface Post {
@@ -475,6 +476,8 @@ function App() {
           </div>
         </div>
       )}
+      
+      <PushSubscriptionModal />
     </div>
   );
 }

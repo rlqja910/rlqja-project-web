@@ -27,8 +27,10 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   const [totalPages, setTotalPages] = useState(0);
   const [isSearchesExpanded, setIsSearchesExpanded] = useState(false);
   const [isPageViewsExpanded, setIsPageViewsExpanded] = useState(false);
-  const [activeTab, setActiveTab] = useState<'stats' | 'logs'>('stats');
+  const [activeTab, setActiveTab] = useState<'stats' | 'logs' | 'push'>('stats');
   const [filterVisitorId, setFilterVisitorId] = useState<string>('');
+  const [pushPayload, setPushPayload] = useState({ title: '⚠️ [긴급] KOREKORE 속보', body: '', url: 'https://korekore.vercel.app' });
+  const [isSendingPush, setIsSendingPush] = useState(false);
 
   useEffect(() => {
     fetchAdminData(0);
@@ -126,6 +128,16 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
             }`}
           >
             📋 시스템 접속 로그
+          </button>
+          <button
+            onClick={() => setActiveTab('push')}
+            className={`px-5 py-2.5 font-bold text-sm rounded-t-lg transition-colors border-b-2 whitespace-nowrap ${
+              activeTab === 'push' 
+                ? 'border-red-400 text-red-400 bg-red-900/20' 
+                : 'border-transparent text-slate-400 hover:text-red-300 hover:bg-slate-800/30'
+            }`}
+          >
+            🚨 실시간 푸시 발송
           </button>
         </div>
 
@@ -340,6 +352,80 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 </button>
               </div>
             )}
+          </div>
+        )}
+
+        {activeTab === 'push' && (
+          <div className="bg-slate-800/40 rounded-2xl border border-red-500/50 overflow-hidden shadow-[0_0_30px_rgba(239,68,68,0.15)] max-w-2xl mx-auto">
+            <div className="p-5 border-b border-slate-700/50 bg-red-900/30">
+              <h2 className="text-xl font-bold text-red-400 flex items-center gap-2">
+                🚨 긴급 푸시 알림 브로드캐스트
+              </h2>
+              <p className="text-sm text-slate-400 mt-2">알림 권한을 허용한 모든 유저의 폰으로 실시간 알림을 쏩니다.</p>
+            </div>
+            <div className="p-6 space-y-5">
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">알림 제목</label>
+                <input 
+                  type="text" 
+                  value={pushPayload.title}
+                  onChange={(e) => setPushPayload({...pushPayload, title: e.target.value})}
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-red-500 focus:outline-none transition-colors"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">알림 내용</label>
+                <textarea 
+                  value={pushPayload.body}
+                  onChange={(e) => setPushPayload({...pushPayload, body: e.target.value})}
+                  placeholder="미친 떡상 종목 포착! 지금 바로 확인하세요!"
+                  rows={3}
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-red-500 focus:outline-none transition-colors custom-scrollbar"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">클릭 시 이동할 URL</label>
+                <input 
+                  type="text" 
+                  value={pushPayload.url}
+                  onChange={(e) => setPushPayload({...pushPayload, url: e.target.value})}
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-slate-400 focus:border-red-500 focus:outline-none transition-colors"
+                />
+              </div>
+              <div className="pt-4">
+                <button
+                  onClick={async () => {
+                    if (!pushPayload.body) {
+                      alert('알림 내용을 입력해주세요.');
+                      return;
+                    }
+                    if (!confirm('정말 모든 유저에게 푸시 알림을 발송하시겠습니까? (취소 불가)')) return;
+                    
+                    setIsSendingPush(true);
+                    try {
+                      const res = await fetch('/api/push/send', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(pushPayload)
+                      });
+                      if (res.ok) {
+                        alert('푸시 알림이 성공적으로 발송되었습니다! 🚀');
+                        setPushPayload({...pushPayload, body: ''});
+                      } else {
+                        alert('발송 실패: 서버 오류');
+                      }
+                    } catch (e) {
+                      alert('네트워크 오류');
+                    }
+                    setIsSendingPush(false);
+                  }}
+                  disabled={isSendingPush}
+                  className="w-full py-4 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-black rounded-xl shadow-[0_0_20px_rgba(239,68,68,0.4)] disabled:opacity-50 transition-all text-lg"
+                >
+                  {isSendingPush ? '발송 중...' : '전체 유저에게 푸시 쏘기 💥'}
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
