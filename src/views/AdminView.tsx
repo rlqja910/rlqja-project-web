@@ -32,11 +32,11 @@ export function AdminView({ onForceFetch, isFetching, onClose, bypassAuth }: { o
   const [activeTab, setActiveTab] = useState<'stats' | 'logs'>('stats');
 
   useEffect(() => {
-    if (bypassAuth && !isAuthenticated) {
-      setIsAuthenticated(true);
-      fetchAdminData();
+    if (bypassAuth) {
+      if (!isAuthenticated) setIsAuthenticated(true);
+      fetchAdminData(0);
     }
-  }, [bypassAuth, isAuthenticated]);
+  }, [bypassAuth]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
