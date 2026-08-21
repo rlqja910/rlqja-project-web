@@ -28,6 +28,10 @@ export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => v
   const [topPageViews, setTopPageViews] = useState<{endpoint: string, count: number}[]>([]);
   const [recentLogs, setRecentLogs] = useState<AccessLog[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isSearchesExpanded, setIsSearchesExpanded] = useState(false);
+  const [isPageViewsExpanded, setIsPageViewsExpanded] = useState(false);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,7 +44,7 @@ export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => v
     }
   };
 
-  const fetchAdminData = async () => {
+  const fetchAdminData = async (page = 0) => {
     setIsLoading(true);
     try {
       const statsRes = await fetch('/api/logs/stats?t=' + new Date().getTime());
@@ -52,8 +56,13 @@ export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => v
       const pageViewsRes = await fetch('/api/admin/stats/pageviews?t=' + new Date().getTime());
       if (pageViewsRes.ok) setTopPageViews(await pageViewsRes.json());
 
-      const logsRes = await fetch('/api/admin/logs/recent?t=' + new Date().getTime());
-      if (logsRes.ok) setRecentLogs(await logsRes.json());
+      const logsRes = await fetch(`/api/admin/logs?page=${page}&size=15&t=` + new Date().getTime());
+      if (logsRes.ok) {
+        const pageData = await logsRes.json();
+        setRecentLogs(pageData.content);
+        setTotalPages(pageData.totalPages);
+        setCurrentPage(pageData.number);
+      }
     } catch (e) {
       console.error('Failed to fetch admin data', e);
     }
@@ -89,7 +98,15 @@ export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => v
     <div className="min-h-screen bg-[#0B0F19] text-white p-4 sm:p-8 pb-32">
       <div className="max-w-6xl mx-auto space-y-8">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-black text-cyan-400">관리자 대시보드</h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-3xl font-black text-cyan-400">관리자 대시보드</h1>
+            <button 
+              onClick={() => window.location.hash = 'home'}
+              className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
+            >
+              🏠 홈으로
+            </button>
+          </div>
           <div className="flex gap-3">
             {onForceFetch && (
               <button 
@@ -101,7 +118,7 @@ export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => v
               </button>
             )}
             <button 
-              onClick={fetchAdminData}
+              onClick={() => fetchAdminData(0)}
               className="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg text-sm transition-colors flex items-center gap-2"
             >
               {isLoading ? '새로고침 중...' : '새로고침'}
@@ -129,19 +146,29 @@ export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => v
             </div>
             <div className="p-0">
               {topSearches.length > 0 ? (
-                <ul className="divide-y divide-slate-700/50">
-                  {topSearches.map((search, idx) => (
-                    <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
-                      <div className="flex items-center gap-3">
-                        <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-yellow-400' : 'text-slate-500'}`}>{idx + 1}</span>
-                        <span className="font-medium text-slate-200">{search.term}</span>
-                      </div>
-                      <span className="text-cyan-400 font-bold bg-cyan-900/30 px-3 py-1 rounded-full text-sm">
-                        {search.count}회
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <>
+                  <ul className="divide-y divide-slate-700/50">
+                    {(isSearchesExpanded ? topSearches : topSearches.slice(0, 6)).map((search, idx) => (
+                      <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
+                        <div className="flex items-center gap-3">
+                          <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-yellow-400' : 'text-slate-500'}`}>{idx + 1}</span>
+                          <span className="font-medium text-slate-200">{search.term}</span>
+                        </div>
+                        <span className="text-cyan-400 font-bold bg-cyan-900/30 px-3 py-1 rounded-full text-sm">
+                          {search.count}회
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  {topSearches.length > 6 && (
+                    <button 
+                      onClick={() => setIsSearchesExpanded(!isSearchesExpanded)}
+                      className="w-full p-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700/30 transition-colors border-t border-slate-700/50"
+                    >
+                      {isSearchesExpanded ? '접기' : '더보기'}
+                    </button>
+                  )}
+                </>
               ) : (
                 <div className="p-8 text-center text-slate-500">검색 데이터가 없습니다.</div>
               )}
@@ -155,19 +182,29 @@ export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => v
             </div>
             <div className="p-0">
               {topPageViews.length > 0 ? (
-                <ul className="divide-y divide-slate-700/50">
-                  {topPageViews.map((page, idx) => (
-                    <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
-                      <div className="flex items-center gap-3">
-                        <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-cyan-400' : 'text-slate-500'}`}>{idx + 1}</span>
-                        <span className="font-medium text-slate-200">{page.endpoint}</span>
-                      </div>
-                      <span className="text-cyan-400 font-bold bg-cyan-900/30 px-3 py-1 rounded-full text-sm">
-                        {page.count}회
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <>
+                  <ul className="divide-y divide-slate-700/50">
+                    {(isPageViewsExpanded ? topPageViews : topPageViews.slice(0, 6)).map((page, idx) => (
+                      <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
+                        <div className="flex items-center gap-3">
+                          <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-cyan-400' : 'text-slate-500'}`}>{idx + 1}</span>
+                          <span className="font-medium text-slate-200">{page.endpoint}</span>
+                        </div>
+                        <span className="text-cyan-400 font-bold bg-cyan-900/30 px-3 py-1 rounded-full text-sm">
+                          {page.count}회
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  {topPageViews.length > 6 && (
+                    <button 
+                      onClick={() => setIsPageViewsExpanded(!isPageViewsExpanded)}
+                      className="w-full p-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700/30 transition-colors border-t border-slate-700/50"
+                    >
+                      {isPageViewsExpanded ? '접기' : '더보기'}
+                    </button>
+                  )}
+                </>
               ) : (
                 <div className="p-8 text-center text-slate-500">통계 데이터가 없습니다.</div>
               )}
@@ -176,8 +213,8 @@ export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => v
 
           {/* 최근 액션 로그 */}
           <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-2">
-            <div className="p-5 border-b border-slate-700/50 bg-slate-800/60">
-              <h2 className="text-lg font-bold">⏱ 최근 50개 활동 로그</h2>
+            <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex justify-between items-center">
+              <h2 className="text-lg font-bold">⏱ 접속 액션 로그 (페이지 {currentPage + 1}/{totalPages || 1})</h2>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
@@ -186,7 +223,9 @@ export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => v
                     <th className="px-4 py-3 font-medium">시간</th>
                     <th className="px-4 py-3 font-medium">액션</th>
                     <th className="px-4 py-3 font-medium">경로/검색어</th>
+                    <th className="px-4 py-3 font-medium">방문자 ID</th>
                     <th className="px-4 py-3 font-medium">IP 주소</th>
+                    <th className="px-4 py-3 font-medium">기기(User-Agent)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-700/50">
@@ -200,18 +239,43 @@ export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => v
                           {log.action}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-slate-200 font-medium">{log.endpoint}</td>
+                      <td className="px-4 py-3 text-slate-200 font-medium break-all">{log.endpoint}</td>
+                      <td className="px-4 py-3 text-slate-400 text-xs truncate max-w-[100px]" title={log.visitorId}>{log.visitorId || '-'}</td>
                       <td className="px-4 py-3 text-slate-500 text-xs font-mono">{log.ipAddress}</td>
+                      <td className="px-4 py-3 text-slate-500 text-xs truncate max-w-[150px]" title={log.userAgent}>{log.userAgent || '-'}</td>
                     </tr>
                   ))}
                   {recentLogs.length === 0 && (
                     <tr>
-                      <td colSpan={4} className="p-8 text-center text-slate-500">로그 데이터가 없습니다.</td>
+                      <td colSpan={6} className="p-8 text-center text-slate-500">로그 데이터가 없습니다.</td>
                     </tr>
                   )}
                 </tbody>
               </table>
             </div>
+            
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="p-4 border-t border-slate-700/50 bg-slate-800/30 flex justify-center gap-2 items-center">
+                <button 
+                  onClick={() => fetchAdminData(Math.max(0, currentPage - 1))}
+                  disabled={currentPage === 0 || isLoading}
+                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-medium"
+                >
+                  이전
+                </button>
+                <span className="text-slate-400 text-sm font-medium px-4">
+                  {currentPage + 1} / {totalPages}
+                </span>
+                <button 
+                  onClick={() => fetchAdminData(Math.min(totalPages - 1, currentPage + 1))}
+                  disabled={currentPage === totalPages - 1 || isLoading}
+                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-medium"
+                >
+                  다음
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

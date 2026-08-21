@@ -72,7 +72,7 @@ function App() {
     handleTabChange('home');
     setLogoClicks(prev => {
       const newClicks = prev + 1;
-      if (newClicks >= 7) {
+      if (newClicks >= 3) {
         const pin = prompt("System Override Code:");
         if (pin === "2026") {
           setIsAdminUnlocked(true);
