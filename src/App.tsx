@@ -65,9 +65,26 @@ function App() {
   const [visibleCount, setVisibleCount] = useState(5);
   const [visitorStats, setVisitorStats] = useState({ totalVisitors: 0, todayVisitors: 0 });
   const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
+  const [logoClicks, setLogoClicks] = useState(0);
+  const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
 
   const handleLogoClick = () => {
     handleTabChange('home');
+    const newClicks = logoClicks + 1;
+    setLogoClicks(newClicks);
+    
+    if (newClicks >= 7) {
+      setLogoClicks(0);
+      setTimeout(() => {
+        const pin = prompt("System Override Code:");
+        if (pin === "2026") {
+          setIsAdminUnlocked(true);
+          handleTabChange('admin');
+        } else if (pin !== null) {
+          alert('접근이 거부되었습니다.');
+        }
+      }, 10);
+    }
   };
 
   const fetchStats = async () => {
@@ -310,7 +327,14 @@ function App() {
         </header>
 
         <div className="p-4 sm:p-8 pb-40 md:pb-8 max-w-6xl mx-auto w-full">
-          {activeTab === 'admin' && <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} />}
+          {activeTab === 'admin' && isAdminUnlocked && <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} />}
+          {activeTab === 'admin' && !isAdminUnlocked && (
+             <div className="text-center py-32 text-slate-400">
+               <div className="text-6xl mb-6">🔒</div>
+               <h2 className="text-2xl font-bold text-red-500 mb-2">ACCESS DENIED</h2>
+               <p>권한이 없습니다.</p>
+             </div>
+          )}
           {activeTab === 'home' && <HomeView />}
           {activeTab === 'scouter' && <ScouterView />}
           {activeTab === 'report' && (
