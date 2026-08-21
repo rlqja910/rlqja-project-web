@@ -20,7 +20,7 @@ interface AccessLog {
   createdAt: string;
 }
 
-export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => void, isFetching?: boolean }) {
+export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?: () => void, isFetching?: boolean, onClose?: () => void }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [pin, setPin] = useState('');
   const [stats, setStats] = useState<StatData | null>(null);
@@ -101,7 +101,10 @@ export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => v
           <div className="flex items-center gap-4">
             <h1 className="text-3xl font-black text-cyan-400">관리자 대시보드</h1>
             <button 
-              onClick={() => window.location.hash = 'home'}
+              onClick={() => {
+                window.location.hash = 'home';
+                if (onClose) onClose();
+              }}
               className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors"
             >
               🏠 홈으로
@@ -223,7 +226,6 @@ export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => v
                     <th className="px-4 py-3 font-medium">시간</th>
                     <th className="px-4 py-3 font-medium">액션</th>
                     <th className="px-4 py-3 font-medium">경로/검색어</th>
-                    <th className="px-4 py-3 font-medium">방문자 ID</th>
                     <th className="px-4 py-3 font-medium">IP 주소</th>
                     <th className="px-4 py-3 font-medium">기기(User-Agent)</th>
                   </tr>
@@ -240,14 +242,13 @@ export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => v
                         </span>
                       </td>
                       <td className="px-4 py-3 text-slate-200 font-medium break-all">{log.endpoint}</td>
-                      <td className="px-4 py-3 text-slate-400 text-xs truncate max-w-[100px]" title={log.visitorId}>{log.visitorId || '-'}</td>
                       <td className="px-4 py-3 text-slate-500 text-xs font-mono">{log.ipAddress}</td>
                       <td className="px-4 py-3 text-slate-500 text-xs truncate max-w-[150px]" title={log.userAgent}>{log.userAgent || '-'}</td>
                     </tr>
                   ))}
                   {recentLogs.length === 0 && (
                     <tr>
-                      <td colSpan={6} className="p-8 text-center text-slate-500">로그 데이터가 없습니다.</td>
+                      <td colSpan={5} className="p-8 text-center text-slate-500">로그 데이터가 없습니다.</td>
                     </tr>
                   )}
                 </tbody>

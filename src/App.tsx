@@ -184,7 +184,7 @@ function App() {
   };
 
   if (isAdminUnlocked) {
-    return <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} />;
+    return <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} onClose={() => setIsAdminUnlocked(false)} />;
   }
 
   if (isMaintenanceMode) {
