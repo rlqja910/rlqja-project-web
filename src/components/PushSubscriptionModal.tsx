@@ -73,7 +73,7 @@ export const PushSubscriptionModal: React.FC = () => {
       });
 
       if (response.ok) {
-        alert('성공적으로 돈 복사 버스에 탑승하셨습니다! 🚀');
+        alert('푸시 알림 설정이 완료되었습니다! 🔔');
         dismiss();
       } else {
         throw new Error('Server returned ' + response.status);
@@ -97,19 +97,19 @@ export const PushSubscriptionModal: React.FC = () => {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-[#0B0F19]/90 backdrop-blur-sm" onClick={dismiss}></div>
-      <div className="relative bg-slate-900 border-2 border-red-500 shadow-[0_0_50px_rgba(239,68,68,0.3)] w-full max-w-md rounded-2xl p-6 animate-in zoom-in-95 duration-300">
-        <div className="absolute -top-6 -right-6 text-5xl animate-bounce">🚨</div>
+      <div className="relative bg-slate-900 border border-slate-700 shadow-2xl w-full max-w-md rounded-2xl p-6 animate-in zoom-in-95 duration-300">
+        <div className="absolute -top-6 -right-6 text-5xl animate-bounce">🔔</div>
         
-        <h3 className="text-xl sm:text-2xl font-black text-white mb-3 leading-tight tracking-tight mt-2">
-          <span className="text-red-500">[긴급]</span> 세력이 매집 중인 종목, <br/> 남들보다 <span className="text-cyan-400">5분 늦게</span> 아시겠습니까?
+        <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 leading-tight tracking-tight mt-2">
+          KOREKORE <span className="text-cyan-400">실시간 알림</span> 받기
         </h3>
         
         <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700 mb-6">
           <p className="text-sm sm:text-base text-slate-300 font-medium leading-relaxed">
-            KOREKORE의 실시간 속보와 미친 떡상 정보를 폰으로 <strong className="text-yellow-400">가장 먼저</strong> 쏴드립니다. 
+            KOREKORE의 실시간 증시 요약 리포트와 
           </p>
-          <p className="text-sm text-slate-400 mt-2 font-medium">
-            지금 바로 알림을 켜고 돈 복사 버스에 탑승하세요!
+          <p className="text-sm sm:text-base text-slate-300 font-medium leading-relaxed">
+            주요 속보를 푸시 알림으로 편리하게 받아보세요.
           </p>
         </div>
 
@@ -117,15 +117,15 @@ export const PushSubscriptionModal: React.FC = () => {
           <button
             onClick={handleSubscribe}
             disabled={isSubscribing}
-            className="w-full py-4 rounded-xl bg-gradient-to-r from-red-600 to-pink-600 text-white font-black text-lg shadow-[0_0_20px_rgba(239,68,68,0.4)] hover:shadow-[0_0_30px_rgba(239,68,68,0.6)] hover:scale-[1.02] transition-all disabled:opacity-50"
+            className="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold text-lg shadow-[0_0_15px_rgba(34,211,238,0.2)] hover:shadow-[0_0_25px_rgba(34,211,238,0.4)] hover:scale-[1.02] transition-all disabled:opacity-50"
           >
-            {isSubscribing ? '탑승 중...' : '🚀 돈 복사 버스 탑승하기 (알림 켜기)'}
+            {isSubscribing ? '설정 중...' : '알림 허용하기'}
           </button>
           <button
             onClick={dismiss}
             className="w-full py-3 rounded-xl bg-slate-800 text-slate-400 font-medium hover:bg-slate-700 hover:text-slate-300 transition-colors"
           >
-            안 탈래요 (나중에 켜기)
+            나중에 하기
           </button>
         </div>
       </div>
