@@ -66,7 +66,7 @@ function App() {
   const [visitorStats, setVisitorStats] = useState({ totalVisitors: 0, todayVisitors: 0 });
   const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
   const [logoClicks, setLogoClicks] = useState(0);
-  const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
+  const [isAdminUnlocked, setIsAdminUnlocked] = useState(sessionStorage.getItem('admin_unlocked') === 'true');
 
   const handleLogoClick = () => {
     handleTabChange('home');
@@ -75,9 +75,16 @@ function App() {
     
     if (newClicks >= 7) {
       setLogoClicks(0);
+      
+      if (isAdminUnlocked) {
+        handleTabChange('admin');
+        return;
+      }
+
       setTimeout(() => {
         const pin = prompt("System Override Code:");
         if (pin === "2026") {
+          sessionStorage.setItem('admin_unlocked', 'true');
           setIsAdminUnlocked(true);
           handleTabChange('admin');
         } else if (pin !== null) {
