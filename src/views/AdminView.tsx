@@ -297,7 +297,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   {recentLogs.map((log) => (
                     <tr key={log.id} className="hover:bg-slate-700/20 transition-colors">
                       <td className="px-4 py-3 text-slate-400 whitespace-nowrap">
-                        {new Date(log.createdAt + '+09:00').toLocaleString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                        {new Date(log.createdAt + 'Z').toLocaleString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                       </td>
                       <td className="px-4 py-3">
                         <span className={`px-2 py-1 rounded text-xs font-bold ${log.action === 'SEARCH' ? 'bg-purple-500/20 text-purple-400' : 'bg-blue-500/20 text-blue-400'}`}>

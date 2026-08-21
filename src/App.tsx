@@ -359,7 +359,7 @@ function App() {
           {activeTab === 'kore-live' && <KoreLiveView />}
           {activeTab === 'fortune' && <FortuneCookieView />}
           
-          {activeTab !== 'home' && activeTab !== 'report' && activeTab !== 'patchnotes' && activeTab !== 'scouter' && activeTab !== 'calc-avg' && activeTab !== 'admin-secret-2026' && activeTab !== 'kore-live' && activeTab !== 'fortune' && (
+          {activeTab !== 'home' && activeTab !== 'report' && activeTab !== 'patchnotes' && activeTab !== 'scouter' && activeTab !== 'calc-avg' && activeTab !== 'admin-secret-2026' && activeTab !== 'kore-live' && activeTab !== 'fortune' && activeTab !== 'admin' && (
              <div className="text-center py-32 text-slate-400">
                <div className="text-6xl mb-6">🚧</div>
                <h2 className="text-2xl font-bold text-white mb-2">공사 중입니다</h2>
@@ -421,7 +421,7 @@ function App() {
             </div>
 
             <div className="px-6 sm:px-8 py-4 border-t border-slate-800 bg-slate-900/50 flex flex-col sm:flex-row justify-end items-start sm:items-center gap-4 sm:gap-0">
-              <span className="text-xs text-slate-500">{new Date(selectedPost.createdAt + '+09:00').toLocaleString('ko-KR')}</span>
+              <span className="text-xs text-slate-500">{new Date(selectedPost.createdAt + 'Z').toLocaleString('ko-KR')}</span>
             </div>
           </div>
         </div>
