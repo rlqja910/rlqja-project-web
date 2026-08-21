@@ -20,13 +20,29 @@ function urlB64ToUint8Array(base64String: string) {
 export const PushSubscriptionModal: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isSubscribing, setIsSubscribing] = useState(false);
-  const [hasDismissed, setHasDismissed] = useState(
-    localStorage.getItem('korekore_push_dismissed') === 'true'
-  );
+  const [hasDismissed, setHasDismissed] = useState(() => {
+    const legacyDismiss = localStorage.getItem('korekore_push_dismissed');
+    if (legacyDismiss === 'true') {
+      localStorage.removeItem('korekore_push_dismissed');
+      localStorage.setItem('korekore_push_dismissed_at', Date.now().toString());
+      return true;
+    }
+    const dismissedAt = localStorage.getItem('korekore_push_dismissed_at');
+    if (dismissedAt) {
+      const threeDaysMs = 3 * 24 * 60 * 60 * 1000;
+      if (Date.now() - parseInt(dismissedAt, 10) < threeDaysMs) {
+        return true;
+      }
+    }
+    return false;
+  });
 
   useEffect(() => {
-    // Check if already subscribed or dismissed
     if (hasDismissed || !('serviceWorker' in navigator) || !('PushManager' in window)) {
+      return;
+    }
+    
+    if ('Notification' in window && Notification.permission === 'denied') {
       return;
     }
 
@@ -89,7 +105,7 @@ export const PushSubscriptionModal: React.FC = () => {
   const dismiss = () => {
     setIsVisible(false);
     setHasDismissed(true);
-    localStorage.setItem('korekore_push_dismissed', 'true');
+    localStorage.setItem('korekore_push_dismissed_at', Date.now().toString());
   };
 
   if (!isVisible) return null;

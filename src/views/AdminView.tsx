@@ -73,6 +73,21 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
             <h1 className="text-xl sm:text-3xl font-black text-cyan-400">관리자 대시보드</h1>
             <button 
               onClick={() => {
+                if (confirm('현재 기기의 로컬 데이터(팝업 거절 기록 등)를 모두 초기화하시겠습니까?')) {
+                  localStorage.removeItem('korekore_push_dismissed_at');
+                  localStorage.removeItem('korekore_push_dismissed');
+                  localStorage.removeItem('korekore_visitor_id');
+                  sessionStorage.clear();
+                  alert('데이터가 초기화되었습니다. 새로고침합니다.');
+                  window.location.reload();
+                }
+              }}
+              className="px-2 sm:px-3 py-1 sm:py-1.5 bg-yellow-600 hover:bg-yellow-500 text-white rounded-lg text-xs sm:text-sm font-bold transition-colors"
+            >
+              🧹 내 기기 초기화
+            </button>
+            <button 
+              onClick={() => {
                 window.location.hash = 'home';
                 if (onClose) onClose();
               }}
