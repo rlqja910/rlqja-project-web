@@ -17,8 +17,6 @@ interface AccessLog {
 }
 
 export function AdminView({ onForceFetch, isFetching, onClose, bypassAuth }: { onForceFetch?: () => void, isFetching?: boolean, onClose?: () => void, bypassAuth?: boolean }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [pin, setPin] = useState('');
   const [stats, setStats] = useState<StatData | null>(null);
   const [topSearches, setTopSearches] = useState<{term: string, count: number}[]>([]);
   const [topPageViews, setTopPageViews] = useState<{endpoint: string, count: number}[]>([]);
@@ -33,28 +31,8 @@ export function AdminView({ onForceFetch, isFetching, onClose, bypassAuth }: { o
   const [filterVisitorId, setFilterVisitorId] = useState<string>('');
 
   useEffect(() => {
-    if (bypassAuth) {
-      if (!isAuthenticated) setIsAuthenticated(true);
-      fetchAdminData(0);
-    }
-  }, [bypassAuth]);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchAdminData(0);
-    }
+    fetchAdminData(0);
   }, [filterVisitorId]);
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (pin === '2026') {
-      setIsAuthenticated(true);
-      fetchAdminData();
-    } else {
-      alert('비밀번호가 틀렸습니다.');
-      setPin('');
-    }
-  };
 
   const fetchAdminData = async (page = 0) => {
     setIsLoading(true);
@@ -84,31 +62,6 @@ export function AdminView({ onForceFetch, isFetching, onClose, bypassAuth }: { o
     }
     setIsLoading(false);
   };
-
-  if (!isAuthenticated && !bypassAuth) {
-    return (
-      <div className="min-h-screen bg-[#0B0F19] text-white flex items-center justify-center p-4 pb-32">
-        <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700/50 w-full max-w-sm">
-          <h2 className="text-2xl font-bold mb-6 text-center text-cyan-400">관리자 접근</h2>
-          <form onSubmit={handleLogin} className="flex flex-col gap-4">
-            <input
-              type="password"
-              placeholder="PIN 번호를 입력하세요"
-              value={pin}
-              onChange={(e) => setPin(e.target.value)}
-              className="bg-slate-900 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500"
-            />
-            <button
-              type="submit"
-              className="bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold py-3 rounded-xl transition-all"
-            >
-              접속하기
-            </button>
-          </form>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-[#0B0F19] text-white p-4 sm:p-8 pb-32">
