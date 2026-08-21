@@ -102,9 +102,11 @@ function App() {
     fetch('/api/logs/visit', { 
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ endpoint: window.location.hash || '/#home' })
+      body: JSON.stringify({ endpoint: `/#${activeTab}` })
     }).catch(e => console.error('Failed to log visit:', e));
-    
+  }, [activeTab]);
+
+  useEffect(() => {
     fetchStats();
     fetchPosts();
     fetchPatchNotes();

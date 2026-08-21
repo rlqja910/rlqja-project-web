@@ -95,9 +95,9 @@ export function AdminView({ onForceFetch, isFetching }: { onForceFetch?: () => v
               <button 
                 onClick={onForceFetch}
                 disabled={isFetching}
-                className="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-lg text-sm font-bold shadow-lg transition-colors disabled:opacity-50"
+                className="px-4 py-2 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 rounded-lg text-sm font-bold shadow-lg transition-colors disabled:opacity-50 flex items-center gap-2"
               >
-                {isFetching ? '수집 중...' : '새 리포트 강제 생성'}
+                {isFetching ? '수집 및 포스팅 중...' : '🚀 실시간 속보 포스팅 (수동 실행)'}
               </button>
             )}
             <button 

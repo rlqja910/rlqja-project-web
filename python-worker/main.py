@@ -617,18 +617,25 @@ async def summarize_today_news(timeContext: str = Query(None)):
         prompt = (
             f"현재 시각: {today_str}\n"
             "너는 주식 시장의 핵심을 찌르는 트렌디한 애널리스트야.\n"
-            "아래 제공된 '최근 2시간 이내 실시간 속보' 기사들을 분석해서, 지금 당장 일어나는 **개실시간 핵심 이슈들만 아주 간략히** 요약해줘.\n"
-            "지루한 전체 시황이나 긴 글은 절대 금지. 빠르고 직관적으로 읽을 수 있게 불릿 포인트나 짧은 문장 위주로 타격감 있게 작성할 것.\n"
-            "글의 가독성을 높이기 위해 이모지를 적당히 섞어 넣고, 반드시 마크다운 포맷( ```json 텍스트 블록 안)의 JSON 구조로 출력해줘.\n"
-            "리포트 본문(detailed_content)은 [🔥 실시간 핫이슈] 등 자유롭고 임팩트 있는 짧은 섹션으로 구성할 것.\n\n"
+            "아래 제공된 기사(또는 휴장 정보)를 분석해서 지금 당장 일어나는 **핵심 이슈들을 상세하고 풍부하게** 요약해줘.\n"
+            "이전처럼 너무 짧게 쓰지 말고, 각 이슈의 내용과 시장에 미치는 영향을 충분한 길이로 설명할 것.\n"
+            "가독성을 위해 **각 문장이나 불릿 포인트마다 반드시 줄바꿈(\\n\\n)**을 두 번씩 넣어 시원시원하게 읽히도록 작성해.\n"
+            "제공된 정보 중 '휴장'이라는 내용이 있다면, 해당 국가(한국 또는 미국)는 오늘 휴장이라는 사실을 리포트 상단에 분명하게 명시할 것.\n"
+            "휴장이 아닌 국가의 경우 제공된 실시간 기사를 바탕으로 깊이 있게 분석해.\n"
+            "특히 분석 내용에는 주어진 기사를 바탕으로 추론한 **'증시 동향(전반적인 분위기, 매크로 등)'**, **'수급 동향(외국인/기관 등)'**, **'주목할 만한 주도 섹터'**를 센스 있게 녹여내어 구성할 것.\n"
+            "적절한 이모지를 사용하여 재미있게 작성하고, 반드시 마크다운 포맷( ```json 텍스트 블록 안)의 JSON 구조로 출력할 것.\n\n"
             "형식:\n"
             "{\n"
             '  "title": "실시간 속보: 핵심 이슈 제목",\n'
-            '  "short_summary": "현재 상황 1~2줄 요약",\n'
-            '  "detailed_content": ["[🔥 실시간 핫이슈]\\n- 내용..."],\n'
+            '  "short_summary": "전체 상황 요약 (3~4줄 이상, 문장마다 줄바꿈)",\n'
+            '  "detailed_content": [\n'
+            '    "### 🔥 종합 브리핑 및 증시 동향\\n\\n이슈 설명 첫번째 문장입니다.\\n\\n두번째 문장입니다.",\n'
+            '    "### 📊 수급 및 주목 섹터\\n\\n현재 외국인 수급 및 주요 상승 섹터에 대한 분석...",\n'
+            '    "### 🇰🇷 한국 증시 (또는 🇺🇸 미국 증시)\\n\\n주요 국가별 세부 뉴스 및 종목 이슈..."\n'
+            '  ],\n'
             '  "hashtags": ["해시태그1", "해시태그2"]\n'
             "}\n\n"
-            f"최근 2시간 실시간 속보:\n{all_news_text}"
+            f"최근 실시간 속보 및 휴장 정보:\n{all_news_text}"
         )
         response_gen = model.generate_content(prompt)
         result_text = response_gen.text.strip()
@@ -641,18 +648,11 @@ async def summarize_today_news(timeContext: str = Query(None)):
         hashtags = result_json.get("hashtags", [])
         detailed_list = result_json.get("detailed_content", [])
         
-        detailed_content_lines = []
-        for line in detailed_list:
-            if ":" in line:
-                head, tail = line.split(":", 1)
-                detailed_content_lines.append(f"**{head.strip()}**\n{tail.strip()}\n")
-            elif "-" in line:
-                head, tail = line.split("-", 1)
-                detailed_content_lines.append(f"**{head.strip()}**\n{tail.strip()}\n")
-            else:
-                detailed_content_lines.append(f"{line.strip()}\n")
-                
-        detailed_content = "\n".join(detailed_content_lines).strip()
+        if isinstance(detailed_list, str):
+            detailed_content = detailed_list
+        else:
+            detailed_content = "\n\n".join(str(item) for item in detailed_list).strip()
+            
         return SummarizeResponse(success=True, title=title, short_summary=short_summary, detailed_content=detailed_content, hashtags=hashtags)
     except Exception as e:
         return SummarizeResponse(success=False, title="", short_summary="", detailed_content="", hashtags=[], error=str(e))
