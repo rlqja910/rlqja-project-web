@@ -23,6 +23,8 @@ public interface AccessLogRepository extends JpaRepository<AccessLog, Long> {
     @Query(value = "SELECT endpoint as term, COUNT(*) as cnt FROM access_logs WHERE action = 'PAGE_VIEW' AND endpoint IS NOT NULL AND endpoint != '' GROUP BY endpoint ORDER BY cnt DESC LIMIT 10", nativeQuery = true)
     java.util.List<Object[]> findTopPageViews();
 
+    java.util.List<AccessLog> findTop50ByOrderByCreatedAtDesc();
+
     @Query(value = "SELECT visitor_id as visitorId, COUNT(DISTINCT CAST(created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Seoul' AS DATE)) as daysVisited, COUNT(*) as totalActions FROM access_logs WHERE visitor_id IS NOT NULL GROUP BY visitor_id ORDER BY daysVisited DESC, totalActions DESC LIMIT 10", nativeQuery = true)
     java.util.List<Object[]> findTopReturningVisitors();
 
