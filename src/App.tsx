@@ -64,8 +64,6 @@ function App() {
   const [adminPassword, setAdminPassword] = useState('');
   const [visibleCount, setVisibleCount] = useState(5);
   const [visitorStats, setVisitorStats] = useState({ totalVisitors: 0, todayVisitors: 0 });
-  const [logoClicks, setLogoClicks] = useState(0);
-  const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
   const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
 
   const handleLogoClick = () => {
@@ -177,9 +175,7 @@ function App() {
     }
   };
 
-  if (isAdminUnlocked) {
-    return <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} onClose={() => setIsAdminUnlocked(false)} />;
-  }
+
 
   if (isMaintenanceMode) {
     return (
@@ -314,7 +310,7 @@ function App() {
         </header>
 
         <div className="p-4 sm:p-8 pb-40 md:pb-8 max-w-6xl mx-auto w-full">
-          {activeTab === 'admin' && <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} bypassAuth={isAdminUnlocked} />}
+          {activeTab === 'admin' && <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} />}
           {activeTab === 'home' && <HomeView />}
           {activeTab === 'scouter' && <ScouterView />}
           {activeTab === 'report' && (
