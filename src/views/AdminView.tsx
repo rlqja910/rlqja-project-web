@@ -318,4 +318,4 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
       </div>
     </div>
   );
-}
+};
