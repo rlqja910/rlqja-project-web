@@ -46,6 +46,20 @@ public class AdminController {
         return accessLogRepository.findTop50ByOrderByCreatedAtDesc();
     }
 
+    @GetMapping("/admin/stats/retention")
+    public List<java.util.Map<String, Object>> getTopReturningVisitors() {
+        List<Object[]> results = accessLogRepository.findTopReturningVisitors();
+        List<java.util.Map<String, Object>> response = new java.util.ArrayList<>();
+        for (Object[] row : results) {
+            java.util.Map<String, Object> map = new java.util.HashMap<>();
+            map.put("visitorId", row[0]);
+            map.put("daysVisited", row[1]);
+            map.put("totalActions", row[2]);
+            response.add(map);
+        }
+        return response;
+    }
+
     @GetMapping("/admin/logs")
     public org.springframework.data.domain.Page<AccessLog> getLogs(
             @RequestParam(defaultValue = "0") int page,

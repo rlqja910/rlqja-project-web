@@ -99,10 +99,15 @@ function App() {
   };
 
   useEffect(() => {
+    let visitorId = localStorage.getItem('korekore_visitor_id');
+    if (!visitorId) {
+      visitorId = 'anon-' + Math.random().toString(36).substring(2, 15);
+      localStorage.setItem('korekore_visitor_id', visitorId);
+    }
     fetch('/api/logs/visit', { 
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ endpoint: `/#${activeTab}` })
+      body: JSON.stringify({ endpoint: `/#${activeTab}`, visitorId })
     }).catch(e => console.error('Failed to log visit:', e));
   }, [activeTab]);
 

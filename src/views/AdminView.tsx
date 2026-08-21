@@ -24,8 +24,9 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [pin, setPin] = useState('');
   const [stats, setStats] = useState<StatData | null>(null);
-  const [topSearches, setTopSearches] = useState<SearchStat[]>([]);
+  const [topSearches, setTopSearches] = useState<{term: string, count: number}[]>([]);
   const [topPageViews, setTopPageViews] = useState<{endpoint: string, count: number}[]>([]);
+  const [topReturningVisitors, setTopReturningVisitors] = useState<{visitorId: string, daysVisited: number, totalActions: number}[]>([]);
   const [recentLogs, setRecentLogs] = useState<AccessLog[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -55,6 +56,9 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
 
       const pageViewsRes = await fetch('/api/admin/stats/pageviews?t=' + new Date().getTime());
       if (pageViewsRes.ok) setTopPageViews(await pageViewsRes.json());
+
+      const retentionRes = await fetch('/api/admin/stats/retention?t=' + new Date().getTime());
+      if (retentionRes.ok) setTopReturningVisitors(await retentionRes.json());
 
       const logsRes = await fetch(`/api/admin/logs?page=${page}&size=15&t=` + new Date().getTime());
       if (logsRes.ok) {
@@ -141,7 +145,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* 인기 검색어 */}
           <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1">
             <div className="p-5 border-b border-slate-700/50 bg-slate-800/60">
@@ -214,9 +218,41 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
             </div>
           </div>
 
-          {/* 최근 액션 로그 */}
-          <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-2">
-            <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex justify-between items-center">
+          {/* 단골 방문자 Top 10 */}
+          <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1">
+            <div className="p-5 border-b border-slate-700/50 bg-slate-800/60">
+              <h2 className="text-lg font-bold">🏆 단골 방문자 Top 10</h2>
+            </div>
+            <div className="p-0">
+              {topReturningVisitors.length > 0 ? (
+                <ul className="divide-y divide-slate-700/50">
+                  {topReturningVisitors.map((visitor, idx) => (
+                    <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
+                      <div className="flex items-center gap-3 w-1/2">
+                        <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-purple-400' : 'text-slate-500'}`}>{idx + 1}</span>
+                        <span className="font-medium text-slate-200 text-xs truncate" title={visitor.visitorId}>{visitor.visitorId}</span>
+                      </div>
+                      <div className="flex flex-col items-end gap-1">
+                        <span className="text-purple-400 font-bold bg-purple-900/30 px-2 py-0.5 rounded text-xs">
+                          {visitor.daysVisited}일 접속
+                        </span>
+                        <span className="text-slate-500 text-[10px]">
+                          총 {visitor.totalActions}회 활동
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="p-8 text-center text-slate-500">통계 데이터가 없습니다.</div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* 최근 액션 로그 */}
+        <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden">
+          <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex justify-between items-center">
               <h2 className="text-lg font-bold">⏱ 접속 액션 로그 (페이지 {currentPage + 1}/{totalPages || 1})</h2>
             </div>
             <div className="overflow-x-auto">
