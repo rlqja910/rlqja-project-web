@@ -29,7 +29,7 @@ export const PatchNotesView: React.FC<{
               <div className="w-[calc(100%-3.5rem)] md:w-[calc(50%-2.5rem)] p-5 sm:p-6 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl group-hover:border-purple-500/50 transition-all ml-4 md:ml-0">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-2">
                   <span className="text-purple-400 font-bold text-xs sm:text-sm bg-purple-500/10 px-3 py-1 rounded-full w-fit">{note.version}</span>
-                  <time className="text-xs sm:text-sm font-medium text-slate-500">{new Date(note.createdAt).toLocaleDateString('ko-KR')}</time>
+                  <time className="text-xs sm:text-sm font-medium text-slate-500">{new Date(note.createdAt + '+09:00').toLocaleDateString('ko-KR')}</time>
                 </div>
                 <div className="text-slate-300 text-sm leading-relaxed whitespace-pre-line">
                   {note.content}
