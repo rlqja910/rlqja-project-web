@@ -78,8 +78,24 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   localStorage.removeItem('korekore_push_dismissed');
                   localStorage.removeItem('korekore_visitor_id');
                   sessionStorage.clear();
-                  alert('데이터가 초기화되었습니다. 새로고침합니다.');
-                  window.location.reload();
+                  
+                  if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                      for(let registration of registrations) {
+                        if (registration.pushManager) {
+                          registration.pushManager.getSubscription().then(sub => {
+                            if (sub) sub.unsubscribe();
+                          });
+                        }
+                        registration.unregister();
+                      }
+                    });
+                  }
+                  
+                  setTimeout(() => {
+                    alert('데이터와 구독 정보가 초기화되었습니다. 새로고침합니다.');
+                    window.location.reload();
+                  }, 500);
                 }
               }}
               className="px-2 sm:px-3 py-1 sm:py-1.5 bg-yellow-600 hover:bg-yellow-500 text-white rounded-lg text-xs sm:text-sm font-bold transition-colors"
