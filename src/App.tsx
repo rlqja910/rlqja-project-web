@@ -70,22 +70,6 @@ function App() {
 
   const handleLogoClick = () => {
     handleTabChange('home');
-    const newClicks = logoClicks + 1;
-    setLogoClicks(newClicks);
-    
-    if (newClicks >= 7) {
-      setLogoClicks(0);
-      // Use setTimeout to allow the state update to finish before blocking with prompt
-      setTimeout(() => {
-        const pin = prompt("System Override Code:");
-        if (pin === "2026") {
-          setIsAdminUnlocked(true);
-          handleTabChange('admin');
-        } else if (pin !== null) {
-          alert('비밀번호가 틀렸습니다.');
-        }
-      }, 10);
-    }
   };
 
   const fetchStats = async () => {
