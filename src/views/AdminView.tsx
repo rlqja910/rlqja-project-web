@@ -29,6 +29,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   const [totalPages, setTotalPages] = useState(0);
   const [isSearchesExpanded, setIsSearchesExpanded] = useState(false);
   const [isPageViewsExpanded, setIsPageViewsExpanded] = useState(false);
+  const [activeTab, setActiveTab] = useState<'stats' | 'logs'>('stats');
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,7 +114,14 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
           <div className="flex gap-3">
             {onForceFetch && (
               <button 
-                onClick={onForceFetch}
+                onClick={() => {
+                  const inputPin = prompt('속보 포스팅을 실행하시려면 암호(PIN)를 입력하세요.');
+                  if (inputPin === '1223') {
+                    onForceFetch();
+                  } else if (inputPin !== null) {
+                    alert('암호가 틀렸습니다.');
+                  }
+                }}
                 disabled={isFetching}
                 className="px-4 py-2 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 rounded-lg text-sm font-bold shadow-lg transition-colors disabled:opacity-50 flex items-center gap-2"
               >
@@ -129,126 +137,154 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
           </div>
         </div>
 
-        {/* 방문자 수 요약 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50">
-            <h3 className="text-slate-400 text-sm font-medium mb-1">오늘 방문자</h3>
-            <p className="text-4xl font-bold text-white">{stats?.todayVisitors || 0}<span className="text-lg text-slate-500 ml-2">명</span></p>
-          </div>
-          <div className="bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50">
-            <h3 className="text-slate-400 text-sm font-medium mb-1">총 방문자</h3>
-            <p className="text-4xl font-bold text-cyan-400">{stats?.totalVisitors || 0}<span className="text-lg text-slate-500 ml-2">명</span></p>
-          </div>
+        {/* 탭 네비게이션 */}
+        <div className="flex gap-2 border-b border-slate-700/50 pb-2 mb-6 overflow-x-auto">
+          <button
+            onClick={() => setActiveTab('stats')}
+            className={`px-5 py-2.5 font-bold text-sm rounded-t-lg transition-colors border-b-2 whitespace-nowrap ${
+              activeTab === 'stats' 
+                ? 'border-cyan-400 text-cyan-400 bg-slate-800/50' 
+                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/30'
+            }`}
+          >
+            📊 통계 요약
+          </button>
+          <button
+            onClick={() => setActiveTab('logs')}
+            className={`px-5 py-2.5 font-bold text-sm rounded-t-lg transition-colors border-b-2 whitespace-nowrap ${
+              activeTab === 'logs' 
+                ? 'border-cyan-400 text-cyan-400 bg-slate-800/50' 
+                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/30'
+            }`}
+          >
+            📋 시스템 접속 로그
+          </button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* 인기 검색어 */}
-          <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1">
-            <div className="p-5 border-b border-slate-700/50 bg-slate-800/60">
-              <h2 className="text-lg font-bold">🔥 인기 검색어 TOP 10</h2>
+        {activeTab === 'stats' && (
+          <>
+            {/* 방문자 수 요약 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50 hover:border-cyan-500/30 transition-colors">
+                <h3 className="text-slate-400 text-sm font-medium mb-1">오늘 방문자</h3>
+                <p className="text-4xl font-bold text-white">{stats?.todayVisitors || 0}<span className="text-lg text-slate-500 ml-2">명</span></p>
+              </div>
+              <div className="bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50 hover:border-cyan-500/30 transition-colors">
+                <h3 className="text-slate-400 text-sm font-medium mb-1">총 방문자</h3>
+                <p className="text-4xl font-bold text-cyan-400">{stats?.totalVisitors || 0}<span className="text-lg text-slate-500 ml-2">명</span></p>
+              </div>
             </div>
-            <div className="p-0">
-              {topSearches.length > 0 ? (
-                <>
-                  <ul className="divide-y divide-slate-700/50">
-                    {(isSearchesExpanded ? topSearches : topSearches.slice(0, 6)).map((search, idx) => (
-                      <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
-                        <div className="flex items-center gap-3">
-                          <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-yellow-400' : 'text-slate-500'}`}>{idx + 1}</span>
-                          <span className="font-medium text-slate-200">{search.term}</span>
-                        </div>
-                        <span className="text-cyan-400 font-bold bg-cyan-900/30 px-3 py-1 rounded-full text-sm">
-                          {search.count}회
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                  {topSearches.length > 6 && (
-                    <button 
-                      onClick={() => setIsSearchesExpanded(!isSearchesExpanded)}
-                      className="w-full p-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700/30 transition-colors border-t border-slate-700/50"
-                    >
-                      {isSearchesExpanded ? '접기' : '더보기'}
-                    </button>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* 인기 검색어 */}
+              <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1 shadow-lg">
+                <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex items-center justify-between">
+                  <h2 className="text-lg font-bold">🔥 인기 검색어 TOP 10</h2>
+                </div>
+                <div className="p-0">
+                  {topSearches.length > 0 ? (
+                    <>
+                      <ul className="divide-y divide-slate-700/50">
+                        {(isSearchesExpanded ? topSearches : topSearches.slice(0, 6)).map((search, idx) => (
+                          <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
+                            <div className="flex items-center gap-3">
+                              <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-yellow-400' : 'text-slate-500'}`}>{idx + 1}</span>
+                              <span className="font-medium text-slate-200">{search.term}</span>
+                            </div>
+                            <span className="text-cyan-400 font-bold bg-cyan-900/30 px-3 py-1 rounded-full text-sm">
+                              {search.count}회
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                      {topSearches.length > 6 && (
+                        <button 
+                          onClick={() => setIsSearchesExpanded(!isSearchesExpanded)}
+                          className="w-full p-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700/30 transition-colors border-t border-slate-700/50"
+                        >
+                          {isSearchesExpanded ? '접기' : '더보기'}
+                        </button>
+                      )}
+                    </>
+                  ) : (
+                    <div className="p-8 text-center text-slate-500">검색 데이터가 없습니다.</div>
                   )}
-                </>
-              ) : (
-                <div className="p-8 text-center text-slate-500">검색 데이터가 없습니다.</div>
-              )}
-            </div>
-          </div>
+                </div>
+              </div>
 
-          {/* 인기 페이지 접근 횟수 */}
-          <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1">
-            <div className="p-5 border-b border-slate-700/50 bg-slate-800/60">
-              <h2 className="text-lg font-bold">📄 가장 많이 본 페이지</h2>
-            </div>
-            <div className="p-0">
-              {topPageViews.length > 0 ? (
-                <>
-                  <ul className="divide-y divide-slate-700/50">
-                    {(isPageViewsExpanded ? topPageViews : topPageViews.slice(0, 6)).map((page, idx) => (
-                      <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
-                        <div className="flex items-center gap-3">
-                          <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-cyan-400' : 'text-slate-500'}`}>{idx + 1}</span>
-                          <span className="font-medium text-slate-200">{page.endpoint}</span>
-                        </div>
-                        <span className="text-cyan-400 font-bold bg-cyan-900/30 px-3 py-1 rounded-full text-sm">
-                          {page.count}회
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                  {topPageViews.length > 6 && (
-                    <button 
-                      onClick={() => setIsPageViewsExpanded(!isPageViewsExpanded)}
-                      className="w-full p-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700/30 transition-colors border-t border-slate-700/50"
-                    >
-                      {isPageViewsExpanded ? '접기' : '더보기'}
-                    </button>
+              {/* 인기 페이지 접근 횟수 */}
+              <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1 shadow-lg">
+                <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex items-center justify-between">
+                  <h2 className="text-lg font-bold">📄 가장 많이 본 페이지</h2>
+                </div>
+                <div className="p-0">
+                  {topPageViews.length > 0 ? (
+                    <>
+                      <ul className="divide-y divide-slate-700/50">
+                        {(isPageViewsExpanded ? topPageViews : topPageViews.slice(0, 6)).map((page, idx) => (
+                          <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
+                            <div className="flex items-center gap-3">
+                              <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-cyan-400' : 'text-slate-500'}`}>{idx + 1}</span>
+                              <span className="font-medium text-slate-200">{page.endpoint}</span>
+                            </div>
+                            <span className="text-cyan-400 font-bold bg-cyan-900/30 px-3 py-1 rounded-full text-sm">
+                              {page.count}회
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                      {topPageViews.length > 6 && (
+                        <button 
+                          onClick={() => setIsPageViewsExpanded(!isPageViewsExpanded)}
+                          className="w-full p-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700/30 transition-colors border-t border-slate-700/50"
+                        >
+                          {isPageViewsExpanded ? '접기' : '더보기'}
+                        </button>
+                      )}
+                    </>
+                  ) : (
+                    <div className="p-8 text-center text-slate-500">통계 데이터가 없습니다.</div>
                   )}
-                </>
-              ) : (
-                <div className="p-8 text-center text-slate-500">통계 데이터가 없습니다.</div>
-              )}
-            </div>
-          </div>
+                </div>
+              </div>
 
-          {/* 단골 방문자 Top 10 */}
-          <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1">
-            <div className="p-5 border-b border-slate-700/50 bg-slate-800/60">
-              <h2 className="text-lg font-bold">🏆 단골 방문자 Top 10</h2>
+              {/* 단골 방문자 Top 10 */}
+              <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1 shadow-lg">
+                <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex items-center justify-between">
+                  <h2 className="text-lg font-bold">🏆 단골 방문자 Top 10</h2>
+                </div>
+                <div className="p-0">
+                  {topReturningVisitors.length > 0 ? (
+                    <ul className="divide-y divide-slate-700/50">
+                      {topReturningVisitors.map((visitor, idx) => (
+                        <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
+                          <div className="flex items-center gap-3 w-1/2">
+                            <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-purple-400' : 'text-slate-500'}`}>{idx + 1}</span>
+                            <span className="font-medium text-slate-200 text-xs truncate" title={visitor.visitorId}>{visitor.visitorId}</span>
+                          </div>
+                          <div className="flex flex-col items-end gap-1">
+                            <span className="text-purple-400 font-bold bg-purple-900/30 px-2 py-0.5 rounded text-xs">
+                              {visitor.daysVisited}일 접속
+                            </span>
+                            <span className="text-slate-500 text-[10px]">
+                              총 {visitor.totalActions}회 활동
+                            </span>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div className="p-8 text-center text-slate-500">통계 데이터가 없습니다.</div>
+                  )}
+                </div>
+              </div>
             </div>
-            <div className="p-0">
-              {topReturningVisitors.length > 0 ? (
-                <ul className="divide-y divide-slate-700/50">
-                  {topReturningVisitors.map((visitor, idx) => (
-                    <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
-                      <div className="flex items-center gap-3 w-1/2">
-                        <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-purple-400' : 'text-slate-500'}`}>{idx + 1}</span>
-                        <span className="font-medium text-slate-200 text-xs truncate" title={visitor.visitorId}>{visitor.visitorId}</span>
-                      </div>
-                      <div className="flex flex-col items-end gap-1">
-                        <span className="text-purple-400 font-bold bg-purple-900/30 px-2 py-0.5 rounded text-xs">
-                          {visitor.daysVisited}일 접속
-                        </span>
-                        <span className="text-slate-500 text-[10px]">
-                          총 {visitor.totalActions}회 활동
-                        </span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <div className="p-8 text-center text-slate-500">통계 데이터가 없습니다.</div>
-              )}
-            </div>
-          </div>
-        </div>
+          </>
+        )}
 
-        {/* 최근 액션 로그 */}
-        <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden">
-          <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex justify-between items-center">
+        {activeTab === 'logs' && (
+          <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden shadow-lg">
+            <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex justify-between items-center">
               <h2 className="text-lg font-bold">⏱ 접속 액션 로그 (페이지 {currentPage + 1}/{totalPages || 1})</h2>
             </div>
             <div className="overflow-x-auto">
@@ -293,7 +329,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 <button 
                   onClick={() => fetchAdminData(Math.max(0, currentPage - 1))}
                   disabled={currentPage === 0 || isLoading}
-                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-medium"
+                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-medium transition-colors"
                 >
                   이전
                 </button>
@@ -303,14 +339,15 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 <button 
                   onClick={() => fetchAdminData(Math.min(totalPages - 1, currentPage + 1))}
                   disabled={currentPage === totalPages - 1 || isLoading}
-                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-medium"
+                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-medium transition-colors"
                 >
                   다음
                 </button>
               </div>
             )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
-};
+}
