@@ -5,10 +5,6 @@ interface StatData {
   todayVisitors: number;
 }
 
-interface SearchStat {
-  term: string;
-  count: number;
-}
 
 interface AccessLog {
   id: number;
@@ -313,7 +309,6 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 </button>
               </div>
             )}
-          </div>
         </div>
       </div>
     </div>
