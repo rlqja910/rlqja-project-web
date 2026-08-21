@@ -64,15 +64,19 @@ function App() {
   const [adminPassword, setAdminPassword] = useState('');
   const [visibleCount, setVisibleCount] = useState(5);
   const [visitorStats, setVisitorStats] = useState({ totalVisitors: 0, todayVisitors: 0 });
-  const [, setLogoClicks] = useState(0);
+  const [logoClicks, setLogoClicks] = useState(0);
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
   const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
 
   const handleLogoClick = () => {
     handleTabChange('home');
-    setLogoClicks(prev => {
-      const newClicks = prev + 1;
-      if (newClicks >= 7) {
+    const newClicks = logoClicks + 1;
+    setLogoClicks(newClicks);
+    
+    if (newClicks >= 7) {
+      setLogoClicks(0);
+      // Use setTimeout to allow the state update to finish before blocking with prompt
+      setTimeout(() => {
         const pin = prompt("System Override Code:");
         if (pin === "2026") {
           setIsAdminUnlocked(true);
@@ -80,10 +84,8 @@ function App() {
         } else if (pin !== null) {
           alert('비밀번호가 틀렸습니다.');
         }
-        return 0;
-      }
-      return newClicks;
-    });
+      }, 10);
+    }
   };
 
   const fetchStats = async () => {
