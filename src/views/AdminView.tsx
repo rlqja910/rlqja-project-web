@@ -30,6 +30,7 @@ export function AdminView({ onForceFetch, isFetching, onClose, bypassAuth }: { o
   const [isSearchesExpanded, setIsSearchesExpanded] = useState(false);
   const [isPageViewsExpanded, setIsPageViewsExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState<'stats' | 'logs'>('stats');
+  const [filterVisitorId, setFilterVisitorId] = useState<string>('');
 
   useEffect(() => {
     if (bypassAuth) {
@@ -37,6 +38,12 @@ export function AdminView({ onForceFetch, isFetching, onClose, bypassAuth }: { o
       fetchAdminData(0);
     }
   }, [bypassAuth]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchAdminData(0);
+    }
+  }, [filterVisitorId]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,7 +71,8 @@ export function AdminView({ onForceFetch, isFetching, onClose, bypassAuth }: { o
       const retentionRes = await fetch('/api/admin/stats/retention?t=' + new Date().getTime());
       if (retentionRes.ok) setTopReturningVisitors(await retentionRes.json());
 
-      const logsRes = await fetch(`/api/admin/logs?page=${page}&size=15&t=` + new Date().getTime());
+      const visitorQuery = filterVisitorId ? `&visitorId=${encodeURIComponent(filterVisitorId)}` : '';
+      const logsRes = await fetch(`/api/admin/logs?page=${page}&size=15${visitorQuery}&t=` + new Date().getTime());
       if (logsRes.ok) {
         const pageData = await logsRes.json();
         setRecentLogs(pageData.content);
@@ -267,7 +275,19 @@ export function AdminView({ onForceFetch, isFetching, onClose, bypassAuth }: { o
                         <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
                           <div className="flex items-center gap-3 w-1/2">
                             <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-purple-400' : 'text-slate-500'}`}>{idx + 1}</span>
-                            <span className="font-medium text-slate-200 text-xs truncate" title={visitor.visitorId}>{visitor.visitorId}</span>
+                            <button 
+                              onClick={() => {
+                                setFilterVisitorId(visitor.visitorId);
+                                setActiveTab('logs');
+                                // The useEffect or a direct call will fetch the filtered data.
+                                // We'll rely on the fetchAdminData call below by passing page 0.
+                                // But since state update is async, we can just call it here with the id directly or add useEffect.
+                              }}
+                              className="font-medium text-slate-200 text-xs truncate hover:text-cyan-400 hover:underline text-left" 
+                              title={visitor.visitorId}
+                            >
+                              {visitor.visitorId}
+                            </button>
                           </div>
                           <div className="flex flex-col items-end gap-1">
                             <span className="text-purple-400 font-bold bg-purple-900/30 px-2 py-0.5 rounded text-xs">
@@ -291,8 +311,23 @@ export function AdminView({ onForceFetch, isFetching, onClose, bypassAuth }: { o
 
         {activeTab === 'logs' && (
           <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden shadow-lg">
-            <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex justify-between items-center">
+            <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex justify-between items-center flex-wrap gap-2">
               <h2 className="text-lg font-bold">⏱ 접속 액션 로그 (페이지 {currentPage + 1}/{totalPages || 1})</h2>
+              {filterVisitorId && (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-slate-400 bg-slate-800 px-2 py-1 rounded border border-slate-700 truncate max-w-[150px] sm:max-w-[200px]" title={filterVisitorId}>
+                    ID: {filterVisitorId}
+                  </span>
+                  <button 
+                    onClick={() => {
+                      setFilterVisitorId('');
+                    }}
+                    className="text-xs bg-red-500/20 text-red-400 hover:bg-red-500/30 px-3 py-1.5 rounded font-bold transition-colors"
+                  >
+                    필터 해제 ✕
+                  </button>
+                </div>
+              )}
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
