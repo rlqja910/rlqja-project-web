@@ -29,7 +29,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   const [isPageViewsExpanded, setIsPageViewsExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState<'stats' | 'logs' | 'push'>('stats');
   const [filterVisitorId, setFilterVisitorId] = useState<string>('');
-  const [pushPayload, setPushPayload] = useState({ title: '⚠️ [긴급] KOREKORE 속보', body: '', url: 'https://korekore.vercel.app' });
+  const [pushPayload, setPushPayload] = useState({ title: '⚠️ [긴급] KOREKORE 속보', body: '', url: 'https://korekore.vercel.app', targetVisitorIds: '' });
   const [isSendingPush, setIsSendingPush] = useState(false);
 
   useEffect(() => {
@@ -423,21 +423,54 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-slate-400 focus:border-red-500 focus:outline-none transition-colors"
                 />
               </div>
-              <div className="pt-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">대상 유저 ID (Visitor ID)</label>
+                <input 
+                  type="text" 
+                  value={pushPayload.targetVisitorIds}
+                  onChange={(e) => setPushPayload({...pushPayload, targetVisitorIds: e.target.value})}
+                  placeholder="예: 256ad-2234, 553bd-1123 (비워두면 전체 유저 발송)"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-slate-400 focus:border-red-500 focus:outline-none transition-colors"
+                />
+                <p className="text-xs text-slate-500 mt-1">특정 유저에게만 보낼 경우 ID를 쉼표(,)로 구분해서 입력하세요.</p>
+              </div>
+              <div className="pt-4 relative">
+                {isSendingPush && (
+                  <div className="absolute -top-8 left-0 right-0 flex flex-col items-center justify-center">
+                    <p className="text-red-400 text-sm font-bold mb-1 animate-pulse">발송 중... (네트워크 통신 중)</p>
+                    <div className="w-full bg-slate-800 rounded-full h-1 overflow-hidden relative">
+                      <div className="bg-red-500 h-1 rounded-full absolute top-0 left-0 w-1/3 animate-[ping_1.5s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
+                      <div className="bg-red-500 h-1 rounded-full absolute top-0 left-0 w-1/3 animate-[pulse_1s_cubic-bezier(0.4,0,0.6,1)_infinite]" style={{ animationDuration: '0.8s', left: '33%' }}></div>
+                      <div className="bg-red-500 h-1 rounded-full absolute top-0 left-0 w-1/3 animate-[ping_1.5s_cubic-bezier(0,0,0.2,1)_infinite]" style={{ animationDelay: '0.5s', left: '66%' }}></div>
+                    </div>
+                  </div>
+                )}
                 <button
                   onClick={async () => {
                     if (!pushPayload.body) {
                       alert('알림 내용을 입력해주세요.');
                       return;
                     }
-                    if (!confirm('정말 모든 유저에게 푸시 알림을 발송하시겠습니까? (취소 불가)')) return;
+                    
+                    const targetList = pushPayload.targetVisitorIds 
+                      ? pushPayload.targetVisitorIds.split(',').map(s => s.trim()).filter(s => s) 
+                      : [];
+                      
+                    const confirmMsg = targetList.length > 0 
+                      ? `${targetList.length}명의 선택된 유저에게 푸시 알림을 발송하시겠습니까? (취소 불가)`
+                      : '정말 모든 유저에게 푸시 알림을 발송하시겠습니까? (취소 불가)';
+                      
+                    if (!confirm(confirmMsg)) return;
                     
                     setIsSendingPush(true);
                     try {
                       const res = await fetch('/api/push/send', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(pushPayload)
+                        body: JSON.stringify({
+                          ...pushPayload,
+                          targetVisitorIds: targetList
+                        })
                       });
                       if (res.ok) {
                         alert('푸시 알림이 성공적으로 발송되었습니다! 🚀');
@@ -453,7 +486,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   disabled={isSendingPush}
                   className="w-full py-4 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-black rounded-xl shadow-[0_0_20px_rgba(239,68,68,0.4)] disabled:opacity-50 transition-all text-lg"
                 >
-                  {isSendingPush ? '발송 중...' : '전체 유저에게 푸시 쏘기 💥'}
+                  {isSendingPush ? '발송 중...' : (pushPayload.targetVisitorIds ? '선택 유저에게 쏘기 🎯' : '전체 유저에게 푸시 쏘기 💥')}
                 </button>
               </div>
             </div>
