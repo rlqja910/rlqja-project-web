@@ -32,6 +32,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   const [pushPayload, setPushPayload] = useState({ title: '⚠️ [긴급] KOREKORE 속보', body: '', url: 'https://korekore.vercel.app', targetVisitorIds: '' });
   const [isSendingPush, setIsSendingPush] = useState(false);
   const [subscribers, setSubscribers] = useState<any[]>([]);
+  const [pushLogs, setPushLogs] = useState<any[]>([]);
   const [searchSubscriber, setSearchSubscriber] = useState('');
   const [selectedSubscribers, setSelectedSubscribers] = useState<string[]>([]);
 
@@ -46,6 +47,11 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
       fetch('/api/push/subscribers')
         .then(res => res.json())
         .then(data => setSubscribers(data))
+        .catch(console.error);
+        
+      fetch('/api/push/logs')
+        .then(res => res.json())
+        .then(data => setPushLogs(data))
         .catch(console.error);
     }
   }, [activeTab]);
@@ -550,6 +556,35 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 >
                   {isSendingPush ? '발송 중...' : (selectedSubscribers.length > 0 ? '선택 유저에게 쏘기 🎯' : '전체 유저에게 푸시 쏘기 💥')}
                 </button>
+              </div>
+              
+              <div className="pt-8 border-t border-slate-700 mt-6">
+                <h3 className="text-sm font-bold text-slate-300 mb-4">최근 발송 이력</h3>
+                <div className="space-y-3 max-h-80 overflow-y-auto custom-scrollbar pr-2">
+                  {pushLogs.map((log: any) => (
+                    <div key={log.id} className="bg-slate-900 border border-slate-700 p-3 rounded-lg flex flex-col gap-2">
+                      <div className="flex justify-between items-start">
+                        <span className="text-xs text-slate-500 font-medium">
+                          {new Date(log.createdAt).toLocaleString('ko-KR')}
+                        </span>
+                        <span className={`text-xs px-2 py-0.5 rounded-full font-bold ${log.targetType === 'ALL' ? 'bg-blue-900/50 text-blue-400' : 'bg-pink-900/50 text-pink-400'}`}>
+                          {log.targetType === 'ALL' ? '전체 발송' : '타겟 발송'} ({log.targetCount}명)
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-slate-200">{log.title}</p>
+                        <p className="text-sm text-slate-400 line-clamp-2 mt-1">{log.body}</p>
+                      </div>
+                      <div className="flex gap-4 mt-1 text-xs">
+                        <span className="text-green-400">성공: {log.successCount}건</span>
+                        <span className="text-red-400">실패: {log.failureCount}건</span>
+                      </div>
+                    </div>
+                  ))}
+                  {pushLogs.length === 0 && (
+                    <p className="text-xs text-slate-500 text-center py-4">발송 이력이 없습니다.</p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
