@@ -69,6 +69,8 @@ export const PushSubscriptionModal: React.FC = () => {
         return;
       }
 
+      const userName = prompt("알림에서 부를 회원님의 닉네임을 입력해주세요. (예: 김기범, 떡상요정)", "KOREKORE 팬") || "KOREKORE 팬";
+
       const registration = await navigator.serviceWorker.ready;
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
@@ -84,7 +86,8 @@ export const PushSubscriptionModal: React.FC = () => {
         body: JSON.stringify({
           endpoint: subscriptionJson.endpoint,
           keys: subscriptionJson.keys,
-          visitorId
+          visitorId,
+          userName
         })
       });
 

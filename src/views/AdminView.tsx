@@ -31,10 +31,24 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   const [filterVisitorId, setFilterVisitorId] = useState<string>('');
   const [pushPayload, setPushPayload] = useState({ title: '⚠️ [긴급] KOREKORE 속보', body: '', url: 'https://korekore.vercel.app', targetVisitorIds: '' });
   const [isSendingPush, setIsSendingPush] = useState(false);
+  const [subscribers, setSubscribers] = useState<any[]>([]);
+  const [searchSubscriber, setSearchSubscriber] = useState('');
+  const [selectedSubscribers, setSelectedSubscribers] = useState<string[]>([]);
 
   useEffect(() => {
     fetchAdminData(0);
-  }, [filterVisitorId]);
+    const interval = setInterval(() => fetchAdminData(currentPage), 30000);
+    return () => clearInterval(interval);
+  }, [currentPage]);
+
+  useEffect(() => {
+    if (activeTab === 'push') {
+      fetch('/api/push/subscribers')
+        .then(res => res.json())
+        .then(data => setSubscribers(data))
+        .catch(console.error);
+    }
+  }, [activeTab]);
 
   const fetchAdminData = async (page = 0) => {
     setIsLoading(true);
@@ -423,16 +437,65 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-slate-400 focus:border-red-500 focus:outline-none transition-colors"
                 />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">대상 유저 ID (Visitor ID)</label>
+              <div className="pt-2">
+                <div className="flex items-center justify-between mb-3">
+                  <label className="block text-sm font-medium text-slate-300">대상 유저 선택 (CRM)</label>
+                  <span className="text-xs text-slate-400">총 {subscribers.length}명 구독 중</span>
+                </div>
+                
                 <input 
                   type="text" 
-                  value={pushPayload.targetVisitorIds}
-                  onChange={(e) => setPushPayload({...pushPayload, targetVisitorIds: e.target.value})}
-                  placeholder="예: 256ad-2234, 553bd-1123 (비워두면 전체 유저 발송)"
-                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-slate-400 focus:border-red-500 focus:outline-none transition-colors"
+                  placeholder="이름이나 Visitor ID로 검색..."
+                  value={searchSubscriber}
+                  onChange={(e) => setSearchSubscriber(e.target.value)}
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-300 focus:border-red-500 mb-3"
                 />
-                <p className="text-xs text-slate-500 mt-1">특정 유저에게만 보낼 경우 ID를 쉼표(,)로 구분해서 입력하세요.</p>
+                
+                <div className="bg-slate-900 border border-slate-700 rounded-lg max-h-60 overflow-y-auto custom-scrollbar p-2 space-y-1">
+                  {subscribers
+                    .filter(sub => {
+                      const query = searchSubscriber.toLowerCase();
+                      return (sub.userName && sub.userName.toLowerCase().includes(query)) || 
+                             (sub.visitorId && sub.visitorId.toLowerCase().includes(query));
+                    })
+                    .map(sub => (
+                    <label key={sub.id} className="flex items-center gap-3 p-2 hover:bg-slate-800 rounded-md cursor-pointer transition-colors border border-transparent hover:border-slate-700">
+                      <input 
+                        type="checkbox" 
+                        className="w-4 h-4 rounded text-red-500 focus:ring-red-500 bg-slate-700 border-slate-600"
+                        checked={selectedSubscribers.includes(sub.visitorId)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedSubscribers(prev => [...prev, sub.visitorId]);
+                          } else {
+                            setSelectedSubscribers(prev => prev.filter(id => id !== sub.visitorId));
+                          }
+                        }}
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-sm font-bold text-slate-200">
+                          {sub.userName || 'KOREKORE 팬'} <span className="text-xs text-slate-500 font-normal ml-1">님</span>
+                        </span>
+                        <span className="text-xs text-slate-500">{sub.visitorId}</span>
+                      </div>
+                    </label>
+                  ))}
+                  
+                  {subscribers.length === 0 && (
+                    <div className="text-center p-4 text-sm text-slate-500">
+                      아직 푸시 알림을 구독한 유저가 없습니다.
+                    </div>
+                  )}
+                </div>
+                <div className="flex justify-between items-center mt-2">
+                  <p className="text-xs text-red-400 font-medium">선택 안 하면 전체 발송됩니다.</p>
+                  <button 
+                    onClick={() => setSelectedSubscribers([])}
+                    className="text-xs text-slate-400 hover:text-white"
+                  >
+                    선택 초기화
+                  </button>
+                </div>
               </div>
               <div className="pt-4 relative">
                 {isSendingPush && (
@@ -452,9 +515,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                       return;
                     }
                     
-                    const targetList = pushPayload.targetVisitorIds 
-                      ? pushPayload.targetVisitorIds.split(',').map(s => s.trim()).filter(s => s) 
-                      : [];
+                    const targetList = selectedSubscribers;
                       
                     const confirmMsg = targetList.length > 0 
                       ? `${targetList.length}명의 선택된 유저에게 푸시 알림을 발송하시겠습니까? (취소 불가)`
@@ -475,6 +536,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                       if (res.ok) {
                         alert('푸시 알림이 성공적으로 발송되었습니다! 🚀');
                         setPushPayload({...pushPayload, body: ''});
+                        setSelectedSubscribers([]);
                       } else {
                         alert('발송 실패: 서버 오류');
                       }
@@ -486,7 +548,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   disabled={isSendingPush}
                   className="w-full py-4 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-black rounded-xl shadow-[0_0_20px_rgba(239,68,68,0.4)] disabled:opacity-50 transition-all text-lg"
                 >
-                  {isSendingPush ? '발송 중...' : (pushPayload.targetVisitorIds ? '선택 유저에게 쏘기 🎯' : '전체 유저에게 푸시 쏘기 💥')}
+                  {isSendingPush ? '발송 중...' : (selectedSubscribers.length > 0 ? '선택 유저에게 쏘기 🎯' : '전체 유저에게 푸시 쏘기 💥')}
                 </button>
               </div>
             </div>
