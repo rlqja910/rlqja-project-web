@@ -84,7 +84,7 @@ export const StockReportView: React.FC<{
 
                   <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-4 sm:gap-0 mt-4 pt-4 border-t border-slate-800/50">
                     <div className="flex justify-between items-center w-full sm:w-auto">
-                      <span className="text-xs font-medium text-slate-500">{new Date(post.createdAt + 'Z').toLocaleString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+                      <span className="text-xs font-medium text-slate-500">{new Date(post.createdAt).toLocaleString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
                       <span className="text-xs text-indigo-400 font-medium sm:hidden sm:group-hover:block ml-4">상세 리포트 보기 &rarr;</span>
                     </div>
                   </div>

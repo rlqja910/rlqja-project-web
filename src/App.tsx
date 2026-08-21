@@ -422,7 +422,7 @@ function App() {
             </div>
 
             <div className="px-6 sm:px-8 py-4 border-t border-slate-800 bg-slate-900/50 flex flex-col sm:flex-row justify-end items-start sm:items-center gap-4 sm:gap-0">
-              <span className="text-xs text-slate-500">{new Date(selectedPost.createdAt + 'Z').toLocaleString('ko-KR')}</span>
+              <span className="text-xs text-slate-500">{new Date(selectedPost.createdAt).toLocaleString('ko-KR')}</span>
             </div>
           </div>
         </div>
