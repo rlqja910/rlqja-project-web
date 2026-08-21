@@ -72,10 +72,13 @@ function App() {
     handleTabChange('home');
     setLogoClicks(prev => {
       const newClicks = prev + 1;
-      if (newClicks >= 3) {
+      if (newClicks >= 7) {
         const pin = prompt("System Override Code:");
         if (pin === "2026") {
           setIsAdminUnlocked(true);
+          handleTabChange('admin');
+        } else if (pin !== null) {
+          alert('비밀번호가 틀렸습니다.');
         }
         return 0;
       }
@@ -325,7 +328,7 @@ function App() {
         </header>
 
         <div className="p-4 sm:p-8 pb-40 md:pb-8 max-w-6xl mx-auto w-full">
-          {activeTab === 'admin' && <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} />}
+          {activeTab === 'admin' && <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} bypassAuth={isAdminUnlocked} />}
           {activeTab === 'home' && <HomeView />}
           {activeTab === 'scouter' && <ScouterView />}
           {activeTab === 'report' && (

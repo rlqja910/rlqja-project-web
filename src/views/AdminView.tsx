@@ -16,8 +16,8 @@ interface AccessLog {
   createdAt: string;
 }
 
-export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?: () => void, isFetching?: boolean, onClose?: () => void }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+export function AdminView({ onForceFetch, isFetching, onClose, bypassAuth }: { onForceFetch?: () => void, isFetching?: boolean, onClose?: () => void, bypassAuth?: boolean }) {
+  const [isAuthenticated, setIsAuthenticated] = useState(bypassAuth || false);
   const [pin, setPin] = useState('');
   const [stats, setStats] = useState<StatData | null>(null);
   const [topSearches, setTopSearches] = useState<{term: string, count: number}[]>([]);
