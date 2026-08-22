@@ -32,8 +32,12 @@ public class WebPushService {
         this.pushLogRepository = pushLogRepository;
     }
 
-    public void broadcast(String title, String body, String url, String visitorId) {
-        List<PushSubscription> subs = visitorId == null ? subscriptionRepository.findAll() : subscriptionRepository.findByVisitorId(visitorId);
+    public void broadcast(String title, String body, String url, List<String> visitorIds) {
+        List<PushSubscription> subs = (visitorIds == null || visitorIds.isEmpty()) ? 
+            subscriptionRepository.findAll() : 
+            subscriptionRepository.findAll().stream()
+                .filter(s -> visitorIds.contains(s.getVisitorId()))
+                .toList();
         int success = 0;
         int fail = 0;
         
@@ -67,5 +71,28 @@ public class WebPushService {
         log.setSuccessCount(success);
         log.setFailCount(fail);
         pushLogRepository.save(log);
+    }
+
+    public void subscribe(String endpoint, String p256dh, String auth, String visitorId, String userName) {
+        java.util.Optional<PushSubscription> existing = subscriptionRepository.findByEndpoint(endpoint);
+        PushSubscription sub = existing.orElseGet(PushSubscription::new);
+        sub.setEndpoint(endpoint);
+        sub.setP256dh(p256dh);
+        sub.setAuth(auth);
+        sub.setVisitorId(visitorId);
+        if (userName != null) sub.setUserName(userName);
+        subscriptionRepository.save(sub);
+    }
+
+    public List<PushSubscription> getAllSubscriptions() {
+        return subscriptionRepository.findAll();
+    }
+
+    public void updateName(String visitorId, String userName) {
+        List<PushSubscription> subs = subscriptionRepository.findByVisitorId(visitorId);
+        for (PushSubscription sub : subs) {
+            sub.setUserName(userName);
+            subscriptionRepository.save(sub);
+        }
     }
 }

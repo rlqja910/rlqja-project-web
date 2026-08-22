@@ -85,7 +85,7 @@ class DeployApp(tk.Tk):
             ".\\gradlew.bat bootJar && "
             "scp -i ..\\key.pem -o StrictHostKeyChecking=no build\\libs\\demo-0.0.1-SNAPSHOT.jar ubuntu@13.124.135.106:/home/ubuntu/demo.jar && "
             "scp -i ..\\key.pem -o StrictHostKeyChecking=no ..\\python-worker\\main.py ubuntu@13.124.135.106:/home/ubuntu/python-worker/main.py && "
-            "ssh -i ..\\key.pem -o StrictHostKeyChecking=no ubuntu@13.124.135.106 \"sudo pkill -9 java; sudo fuser -k 8000/tcp; nohup java -Djava.security.egd=file:/dev/./urandom -Xmx256m -jar /home/ubuntu/demo.jar </dev/null > /home/ubuntu/java.log 2>&1 & cd /home/ubuntu/python-worker && source venv/bin/activate && nohup uvicorn main:app --host 0.0.0.0 --port 8000 </dev/null > worker.log 2>&1 &\""
+            "ssh -i ..\\key.pem -o StrictHostKeyChecking=no ubuntu@13.124.135.106 \"sudo pkill -9 java; sudo fuser -k 8000/tcp; nohup java -Duser.timezone=Asia/Seoul -Djava.security.egd=file:/dev/./urandom -Xmx256m -jar /home/ubuntu/demo.jar </dev/null > /home/ubuntu/java.log 2>&1 & cd /home/ubuntu/python-worker && source venv/bin/activate && nohup uvicorn main:app --host 0.0.0.0 --port 8000 </dev/null > worker.log 2>&1 &\""
         )
         run_command_in_bg("백단 배포(AWS)", cmd, self.console)
 
