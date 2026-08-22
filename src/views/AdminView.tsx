@@ -37,7 +37,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   const [selectedSubscribers, setSelectedSubscribers] = useState<string[]>([]);
 
   useEffect(() => {
-    fetchAdminData(0);
+    fetchAdminData(currentPage);
     const interval = setInterval(() => fetchAdminData(currentPage), 30000);
     return () => clearInterval(interval);
   }, [currentPage]);
