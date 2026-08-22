@@ -9,6 +9,8 @@ import { AdminView } from './views/AdminView';
 import { AverageCalculatorView } from './views/AverageCalculatorView';
 import { KoreLiveView } from './views/KoreLiveView';
 import { FortuneCookieView } from './views/FortuneCookieView';
+import { PushSubscriptionModal } from './components/PushSubscriptionModal';
+import { LoyalUserModal } from './components/LoyalUserModal';
 import { useMagaMode } from './hooks/useMagaMode';
 
 interface Post {
@@ -64,12 +66,35 @@ function App() {
   const [adminPassword, setAdminPassword] = useState('');
   const [visibleCount, setVisibleCount] = useState(5);
   const [visitorStats, setVisitorStats] = useState({ totalVisitors: 0, todayVisitors: 0 });
-  const [logoClicks, setLogoClicks] = useState(0);
-  const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
   const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
+  const [logoClicks, setLogoClicks] = useState(0);
+  const [isAdminUnlocked, setIsAdminUnlocked] = useState(sessionStorage.getItem('admin_unlocked') === 'true');
+  const [showLoyalModal, setShowLoyalModal] = useState(false);
 
   const handleLogoClick = () => {
     handleTabChange('home');
+    const newClicks = logoClicks + 1;
+    setLogoClicks(newClicks);
+    
+    if (newClicks >= 7) {
+      setLogoClicks(0);
+      
+      if (isAdminUnlocked) {
+        handleTabChange('admin');
+        return;
+      }
+
+      setTimeout(() => {
+        const pin = prompt("System Override Code:");
+        if (pin === "2026") {
+          sessionStorage.setItem('admin_unlocked', 'true');
+          setIsAdminUnlocked(true);
+          handleTabChange('admin');
+        } else if (pin !== null) {
+          alert('접근이 거부되었습니다.');
+        }
+      }, 10);
+    }
   };
 
   const fetchStats = async () => {
@@ -98,6 +123,21 @@ function App() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ endpoint: `/#${activeTab}`, visitorId })
     }).catch(e => console.error('Failed to log visit:', e));
+
+    // Track visit days
+    const today = new Date().toLocaleDateString('ko-KR');
+    const visitDaysStr = localStorage.getItem('korekore_visit_days');
+    let visitDays: string[] = visitDaysStr ? JSON.parse(visitDaysStr) : [];
+    
+    if (!visitDays.includes(today)) {
+      visitDays.push(today);
+      localStorage.setItem('korekore_visit_days', JSON.stringify(visitDays));
+    }
+
+    if (visitDays.length >= 5 && !localStorage.getItem('korekore_nickname') && activeTab === 'report') {
+      setShowLoyalModal(true);
+    }
+
   }, [activeTab]);
 
   useEffect(() => {
@@ -177,9 +217,7 @@ function App() {
     }
   };
 
-  if (isAdminUnlocked) {
-    return <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} onClose={() => setIsAdminUnlocked(false)} />;
-  }
+
 
   if (isMaintenanceMode) {
     return (
@@ -314,7 +352,14 @@ function App() {
         </header>
 
         <div className="p-4 sm:p-8 pb-40 md:pb-8 max-w-6xl mx-auto w-full">
-          {activeTab === 'admin' && <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} bypassAuth={isAdminUnlocked} />}
+          {activeTab === 'admin' && isAdminUnlocked && <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} />}
+          {activeTab === 'admin' && !isAdminUnlocked && (
+             <div className="text-center py-32 text-slate-400">
+               <div className="text-6xl mb-6">🔒</div>
+               <h2 className="text-2xl font-bold text-red-500 mb-2">ACCESS DENIED</h2>
+               <p>권한이 없습니다.</p>
+             </div>
+          )}
           {activeTab === 'home' && <HomeView />}
           {activeTab === 'scouter' && <ScouterView />}
           {activeTab === 'report' && (
@@ -332,7 +377,7 @@ function App() {
           {activeTab === 'kore-live' && <KoreLiveView />}
           {activeTab === 'fortune' && <FortuneCookieView />}
           
-          {activeTab !== 'home' && activeTab !== 'report' && activeTab !== 'patchnotes' && activeTab !== 'scouter' && activeTab !== 'calc-avg' && activeTab !== 'admin-secret-2026' && activeTab !== 'kore-live' && activeTab !== 'fortune' && (
+          {activeTab !== 'home' && activeTab !== 'report' && activeTab !== 'patchnotes' && activeTab !== 'scouter' && activeTab !== 'calc-avg' && activeTab !== 'admin-secret-2026' && activeTab !== 'kore-live' && activeTab !== 'fortune' && activeTab !== 'admin' && (
              <div className="text-center py-32 text-slate-400">
                <div className="text-6xl mb-6">🚧</div>
                <h2 className="text-2xl font-bold text-white mb-2">공사 중입니다</h2>
@@ -386,7 +431,15 @@ function App() {
             </div>
 
             <div className="px-6 sm:px-8 py-6 sm:py-8 overflow-y-auto flex-1 custom-scrollbar">
-              <div className="text-slate-300 leading-relaxed text-sm sm:text-[15px] space-y-4 font-medium [&>h2]:text-xl [&>h2]:font-bold [&>h2]:text-white [&>h2]:mt-8 [&>h2]:mb-4 [&>h2]:flex [&>h2]:items-center [&>h2]:gap-2 [&>strong]:text-cyan-400 [&>strong]:font-bold [&>p]:mb-4">
+              <div className="text-slate-300 leading-relaxed text-sm sm:text-[15px] font-medium 
+                [&>h2]:text-xl [&>h2]:font-bold [&>h2]:text-white [&>h2]:mt-8 [&>h2]:mb-4 [&>h2]:flex [&>h2]:items-center [&>h2]:gap-2 
+                [&>h3]:text-lg [&>h3]:font-bold [&>h3]:text-white [&>h3]:mt-6 [&>h3]:mb-3 [&>h3]:flex [&>h3]:items-center [&>h3]:gap-2
+                [&>strong]:text-cyan-400 [&>strong]:font-bold 
+                [&>p]:mb-5 [&>p]:leading-7
+                [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-2 [&>ul]:mb-6 [&>ul>li]:text-slate-300 
+                [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:space-y-2 [&>ol]:mb-6 [&>ol>li]:text-slate-300 
+                [&>blockquote]:border-l-4 [&>blockquote]:border-cyan-500 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-slate-400 [&>blockquote]:bg-slate-800/30 [&>blockquote]:py-2 [&>blockquote]:my-4 [&>blockquote]:rounded-r-lg
+                [&_a]:text-cyan-400 [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-cyan-300">
                 <ReactMarkdown>
                   {selectedPost.detailedContent || ''}
                 </ReactMarkdown>
@@ -448,6 +501,12 @@ function App() {
           </div>
         </div>
       )}
+      
+      <PushSubscriptionModal />
+      <LoyalUserModal 
+        isVisible={showLoyalModal} 
+        onComplete={() => setShowLoyalModal(false)} 
+      />
     </div>
   );
 }
