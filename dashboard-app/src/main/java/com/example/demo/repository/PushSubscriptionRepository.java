@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface PushSubscriptionRepository extends JpaRepository<PushSubscription, Long> {
     Optional<PushSubscription> findByEndpoint(String endpoint);
+    java.util.List<PushSubscription> findByVisitorId(String visitorId);
 }
