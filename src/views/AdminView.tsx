@@ -540,9 +540,11 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                         })
                       });
                       if (res.ok) {
-                        alert('푸시 알림이 성공적으로 발송되었습니다! 🚀');
+                        alert('발송 명령이 서버에 전달되었습니다! 🚀\n실제 발송 성공 여부는 3초 후 하단의 "최근 발송 이력"에서 확인해주세요.');
                         setPushPayload({...pushPayload, body: ''});
                         setSelectedSubscribers([]);
+                        // 3초 후 데이터 새로고침
+                        setTimeout(() => fetchAdminData(0), 3000);
                       } else {
                         alert('발송 실패: 서버 오류');
                       }
