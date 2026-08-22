@@ -91,11 +91,11 @@ export function CompoundCalcView() {
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-20 animate-fade-in pt-4">
       <div className="text-center space-y-2 mb-8">
-        <h1 className="text-3xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-cyan-400">
-          🔥 복리 팩폭 계산기
+        <h1 className="text-4xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500 animate-pulse tracking-tight drop-shadow-[0_0_15px_rgba(192,38,211,0.5)]">
+          🎢 도파민 폭발 레버리지 팩폭기
         </h1>
-        <p className="text-slate-400 text-sm sm:text-base font-medium">
-          횡보장에서 내 돈이 얼마나 녹았을까? (변동성 끌림 현상 계산)
+        <p className="text-slate-300 text-sm sm:text-base font-bold mt-3 bg-slate-800/50 inline-block px-4 py-2 rounded-full border border-slate-700/50 shadow-lg">
+          내 계좌가 얼마나 녹아내렸을까? 야수의 심장 전용 변동성 끌림 테스트 🐯🔥
         </p>
       </div>
 
@@ -230,6 +230,12 @@ export function CompoundCalcView() {
                   ? '단순히 더한 수익률보다 실제 계좌가 처참하게 녹아내렸습니다. 이게 바로 변동성 끌림 현상입니다.'
                   : '오르락 내리락 복리 효과가 긍정적으로 작용하여 기대보다 더 많은 수익을 거뒀습니다!'}
               </div>
+              {result.ticker && !/(2X|3X|BULL|BEAR|SOXL|TQQQ|SQQQ|SOXS|BOIL|KOLD|FAS|FAZ|YINN|YANG|UPRO|SPXU|BULZ|FNGU|FNGD|LABU|LABD)/i.test(result.ticker) && (
+                <div className="text-xs text-slate-300 mt-3 p-3 bg-slate-900/60 rounded-lg border border-slate-700 shadow-inner">
+                  💡 <strong>앗! 일반 주식(1X 본주)을 검색하셨나요?</strong><br />
+                  일반 주식은 레버리지(2X/3X)처럼 <strong>음의 복리(변동성 끌림)</strong> 효과가 크지 않아서 단순 합산과 큰 차이가 없을 수 있습니다. 진정한 야수의 심장 테스트를 원하시면 <code>SOXL</code>이나 <code>TQQQ</code>를 입력해보세요! 🎢
+                </div>
+              )}
             </div>
             <div className="text-right shrink-0">
               <div className="text-xs font-bold opacity-70 mb-1">복리로 증발한/불려진 금액</div>
