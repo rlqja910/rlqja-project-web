@@ -78,7 +78,7 @@ export const StockReportView: React.FC<{
                     </div>
                   </div>
 
-                  <p className="text-sm text-slate-400 leading-relaxed mb-4 relative z-10">
+                  <p className="text-sm text-slate-400 leading-relaxed mb-4 relative z-10 line-clamp-2">
                     {renderMagaContent(post.shortContent)}
                   </p>
 

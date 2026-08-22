@@ -431,7 +431,15 @@ function App() {
             </div>
 
             <div className="px-6 sm:px-8 py-6 sm:py-8 overflow-y-auto flex-1 custom-scrollbar">
-              <div className="text-slate-300 leading-relaxed text-sm sm:text-[15px] space-y-4 font-medium [&>h2]:text-xl [&>h2]:font-bold [&>h2]:text-white [&>h2]:mt-8 [&>h2]:mb-4 [&>h2]:flex [&>h2]:items-center [&>h2]:gap-2 [&>strong]:text-cyan-400 [&>strong]:font-bold [&>p]:mb-4">
+              <div className="text-slate-300 leading-relaxed text-sm sm:text-[15px] font-medium 
+                [&>h2]:text-xl [&>h2]:font-bold [&>h2]:text-white [&>h2]:mt-8 [&>h2]:mb-4 [&>h2]:flex [&>h2]:items-center [&>h2]:gap-2 
+                [&>h3]:text-lg [&>h3]:font-bold [&>h3]:text-white [&>h3]:mt-6 [&>h3]:mb-3 [&>h3]:flex [&>h3]:items-center [&>h3]:gap-2
+                [&>strong]:text-cyan-400 [&>strong]:font-bold 
+                [&>p]:mb-5 [&>p]:leading-7
+                [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-2 [&>ul]:mb-6 [&>ul>li]:text-slate-300 
+                [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:space-y-2 [&>ol]:mb-6 [&>ol>li]:text-slate-300 
+                [&>blockquote]:border-l-4 [&>blockquote]:border-cyan-500 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-slate-400 [&>blockquote]:bg-slate-800/30 [&>blockquote]:py-2 [&>blockquote]:my-4 [&>blockquote]:rounded-r-lg
+                [&_a]:text-cyan-400 [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-cyan-300">
                 <ReactMarkdown>
                   {selectedPost.detailedContent || ''}
                 </ReactMarkdown>
