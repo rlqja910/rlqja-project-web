@@ -51,6 +51,14 @@ export function CompoundCalcView() {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<CalcResult | null>(null);
 
+  const MEMES = [
+    "https://media.giphy.com/media/NTur7XlVDUdqM/giphy.gif",
+    "https://media.giphy.com/media/JtBZm3Getg3dqxEXLU/giphy.gif",
+    "https://media.giphy.com/media/Y2ZUWLrTy63j9T6qrK/giphy.gif",
+    "https://media.giphy.com/media/11ISwbgCxEzMyY/giphy.gif"
+  ];
+  const todayMeme = MEMES[new Date().getDate() % MEMES.length];
+
   const formatMoney = (val: number, cur: string = 'KRW') => {
     if (cur === 'USD') {
       return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
@@ -91,15 +99,18 @@ export function CompoundCalcView() {
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-20 animate-fade-in pt-4">
       <div className="text-center space-y-2 mb-8">
-        <h1 className="text-4xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500 animate-pulse tracking-tight drop-shadow-[0_0_15px_rgba(192,38,211,0.5)]">
-          🎢 도파민 폭발 레버리지 팩폭기
+        <h1 className="text-3xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500 animate-pulse tracking-tight drop-shadow-[0_0_15px_rgba(192,38,211,0.5)]">
+          🎢 야수의 심장 계좌 엑스레이
         </h1>
         <p className="text-slate-300 text-sm sm:text-base font-bold mt-3 bg-slate-800/50 inline-block px-4 py-2 rounded-full border border-slate-700/50 shadow-lg">
-          내 계좌가 얼마나 녹아내렸을까? 야수의 심장 전용 변동성 끌림 테스트 🐯🔥
+          내 계좌가 얼마나 녹아내렸을까? 레버리지 롤러코스터 탑승 시뮬레이터 🐯🔥
         </p>
       </div>
 
       <div className="bg-slate-900/50 backdrop-blur-md border border-slate-700/50 rounded-2xl p-6 sm:p-8 shadow-2xl">
+        <div className="flex justify-center mb-8">
+          <img src={todayMeme} alt="meme" className="h-32 sm:h-48 rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.5)] border border-slate-600/50 object-cover" />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div>
             <label className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">종목명 또는 티커</label>
@@ -285,6 +296,16 @@ export function CompoundCalcView() {
                 />
               </LineChart>
             </ResponsiveContainer>
+          </div>
+
+          <div className="mt-12 bg-slate-800/40 p-5 rounded-xl text-slate-400 text-xs sm:text-sm border border-slate-700/50 relative z-10">
+            <h3 className="font-bold text-slate-200 mb-3 text-base">🤔 어떻게 계산된 결과인가요?</h3>
+            <ul className="list-disc pl-5 space-y-2">
+              <li><strong className="text-slate-300">단순 기대 수익:</strong> 매일매일의 등락률(+5%, -3% 등)을 단순히 더했을 때 내가 기대하는 이론적인 수익률입니다.</li>
+              <li><strong className="text-slate-300">실제 내 계좌 수익:</strong> 복리 효과가 적용되어 내 계좌에 실제로 찍혀있는 최종 수익률입니다.</li>
+              <li><strong className="text-slate-300">변동성 끌림(음의 복리):</strong> 주가가 오르락내리락을 반복할 때, 상승률보다 하락률의 타격이 더 커서 결과적으로 계좌가 녹아내리는 현상입니다. (예: 50% 하락 후 원금을 복구하려면 100% 상승이 필요함)</li>
+              <li><strong className="text-slate-300">환율 변동 효과:</strong> 원화 투자 시, 주식 수익률과 별개로 매수 시점 대비 달러 환율이 오르거나 내림에 따라 발생한 추가 이득/손실입니다.</li>
+            </ul>
           </div>
         </div>
       )}
