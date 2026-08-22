@@ -574,6 +574,11 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                       <div>
                         <p className="text-sm font-bold text-slate-200">{log.title}</p>
                         <p className="text-sm text-slate-400 line-clamp-2 mt-1">{log.body}</p>
+                        {log.url && (
+                          <a href={log.url} target="_blank" rel="noopener noreferrer" className="text-xs text-cyan-400 hover:underline mt-2 inline-block">
+                            🔗 {log.url}
+                          </a>
+                        )}
                       </div>
                       <div className="flex gap-4 mt-1 text-xs">
                         <span className="text-green-400">성공: {log.successCount}건</span>
