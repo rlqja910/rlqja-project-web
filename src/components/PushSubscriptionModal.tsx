@@ -68,36 +68,42 @@ export const PushSubscriptionModal: React.FC = () => {
         dismiss();
         return;
       }
-      const userName = localStorage.getItem('korekore_nickname') || "KOREKORE 팬";
-      const registration = await navigator.serviceWorker.ready;
-      const subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
-      });
-
-      const visitorId = localStorage.getItem('korekore_visitor_id') || 'unknown';
-      const subscriptionJson = subscription.toJSON();
       
-      const response = await fetch('/api/push/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          endpoint: subscriptionJson.endpoint,
-          keys: subscriptionJson.keys,
-          visitorId,
-          userName
-        })
-      });
+      // 즉시 모달 닫고 성공 알림 띄우기 (체감 속도 0초)
+      dismiss();
+      alert('푸시 알림 설정이 완료되었습니다! 🔔');
 
-      if (response.ok) {
-        alert('푸시 알림 설정이 완료되었습니다! 🔔');
-        dismiss();
-      } else {
-        throw new Error('Server returned ' + response.status);
-      }
+      // 서버 연동은 백그라운드에서 비동기 처리
+      (async () => {
+        try {
+          const userName = localStorage.getItem('korekore_nickname') || "KOREKORE 팬";
+          const registration = await navigator.serviceWorker.ready;
+          const subscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
+          });
+
+          const visitorId = localStorage.getItem('korekore_visitor_id') || 'unknown';
+          const subscriptionJson = subscription.toJSON();
+          
+          await fetch('/api/push/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              endpoint: subscriptionJson.endpoint,
+              keys: subscriptionJson.keys,
+              visitorId,
+              userName
+            })
+          });
+        } catch (bgError) {
+          console.error('Background push subscription failed:', bgError);
+        }
+      })();
+
     } catch (e) {
-      console.error('Push subscription failed:', e);
-      alert('알림 설정에 실패했습니다.');
+      console.error('Push permission request failed:', e);
+      alert('알림 권한 요청에 실패했습니다.');
     } finally {
       setIsSubscribing(false);
     }
