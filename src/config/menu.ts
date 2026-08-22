@@ -35,7 +35,7 @@ export const PORTAL_MENUS: MainCategory[] = [
         label: '투자 계산기',
         items: [
           { id: 'calc-avg', label: '물타기(평단가) 계산기', icon: '🛟', isReady: true },
-          { id: 'calc-compound', label: '복리 수익률 시뮬레이터', icon: '🪄', isReady: false }
+          { id: 'calc-compound', label: '복리 수익률(음/양) 팩폭 시뮬레이터', icon: '🔥', isReady: true }
         ]
       }
     ]

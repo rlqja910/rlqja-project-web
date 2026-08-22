@@ -34,3 +34,9 @@ server:
 app:
   python-worker:
     url: http://localhost:8000
+
+vapid:
+  public:
+    key: BNIeDxN-bE10w1cr3CbchMx6FfGPrpqckyE7C-84-QENctUN-9u_RQNwLe8A1UnLnZVitXI9a7H4NtE1T98jkgc
+  private:
+    key: B9nSP-owaNAB0mWtmCSfa82evjZoqUNcVWOf_tGeXHU
