@@ -117,18 +117,16 @@ export const PushSubscriptionModal: React.FC = () => {
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-[#0B0F19]/90 backdrop-blur-sm" onClick={dismiss}></div>
       <div className="relative bg-slate-900 border border-slate-700 shadow-2xl w-full max-w-md rounded-2xl p-6 animate-in zoom-in-95 duration-300">
-        <div className="absolute -top-6 -right-6 text-5xl animate-bounce">🔔</div>
-        
-        <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 leading-tight tracking-tight mt-2">
-          KOREKORE <span className="text-cyan-400">실시간 알림</span> 받기
-        </h3>
-        
-        <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700 mb-6">
-          <p className="text-sm sm:text-base text-slate-300 font-medium leading-relaxed">
-            KOREKORE의 실시간 증시 요약 리포트와 
-          </p>
-          <p className="text-sm sm:text-base text-slate-300 font-medium leading-relaxed">
-            주요 속보를 푸시 알림으로 편리하게 받아보세요.
+        <div className="p-8 text-center">
+          <div className="w-16 h-16 bg-gradient-to-tr from-purple-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg rotate-3">
+            <span className="text-3xl">🤫</span>
+          </div>
+          
+          <h2 className="text-2xl font-extrabold text-white mb-4 break-keep">
+            찌라시, 광고 <span className="text-red-400">절대</span> 안 보냅니다.
+          </h2>
+          <p className="text-slate-400 text-sm leading-relaxed mb-8 break-keep px-2">
+            하루 딱 3번. 장전/점심/장마감 때 진짜 필요한 시황 세 줄 요약만 조용히 띄워드리고 빠집니다.
           </p>
         </div>
 
