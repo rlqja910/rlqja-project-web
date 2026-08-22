@@ -15,17 +15,24 @@ interface ChartData {
   actualPct: number;
   arithmeticPct: number;
   price: number;
+  exchangeRate?: number;
 }
 
 interface CalcResult {
   success: boolean;
   ticker?: string;
+  isUsStock?: boolean;
+  currency?: string;
   actualReturnPct?: number;
   arithmeticReturnPct?: number;
   compoundEffectPct?: number;
   actualAmount?: number;
   arithmeticAmount?: number;
   compoundDiffAmount?: number;
+  fxImpactPct?: number;
+  fxImpactAmount?: number;
+  initialFx?: number;
+  currentFx?: number;
   chartData?: ChartData[];
   error?: string;
 }
@@ -39,11 +46,15 @@ export function CompoundCalcView() {
   });
   const [principal, setPrincipal] = useState('10000000');
   const [avgPrice, setAvgPrice] = useState('');
+  const [currency, setCurrency] = useState<'KRW'|'USD'>('KRW');
   
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<CalcResult | null>(null);
 
-  const formatMoney = (val: number) => {
+  const formatMoney = (val: number, cur: string = 'KRW') => {
+    if (cur === 'USD') {
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
+    }
     return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(val);
   };
 
@@ -65,6 +76,7 @@ export function CompoundCalcView() {
           startDate,
           principal: parseFloat(principal),
           avgPrice: avgPrice ? parseFloat(avgPrice) : null,
+          currency,
         }),
       });
       const data = await res.json();
@@ -109,12 +121,29 @@ export function CompoundCalcView() {
             />
           </div>
           <div>
-            <label className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">투자 원금 (KRW)</label>
+            <label className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">입력 통화 (KRW/USD)</label>
+            <div className="flex bg-slate-800 rounded-lg overflow-hidden border border-slate-700">
+              <button 
+                className={`flex-1 py-3 text-sm font-bold transition-colors ${currency === 'KRW' ? 'bg-cyan-600 text-white' : 'text-slate-400 hover:bg-slate-700'}`}
+                onClick={() => setCurrency('KRW')}
+              >
+                KRW (원)
+              </button>
+              <button 
+                className={`flex-1 py-3 text-sm font-bold transition-colors ${currency === 'USD' ? 'bg-cyan-600 text-white' : 'text-slate-400 hover:bg-slate-700'}`}
+                onClick={() => setCurrency('USD')}
+              >
+                USD (달러)
+              </button>
+            </div>
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">투자 원금 ({currency})</label>
             <input 
               type="number" 
               value={principal}
               onChange={(e) => setPrincipal(e.target.value)}
-              placeholder="10000000"
+              placeholder={currency === 'KRW' ? "10000000" : "10000"}
               className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white font-bold focus:border-cyan-400 focus:outline-none transition-colors"
             />
           </div>
@@ -158,7 +187,7 @@ export function CompoundCalcView() {
               <div className="text-3xl font-black text-slate-200">
                 {result.arithmeticReturnPct! > 0 ? '+' : ''}{result.arithmeticReturnPct}%
               </div>
-              <div className="text-slate-500 text-sm mt-1">{formatMoney(result.arithmeticAmount!)}</div>
+              <div className="text-slate-500 text-sm mt-1">{formatMoney(result.arithmeticAmount!, result.currency)}</div>
             </div>
 
             <div className={`bg-slate-800/80 rounded-xl p-5 border shadow-xl flex flex-col justify-center ${result.actualReturnPct! >= 0 ? 'border-cyan-500/50 shadow-cyan-900/20' : 'border-red-500/50 shadow-red-900/20'}`}>
@@ -166,9 +195,26 @@ export function CompoundCalcView() {
               <div className={`text-4xl font-black ${result.actualReturnPct! >= 0 ? 'text-cyan-400' : 'text-red-400'}`}>
                 {result.actualReturnPct! > 0 ? '+' : ''}{result.actualReturnPct}%
               </div>
-              <div className="text-slate-300 text-sm mt-1 font-bold">{formatMoney(result.actualAmount!)}</div>
+              <div className="text-slate-300 text-sm mt-1 font-bold">{formatMoney(result.actualAmount!, result.currency)}</div>
             </div>
           </div>
+
+          {result.isUsStock && result.currency === 'KRW' && result.fxImpactPct !== undefined && (
+            <div className="relative z-10 rounded-xl p-5 border flex flex-col justify-center bg-slate-800/80 border-slate-700 mt-4">
+              <div className="text-slate-400 text-xs font-bold mb-1 flex items-center justify-between">
+                <span>🌍 환율 변동 효과 (FX Impact)</span>
+                <span className="text-slate-500 font-normal">
+                  매수시: {result.initialFx?.toLocaleString()}원 ➔ 현재: {result.currentFx?.toLocaleString()}원
+                </span>
+              </div>
+              <div className={`text-2xl font-black ${result.fxImpactPct >= 0 ? 'text-green-400' : 'text-orange-400'}`}>
+                {result.fxImpactPct > 0 ? '+' : ''}{result.fxImpactPct}%
+              </div>
+              <div className="text-slate-300 text-sm mt-1 font-bold">
+                {result.fxImpactAmount! > 0 ? '+' : ''}{formatMoney(result.fxImpactAmount!, 'KRW')}
+              </div>
+            </div>
+          )}
 
           <div className={`relative z-10 rounded-xl p-6 border flex items-center justify-between gap-4 ${
             result.compoundEffectPct! < 0 
@@ -188,7 +234,7 @@ export function CompoundCalcView() {
             <div className="text-right shrink-0">
               <div className="text-xs font-bold opacity-70 mb-1">복리로 증발한/불려진 금액</div>
               <div className={`text-2xl sm:text-3xl font-black ${result.compoundEffectPct! < 0 ? 'text-red-400' : 'text-cyan-400'}`}>
-                {result.compoundDiffAmount! > 0 ? '+' : ''}{formatMoney(result.compoundDiffAmount!)}
+                {result.compoundDiffAmount! > 0 ? '+' : ''}{formatMoney(result.compoundDiffAmount!, result.currency)}
               </div>
             </div>
           </div>
