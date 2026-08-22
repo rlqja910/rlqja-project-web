@@ -10,6 +10,7 @@ import { AverageCalculatorView } from './views/AverageCalculatorView';
 import { KoreLiveView } from './views/KoreLiveView';
 import { FortuneCookieView } from './views/FortuneCookieView';
 import { PushSubscriptionModal } from './components/PushSubscriptionModal';
+import { LoyalUserModal } from './components/LoyalUserModal';
 import { useMagaMode } from './hooks/useMagaMode';
 
 interface Post {
@@ -68,6 +69,7 @@ function App() {
   const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
   const [logoClicks, setLogoClicks] = useState(0);
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(sessionStorage.getItem('admin_unlocked') === 'true');
+  const [showLoyalModal, setShowLoyalModal] = useState(false);
 
   const handleLogoClick = () => {
     handleTabChange('home');
@@ -121,6 +123,21 @@ function App() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ endpoint: `/#${activeTab}`, visitorId })
     }).catch(e => console.error('Failed to log visit:', e));
+
+    // Track visit days
+    const today = new Date().toLocaleDateString('ko-KR');
+    const visitDaysStr = localStorage.getItem('korekore_visit_days');
+    let visitDays: string[] = visitDaysStr ? JSON.parse(visitDaysStr) : [];
+    
+    if (!visitDays.includes(today)) {
+      visitDays.push(today);
+      localStorage.setItem('korekore_visit_days', JSON.stringify(visitDays));
+    }
+
+    if (visitDays.length >= 5 && !localStorage.getItem('korekore_nickname') && activeTab === 'report') {
+      setShowLoyalModal(true);
+    }
+
   }, [activeTab]);
 
   useEffect(() => {
@@ -478,6 +495,10 @@ function App() {
       )}
       
       <PushSubscriptionModal />
+      <LoyalUserModal 
+        isVisible={showLoyalModal} 
+        onComplete={() => setShowLoyalModal(false)} 
+      />
     </div>
   );
 }
