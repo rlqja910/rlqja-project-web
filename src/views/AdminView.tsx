@@ -86,11 +86,11 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-white p-4 sm:p-8 pb-32">
+    <div className="min-h-screen bg-[#09090b] font-['Outfit',sans-serif] text-white p-4 sm:p-8 pb-32">
       <div className="max-w-6xl mx-auto space-y-8">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2 sm:gap-4">
-            <h1 className="text-xl sm:text-3xl font-black text-cyan-400">관리자 대시보드</h1>
+            <h1 className="text-2xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">관리자 대시보드</h1>
             <button 
               onClick={() => {
                 if (confirm('현재 기기의 로컬 데이터(팝업 거절 기록 등)를 모두 초기화하시겠습니까?')) {
@@ -159,36 +159,36 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
         </div>
 
         {/* 탭 네비게이션 */}
-        <div className="flex gap-2 border-b border-slate-700/50 pb-2 mb-6 overflow-x-auto">
+        <div className="flex gap-2 sm:gap-4 border-b-2 border-slate-800 pb-4 mb-8 overflow-x-auto custom-scrollbar scroll-smooth">
           <button
             onClick={() => setActiveTab('stats')}
-            className={`px-5 py-2.5 font-bold text-sm rounded-t-lg transition-colors border-b-2 whitespace-nowrap ${
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition-all whitespace-nowrap shadow-lg flex-1 ${
               activeTab === 'stats' 
-                ? 'border-cyan-400 text-cyan-400 bg-slate-800/50' 
-                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/30'
+                ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-[0_0_15px_rgba(34,211,238,0.4)] scale-[1.02]' 
+                : 'bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-700/50'
             }`}
           >
             📊 통계 요약
           </button>
           <button
             onClick={() => setActiveTab('logs')}
-            className={`px-5 py-2.5 font-bold text-sm rounded-t-lg transition-colors border-b-2 whitespace-nowrap ${
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition-all whitespace-nowrap shadow-lg flex-1 ${
               activeTab === 'logs' 
-                ? 'border-cyan-400 text-cyan-400 bg-slate-800/50' 
-                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/30'
+                ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-[0_0_15px_rgba(192,132,252,0.4)] scale-[1.02]' 
+                : 'bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-700/50'
             }`}
           >
-            📋 시스템 접속 로그
+            📋 시스템 로그
           </button>
           <button
             onClick={() => setActiveTab('push')}
-            className={`px-5 py-2.5 font-bold text-sm rounded-t-lg transition-colors border-b-2 whitespace-nowrap ${
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition-all whitespace-nowrap shadow-lg flex-1 ${
               activeTab === 'push' 
-                ? 'border-red-400 text-red-400 bg-red-900/20' 
-                : 'border-transparent text-slate-400 hover:text-red-300 hover:bg-slate-800/30'
+                ? 'bg-gradient-to-r from-red-600 to-orange-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] scale-[1.02]' 
+                : 'bg-slate-800/50 text-slate-400 hover:text-red-300 hover:bg-slate-700/50'
             }`}
           >
-            🚨 실시간 푸시 발송
+            🚨 푸시 발송
           </button>
         </div>
 
@@ -573,7 +573,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                       </div>
                       <div>
                         <p className="text-sm font-bold text-slate-200">{log.title}</p>
-                        <p className="text-sm text-slate-400 line-clamp-2 mt-1">{log.body}</p>
+                        <p className="text-sm text-slate-400 line-clamp-2 mt-1">{log.content}</p>
                         {log.url && (
                           <a href={log.url} target="_blank" rel="noopener noreferrer" className="text-xs text-cyan-400 hover:underline mt-2 inline-block">
                             🔗 {log.url}
@@ -582,7 +582,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                       </div>
                       <div className="flex gap-4 mt-1 text-xs">
                         <span className="text-green-400">성공: {log.successCount}건</span>
-                        <span className="text-red-400">실패: {log.failureCount}건</span>
+                        <span className="text-red-400">실패: {log.failCount}건</span>
                       </div>
                     </div>
                   ))}
