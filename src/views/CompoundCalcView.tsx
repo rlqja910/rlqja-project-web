@@ -66,6 +66,14 @@ export function CompoundCalcView() {
     return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(val);
   };
 
+  const formatNumberInput = (val: string) => {
+    const numeric = val.replace(/[^0-9.]/g, '');
+    if (!numeric) return '';
+    const parts = numeric.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return parts.join('.');
+  };
+
   const calculate = async () => {
     if (!ticker || !startDate || !principal) {
       alert('종목, 매수일, 투자원금을 입력해주세요.');
@@ -151,10 +159,11 @@ export function CompoundCalcView() {
           <div>
             <label className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">투자 원금 ({currency})</label>
             <input 
-              type="number" 
-              value={principal}
-              onChange={(e) => setPrincipal(e.target.value)}
-              placeholder={currency === 'KRW' ? "10000000" : "10000"}
+              type="text" 
+              inputMode="decimal"
+              value={formatNumberInput(principal)}
+              onChange={(e) => setPrincipal(e.target.value.replace(/[^0-9.]/g, ''))}
+              placeholder={currency === 'KRW' ? "10,000,000" : "10,000"}
               className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white font-bold focus:border-cyan-400 focus:outline-none transition-colors"
             />
           </div>
@@ -163,9 +172,10 @@ export function CompoundCalcView() {
               매수 평단가 <span className="text-slate-500 font-normal">(선택항목)</span>
             </label>
             <input 
-              type="number" 
-              value={avgPrice}
-              onChange={(e) => setAvgPrice(e.target.value)}
+              type="text"
+              inputMode="decimal" 
+              value={formatNumberInput(avgPrice)}
+              onChange={(e) => setAvgPrice(e.target.value.replace(/[^0-9.]/g, ''))}
               placeholder="비워두면 매수일 종가 기준"
               className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white font-bold focus:border-cyan-400 focus:outline-none transition-colors"
             />
