@@ -63,7 +63,7 @@ export function CompoundCalcView() {
     if (cur === 'USD') {
       return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
     }
-    return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(val);
+    return new Intl.NumberFormat('ko-KR').format(Math.round(val)) + '원';
   };
 
   const formatNumberInput = (val: string) => {
@@ -208,7 +208,10 @@ export function CompoundCalcView() {
               <div className="text-2xl sm:text-3xl font-black text-slate-200">
                 {result.arithmeticReturnPct! > 0 ? '+' : ''}{result.arithmeticReturnPct}%
               </div>
-              <div className="text-slate-500 text-sm mt-1">{formatMoney(result.arithmeticAmount!, result.currency)}</div>
+              <div className="text-slate-500 text-sm mt-1">
+                {formatMoney(result.arithmeticAmount!, result.currency)}
+                {result.currency === 'USD' && result.currentFx && ` (약 ${formatMoney(result.arithmeticAmount! * result.currentFx, 'KRW')})`}
+              </div>
             </div>
 
             <div className={`bg-slate-800/80 rounded-xl p-5 border shadow-xl flex flex-col justify-center ${result.actualReturnPct! >= 0 ? 'border-cyan-500/50 shadow-cyan-900/20' : 'border-red-500/50 shadow-red-900/20'}`}>
@@ -216,7 +219,10 @@ export function CompoundCalcView() {
               <div className={`text-3xl sm:text-4xl font-black ${result.actualReturnPct! >= 0 ? 'text-cyan-400' : 'text-red-400'}`}>
                 {result.actualReturnPct! > 0 ? '+' : ''}{result.actualReturnPct}%
               </div>
-              <div className="text-slate-300 text-sm mt-1 font-bold">{formatMoney(result.actualAmount!, result.currency)}</div>
+              <div className="text-slate-300 text-sm mt-1 font-bold">
+                {formatMoney(result.actualAmount!, result.currency)}
+                {result.currency === 'USD' && result.currentFx && <span className="text-slate-400 font-normal ml-1">(약 {formatMoney(result.actualAmount! * result.currentFx, 'KRW')})</span>}
+              </div>
             </div>
           </div>
 
@@ -263,6 +269,11 @@ export function CompoundCalcView() {
               <div className={`text-2xl sm:text-3xl font-black ${result.compoundEffectPct! < 0 ? 'text-red-400' : 'text-cyan-400'}`}>
                 {result.compoundDiffAmount! > 0 ? '+' : ''}{formatMoney(result.compoundDiffAmount!, result.currency)}
               </div>
+              {result.currency === 'USD' && result.currentFx && (
+                <div className={`text-sm mt-1 font-bold ${result.compoundEffectPct! < 0 ? 'text-red-400/80' : 'text-cyan-400/80'}`}>
+                  (약 {result.compoundDiffAmount! > 0 ? '+' : ''}{formatMoney(result.compoundDiffAmount! * result.currentFx, 'KRW')})
+                </div>
+              )}
             </div>
           </div>
 
