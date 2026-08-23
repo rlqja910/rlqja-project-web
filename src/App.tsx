@@ -48,7 +48,10 @@ function App() {
   };
 
   useEffect(() => {
-    const handleHashChange = () => setActiveTab(getInitialTab());
+    const handleHashChange = () => {
+      setActiveTab(getInitialTab());
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    };
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
@@ -56,6 +59,7 @@ function App() {
   const handleTabChange = (tab: string) => {
     window.location.hash = tab;
     setActiveTab(tab);
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const [posts, setPosts] = useState<Post[]>([]);
