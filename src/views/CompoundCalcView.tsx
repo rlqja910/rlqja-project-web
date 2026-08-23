@@ -98,11 +98,11 @@ export function CompoundCalcView() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-20 animate-fade-in pt-4">
-      <div className="text-center space-y-2 mb-8">
-        <h1 className="text-3xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500 animate-pulse tracking-tight drop-shadow-[0_0_15px_rgba(192,38,211,0.5)]">
+      <div className="text-center space-y-2 mb-8 px-2">
+        <h1 className="text-2xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500 animate-pulse tracking-tight drop-shadow-[0_0_15px_rgba(192,38,211,0.5)] break-keep">
           🎢 야수의 심장 계좌 엑스레이
         </h1>
-        <p className="text-slate-300 text-sm sm:text-base font-bold mt-3 bg-slate-800/50 inline-block px-4 py-2 rounded-full border border-slate-700/50 shadow-lg">
+        <p className="text-slate-300 text-sm sm:text-base font-bold mt-3 bg-slate-800/50 inline-block px-4 py-2 rounded-full border border-slate-700/50 shadow-lg break-keep leading-relaxed">
           내 계좌가 얼마나 녹아내렸을까? 레버리지 롤러코스터 탑승 시뮬레이터 🐯🔥
         </p>
       </div>
@@ -175,9 +175,9 @@ export function CompoundCalcView() {
         <button 
           onClick={calculate}
           disabled={isLoading}
-          className="w-full bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-black text-lg py-4 rounded-xl shadow-[0_0_20px_rgba(220,38,38,0.3)] transition-all hover:shadow-[0_0_30px_rgba(220,38,38,0.5)] transform hover:-translate-y-1 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-black text-lg py-4 rounded-xl shadow-[0_0_20px_rgba(220,38,38,0.3)] transition-all hover:shadow-[0_0_30px_rgba(220,38,38,0.5)] transform hover:-translate-y-1 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed break-keep"
         >
-          {isLoading ? '팩트 폭행 계산 중... ⏳' : '뼈 때리는 결과 보기 💥'}
+          {isLoading ? '계좌 스캔 중... ⏳' : '내 계좌 엑스레이 찍기 💥'}
         </button>
       </div>
 
@@ -192,18 +192,18 @@ export function CompoundCalcView() {
             <p className="text-slate-400 text-sm">({startDate} ~ 현재)</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 relative z-10">
             <div className="bg-slate-800/50 rounded-xl p-5 border border-slate-700 flex flex-col justify-center">
-              <div className="text-slate-400 text-xs font-bold mb-1">단순 합산 수익 (기대치)</div>
-              <div className="text-3xl font-black text-slate-200">
+              <div className="text-slate-400 text-xs sm:text-sm font-bold mb-1">단순 합산 수익 (기대치)</div>
+              <div className="text-2xl sm:text-3xl font-black text-slate-200">
                 {result.arithmeticReturnPct! > 0 ? '+' : ''}{result.arithmeticReturnPct}%
               </div>
               <div className="text-slate-500 text-sm mt-1">{formatMoney(result.arithmeticAmount!, result.currency)}</div>
             </div>
 
             <div className={`bg-slate-800/80 rounded-xl p-5 border shadow-xl flex flex-col justify-center ${result.actualReturnPct! >= 0 ? 'border-cyan-500/50 shadow-cyan-900/20' : 'border-red-500/50 shadow-red-900/20'}`}>
-              <div className="text-slate-400 text-xs font-bold mb-1">실제 내 계좌 수익</div>
-              <div className={`text-4xl font-black ${result.actualReturnPct! >= 0 ? 'text-cyan-400' : 'text-red-400'}`}>
+              <div className="text-slate-400 text-xs sm:text-sm font-bold mb-1">실제 내 계좌 수익</div>
+              <div className={`text-3xl sm:text-4xl font-black ${result.actualReturnPct! >= 0 ? 'text-cyan-400' : 'text-red-400'}`}>
                 {result.actualReturnPct! > 0 ? '+' : ''}{result.actualReturnPct}%
               </div>
               <div className="text-slate-300 text-sm mt-1 font-bold">{formatMoney(result.actualAmount!, result.currency)}</div>
@@ -227,28 +227,28 @@ export function CompoundCalcView() {
             </div>
           )}
 
-          <div className={`relative z-10 rounded-xl p-6 border flex items-center justify-between gap-4 ${
+          <div className={`relative z-10 rounded-xl p-6 border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
             result.compoundEffectPct! < 0 
               ? 'bg-red-950/40 border-red-900/50 text-red-100' 
               : 'bg-cyan-950/40 border-cyan-900/50 text-cyan-100'
           }`}>
-            <div>
-              <div className="font-black text-lg mb-1">
+            <div className="flex-1">
+              <div className="font-black text-lg mb-1 break-keep">
                 {result.compoundEffectPct! < 0 ? '🚨 음의 복리 마술에 당했습니다!' : '✨ 양의 복리로 존버 승리!'}
               </div>
-              <div className="text-sm opacity-80">
+              <div className="text-sm opacity-80 break-keep leading-relaxed">
                 {result.compoundEffectPct! < 0 
                   ? '단순히 더한 수익률보다 실제 계좌가 처참하게 녹아내렸습니다. 이게 바로 변동성 끌림 현상입니다.'
                   : '오르락 내리락 복리 효과가 긍정적으로 작용하여 기대보다 더 많은 수익을 거뒀습니다!'}
               </div>
               {result.ticker && !/(2X|3X|BULL|BEAR|SOXL|TQQQ|SQQQ|SOXS|BOIL|KOLD|FAS|FAZ|YINN|YANG|UPRO|SPXU|BULZ|FNGU|FNGD|LABU|LABD)/i.test(result.ticker) && (
-                <div className="text-xs text-slate-300 mt-3 p-3 bg-slate-900/60 rounded-lg border border-slate-700 shadow-inner">
+                <div className="text-xs text-slate-300 mt-3 p-3 bg-slate-900/60 rounded-lg border border-slate-700 shadow-inner break-keep leading-relaxed">
                   💡 <strong>앗! 일반 주식(1X 본주)을 검색하셨나요?</strong><br />
                   일반 주식은 레버리지(2X/3X)처럼 <strong>음의 복리(변동성 끌림)</strong> 효과가 크지 않아서 단순 합산과 큰 차이가 없을 수 있습니다. 진정한 야수의 심장 테스트를 원하시면 <code>SOXL</code>이나 <code>TQQQ</code>를 입력해보세요! 🎢
                 </div>
               )}
             </div>
-            <div className="text-right shrink-0">
+            <div className="text-left sm:text-right shrink-0 w-full sm:w-auto pt-4 sm:pt-0 border-t sm:border-t-0 border-slate-700/50 sm:border-transparent">
               <div className="text-xs font-bold opacity-70 mb-1">복리로 증발한/불려진 금액</div>
               <div className={`text-2xl sm:text-3xl font-black ${result.compoundEffectPct! < 0 ? 'text-red-400' : 'text-cyan-400'}`}>
                 {result.compoundDiffAmount! > 0 ? '+' : ''}{formatMoney(result.compoundDiffAmount!, result.currency)}
