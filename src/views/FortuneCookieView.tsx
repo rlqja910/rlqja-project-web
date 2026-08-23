@@ -7,28 +7,18 @@ export const FortuneCookieView: React.FC = () => {
   const handleSmash = async () => {
     if (step !== 'idle') return;
 
-    const todayStr = new Date().toLocaleDateString('ko-KR');
-    const savedFortune = localStorage.getItem('korekore_fortune_text');
-    const savedDate = localStorage.getItem('korekore_fortune_date');
-
     setStep('smashing');
 
     const fetchPromise = (async () => {
-      if (savedDate === todayStr && savedFortune) {
-        return savedFortune;
-      } else {
-        try {
-          const response = await fetch('/api/fortune');
-          const data = await response.json();
-          if (data.success && data.fortune) {
-            localStorage.setItem('korekore_fortune_text', data.fortune);
-            localStorage.setItem('korekore_fortune_date', todayStr);
-            return data.fortune;
-          }
-          return data.fortune || "오늘의 운세를 불러오지 못했습니다.";
-        } catch (e) {
-          return "운명의 기를 모으는데 실패했습니다. 강제 존버하십시오.";
+      try {
+        const response = await fetch('/api/fortune');
+        const data = await response.json();
+        if (data.success && data.fortune) {
+          return data.fortune;
         }
+        return data.fortune || "오늘의 운세를 불러오지 못했습니다. 잠시 후 다시 시도해보세요.";
+      } catch (e) {
+        return "운명의 기를 모으는데 실패했습니다. 강제 존버하십시오.";
       }
     })();
 
