@@ -378,12 +378,12 @@ function App() {
           )}
           {activeTab === 'patchnotes' && <PatchNotesView patchNotes={patchNotes} />}
           {activeTab === 'calc-avg' && <AverageCalculatorView />}
-          { activeTab === 'admin-secret-2026' && <AdminView /> }
-          { activeTab === 'kore-live' && <KoreLiveView /> }
-          { activeTab === 'fortune' && <FortuneCookieView /> }
-          { activeTab === 'calc-compound' && <CompoundCalcView /> }
+          {activeTab === 'admin-secret-2026' && <AdminView />}
+          {activeTab === 'kore-live' && <KoreLiveView />}
+          {activeTab === 'fortune' && <FortuneCookieView />}
+          {activeTab === 'calc-compound' && <CompoundCalcView />}
           
-          { activeTab !== 'home' && activeTab !== 'report' && activeTab !== 'patchnotes' && activeTab !== 'scouter' && activeTab !== 'calc-avg' && activeTab !== 'calc-compound' && activeTab !== 'admin-secret-2026' && activeTab !== 'kore-live' && activeTab !== 'fortune' && activeTab !== 'admin' && (
+          {activeTab !== 'home' && activeTab !== 'report' && activeTab !== 'patchnotes' && activeTab !== 'scouter' && activeTab !== 'calc-avg' && activeTab !== 'calc-compound' && activeTab !== 'admin-secret-2026' && activeTab !== 'kore-live' && activeTab !== 'fortune' && activeTab !== 'admin' && (
              <div className="text-center py-32 text-slate-400">
                <div className="text-6xl mb-6">🚧</div>
                <h2 className="text-2xl font-bold text-white mb-2">공사 중입니다</h2>

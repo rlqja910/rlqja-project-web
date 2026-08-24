@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const VAPID_PUBLIC_KEY = 'BP4JbF_NrbG6cV3kTc_lnxuB7keMua1qGJrk20gjrsc-IY2J4LDZsJdh56cUbvttEocetu5T64iT-vyAfoChWDQ';
+const VAPID_PUBLIC_KEY = 'BJVoBxmb9z4AK0ejeNA-tccW9W5yP8gEL940DKZw9hI1aKNt2EKJiBojfqSdjVqrYRnYn_dWwDrbZNgeBVDfLX8';
 
 function urlB64ToUint8Array(base64String: string) {
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -38,24 +38,65 @@ export const PushSubscriptionModal: React.FC = () => {
   });
 
   useEffect(() => {
-    if (hasDismissed || !('serviceWorker' in navigator) || !('PushManager' in window)) {
-      return;
-    }
-    
-    if ('Notification' in window && Notification.permission === 'denied') {
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
       return;
     }
 
-    navigator.serviceWorker.ready.then((registration) => {
-      registration.pushManager.getSubscription().then((subscription) => {
-        if (!subscription) {
-          // Show popup after 3 seconds of entering site
-          const timer = setTimeout(() => {
-            setIsVisible(true);
-          }, 3000);
-          return () => clearTimeout(timer);
+    navigator.serviceWorker.ready.then(async (registration) => {
+      // VAPID 키 변경에 따른 기존 좀비 구독 정보 마이그레이션 (버전 2)
+      const currentPushVersion = 'v2';
+      const savedVersion = localStorage.getItem('korekore_push_version');
+      
+      let currentSubscription = await registration.pushManager.getSubscription();
+
+      if (savedVersion !== currentPushVersion) {
+        if (currentSubscription) {
+          // 기존 키로 꼬여있는 구독 강제 삭제
+          await currentSubscription.unsubscribe();
+          currentSubscription = null;
+          
+          // 이미 알림을 허용했던 유저라면 사용자 개입 없이 백그라운드에서 새 키로 즉시 재구독
+          if ('Notification' in window && Notification.permission === 'granted') {
+            try {
+              const newSub = await registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
+              });
+              
+              const visitorId = localStorage.getItem('korekore_visitor_id') || 'unknown';
+              const userName = localStorage.getItem('korekore_nickname') || "KOREKORE 팬";
+              const subscriptionJson = newSub.toJSON();
+              
+              await fetch('/api/push/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  endpoint: subscriptionJson.endpoint,
+                  keys: subscriptionJson.keys,
+                  visitorId,
+                  userName
+                })
+              });
+              currentSubscription = newSub; // 갱신 성공
+            } catch (e) {
+              console.error('Silent resubscription failed', e);
+            }
+          } else {
+            // 거절/보류 상태였던 유저라면 팝업을 다시 띄우기 위해 기록 삭제
+            localStorage.removeItem('korekore_push_dismissed_at');
+            setHasDismissed(false);
+          }
         }
-      });
+        localStorage.setItem('korekore_push_version', currentPushVersion);
+      }
+
+      // 구독 정보가 없고 거절도 안 했다면 3초 후 팝업 띄우기
+      if (!currentSubscription && !hasDismissed && ('Notification' in window && Notification.permission !== 'denied')) {
+        const timer = setTimeout(() => {
+          setIsVisible(true);
+        }, 3000);
+        return () => clearTimeout(timer);
+      }
     });
   }, [hasDismissed]);
 

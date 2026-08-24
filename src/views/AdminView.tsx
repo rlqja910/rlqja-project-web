@@ -18,9 +18,9 @@ interface AccessLog {
 
 export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?: () => void, isFetching?: boolean, onClose?: () => void }) {
   const [stats, setStats] = useState<StatData | null>(null);
-  const [topSearches, setTopSearches] = useState<{ term: string, count: number }[]>([]);
-  const [topPageViews, setTopPageViews] = useState<{ endpoint: string, count: number }[]>([]);
-  const [topReturningVisitors, setTopReturningVisitors] = useState<{ visitorId: string, daysVisited: number, totalActions: number }[]>([]);
+  const [topSearches, setTopSearches] = useState<{term: string, count: number}[]>([]);
+  const [topPageViews, setTopPageViews] = useState<{endpoint: string, count: number}[]>([]);
+  const [topReturningVisitors, setTopReturningVisitors] = useState<{visitorId: string, daysVisited: number, totalActions: number}[]>([]);
   const [recentLogs, setRecentLogs] = useState<AccessLog[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -29,7 +29,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   const [isPageViewsExpanded, setIsPageViewsExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState<'stats' | 'logs' | 'push'>('stats');
   const [filterVisitorId, setFilterVisitorId] = useState<string>('');
-  const [pushPayload, setPushPayload] = useState({ title: '⚠️ [긴급] KOREKORE 속보', body: '', url: 'https://korekore.vercel.app/#report', targetVisitorIds: '' });
+  const [pushPayload, setPushPayload] = useState({ title: '⚠️ [긴급] KOREKORE 속보', body: '', url: 'https://korekore.vercel.app', targetVisitorIds: '' });
   const [isSendingPush, setIsSendingPush] = useState(false);
   const [subscribers, setSubscribers] = useState<any[]>([]);
   const [pushLogs, setPushLogs] = useState<any[]>([]);
@@ -48,7 +48,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
         .then(res => res.json())
         .then(data => setSubscribers(data))
         .catch(console.error);
-
+        
       fetch('/api/push/logs')
         .then(res => res.json())
         .then(data => setPushLogs(data))
@@ -90,18 +90,18 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
       <div className="max-w-6xl mx-auto space-y-8">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2 sm:gap-4">
-            <h1 className="text-xl sm:text-3xl font-black text-cyan-400">관리자 대시보드</h1>
-            <button
+            <h1 className="text-2xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">관리자 대시보드</h1>
+            <button 
               onClick={() => {
                 if (confirm('현재 기기의 로컬 데이터(팝업 거절 기록 등)를 모두 초기화하시겠습니까?')) {
                   localStorage.removeItem('korekore_push_dismissed_at');
                   localStorage.removeItem('korekore_push_dismissed');
                   localStorage.removeItem('korekore_visitor_id');
                   sessionStorage.clear();
-
+                  
                   if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.getRegistrations().then(function (registrations) {
-                      for (let registration of registrations) {
+                    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                      for(let registration of registrations) {
                         if (registration.pushManager) {
                           registration.pushManager.getSubscription().then(sub => {
                             if (sub) sub.unsubscribe();
@@ -111,7 +111,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                       }
                     });
                   }
-
+                  
                   setTimeout(() => {
                     alert('데이터와 구독 정보가 초기화되었습니다. 새로고침합니다.');
                     window.location.reload();
@@ -122,7 +122,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
             >
               🧹 내 기기 초기화
             </button>
-            <button
+            <button 
               onClick={() => {
                 window.location.hash = 'home';
                 if (onClose) onClose();
@@ -134,7 +134,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
           </div>
           <div className="flex gap-2 sm:gap-3">
             {onForceFetch && (
-              <button
+              <button 
                 onClick={() => {
                   const inputPin = prompt('속보 포스팅을 실행하시려면 암호(PIN)를 입력하세요.');
                   if (inputPin === '1223') {
@@ -149,7 +149,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 {isFetching ? '수집 중...' : '🚀 수동 포스팅'}
               </button>
             )}
-            <button
+            <button 
               onClick={() => fetchAdminData(0)}
               className="px-2 sm:px-4 py-1.5 sm:py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg text-[10px] sm:text-sm transition-colors flex items-center gap-1 sm:gap-2"
             >
@@ -162,28 +162,31 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
         <div className="flex gap-2 sm:gap-4 border-b-2 border-slate-800 pb-4 mb-8 overflow-x-auto custom-scrollbar scroll-smooth">
           <button
             onClick={() => setActiveTab('stats')}
-            className={`px-5 py-2.5 font-bold text-sm rounded-t-lg transition-colors border-b-2 whitespace-nowrap ${activeTab === 'stats'
-              ? 'border-cyan-400 text-cyan-400 bg-slate-800/50'
-              : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/30'
-              }`}
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition-all whitespace-nowrap shadow-lg flex-1 ${
+              activeTab === 'stats' 
+                ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-[0_0_15px_rgba(34,211,238,0.4)] scale-[1.02]' 
+                : 'bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-700/50'
+            }`}
           >
             📊 통계 요약
           </button>
           <button
             onClick={() => setActiveTab('logs')}
-            className={`px-5 py-2.5 font-bold text-sm rounded-t-lg transition-colors border-b-2 whitespace-nowrap ${activeTab === 'logs'
-              ? 'border-cyan-400 text-cyan-400 bg-slate-800/50'
-              : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/30'
-              }`}
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition-all whitespace-nowrap shadow-lg flex-1 ${
+              activeTab === 'logs' 
+                ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-[0_0_15px_rgba(192,132,252,0.4)] scale-[1.02]' 
+                : 'bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-700/50'
+            }`}
           >
             📋 시스템 로그
           </button>
           <button
             onClick={() => setActiveTab('push')}
-            className={`px-5 py-2.5 font-bold text-sm rounded-t-lg transition-colors border-b-2 whitespace-nowrap ${activeTab === 'push'
-              ? 'border-red-400 text-red-400 bg-red-900/20'
-              : 'border-transparent text-slate-400 hover:text-red-300 hover:bg-slate-800/30'
-              }`}
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition-all whitespace-nowrap shadow-lg flex-1 ${
+              activeTab === 'push' 
+                ? 'bg-gradient-to-r from-red-600 to-orange-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] scale-[1.02]' 
+                : 'bg-slate-800/50 text-slate-400 hover:text-red-300 hover:bg-slate-700/50'
+            }`}
           >
             🚨 푸시 발송
           </button>
@@ -226,7 +229,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                         ))}
                       </ul>
                       {topSearches.length > 6 && (
-                        <button
+                        <button 
                           onClick={() => setIsSearchesExpanded(!isSearchesExpanded)}
                           className="w-full p-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700/30 transition-colors border-t border-slate-700/50"
                         >
@@ -262,7 +265,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                         ))}
                       </ul>
                       {topPageViews.length > 6 && (
-                        <button
+                        <button 
                           onClick={() => setIsPageViewsExpanded(!isPageViewsExpanded)}
                           className="w-full p-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700/30 transition-colors border-t border-slate-700/50"
                         >
@@ -288,7 +291,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                         <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
                           <div className="flex items-center gap-3 w-1/2">
                             <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-purple-400' : 'text-slate-500'}`}>{idx + 1}</span>
-                            <button
+                            <button 
                               onClick={() => {
                                 setFilterVisitorId(visitor.visitorId);
                                 setActiveTab('logs');
@@ -296,7 +299,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                                 // We'll rely on the fetchAdminData call below by passing page 0.
                                 // But since state update is async, we can just call it here with the id directly or add useEffect.
                               }}
-                              className="font-medium text-slate-200 text-xs truncate hover:text-cyan-400 hover:underline text-left"
+                              className="font-medium text-slate-200 text-xs truncate hover:text-cyan-400 hover:underline text-left" 
                               title={visitor.visitorId}
                             >
                               {visitor.visitorId}
@@ -331,7 +334,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   <span className="text-xs text-slate-400 bg-slate-800 px-2 py-1 rounded border border-slate-700 truncate max-w-[150px] sm:max-w-[200px]" title={filterVisitorId}>
                     ID: {filterVisitorId}
                   </span>
-                  <button
+                  <button 
                     onClick={() => {
                       setFilterVisitorId('');
                     }}
@@ -377,11 +380,11 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 </tbody>
               </table>
             </div>
-
+            
             {/* Pagination Controls */}
             {totalPages > 1 && (
               <div className="p-4 border-t border-slate-700/50 bg-slate-800/30 flex justify-center gap-2 items-center">
-                <button
+                <button 
                   onClick={() => fetchAdminData(Math.max(0, currentPage - 1))}
                   disabled={currentPage === 0 || isLoading}
                   className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-medium transition-colors"
@@ -391,7 +394,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 <span className="text-slate-400 text-sm font-medium px-4">
                   {currentPage + 1} / {totalPages}
                 </span>
-                <button
+                <button 
                   onClick={() => fetchAdminData(Math.min(totalPages - 1, currentPage + 1))}
                   disabled={currentPage === totalPages - 1 || isLoading}
                   className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-medium transition-colors"
@@ -414,18 +417,18 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
             <div className="p-6 space-y-5">
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">알림 제목</label>
-                <input
-                  type="text"
+                <input 
+                  type="text" 
                   value={pushPayload.title}
-                  onChange={(e) => setPushPayload({ ...pushPayload, title: e.target.value })}
+                  onChange={(e) => setPushPayload({...pushPayload, title: e.target.value})}
                   className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-red-500 focus:outline-none transition-colors"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">알림 내용</label>
-                <textarea
+                <textarea 
                   value={pushPayload.body}
-                  onChange={(e) => setPushPayload({ ...pushPayload, body: e.target.value })}
+                  onChange={(e) => setPushPayload({...pushPayload, body: e.target.value})}
                   placeholder="미친 떡상 종목 포착! 지금 바로 확인하세요!"
                   rows={3}
                   className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-red-500 focus:outline-none transition-colors custom-scrollbar"
@@ -433,10 +436,10 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">클릭 시 이동할 URL</label>
-                <input
-                  type="text"
+                <input 
+                  type="text" 
                   value={pushPayload.url}
-                  onChange={(e) => setPushPayload({ ...pushPayload, url: e.target.value })}
+                  onChange={(e) => setPushPayload({...pushPayload, url: e.target.value})}
                   className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-slate-400 focus:border-red-500 focus:outline-none transition-colors"
                 />
               </div>
@@ -445,45 +448,45 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   <label className="block text-sm font-medium text-slate-300">대상 유저 선택 (CRM)</label>
                   <span className="text-xs text-slate-400">총 {subscribers.length}명 구독 중</span>
                 </div>
-
-                <input
-                  type="text"
+                
+                <input 
+                  type="text" 
                   placeholder="이름이나 Visitor ID로 검색..."
                   value={searchSubscriber}
                   onChange={(e) => setSearchSubscriber(e.target.value)}
                   className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-300 focus:border-red-500 mb-3"
                 />
-
+                
                 <div className="bg-slate-900 border border-slate-700 rounded-lg max-h-60 overflow-y-auto custom-scrollbar p-2 space-y-1">
                   {subscribers
                     .filter(sub => {
                       const query = searchSubscriber.toLowerCase();
-                      return (sub.userName && sub.userName.toLowerCase().includes(query)) ||
-                        (sub.visitorId && sub.visitorId.toLowerCase().includes(query));
+                      return (sub.userName && sub.userName.toLowerCase().includes(query)) || 
+                             (sub.visitorId && sub.visitorId.toLowerCase().includes(query));
                     })
                     .map(sub => (
-                      <label key={sub.id} className="flex items-center gap-3 p-2 hover:bg-slate-800 rounded-md cursor-pointer transition-colors border border-transparent hover:border-slate-700">
-                        <input
-                          type="checkbox"
-                          className="w-4 h-4 rounded text-red-500 focus:ring-red-500 bg-slate-700 border-slate-600"
-                          checked={selectedSubscribers.includes(sub.visitorId)}
-                          onChange={(e) => {
-                            if (e.target.checked) {
-                              setSelectedSubscribers(prev => [...prev, sub.visitorId]);
-                            } else {
-                              setSelectedSubscribers(prev => prev.filter(id => id !== sub.visitorId));
-                            }
-                          }}
-                        />
-                        <div className="flex flex-col">
-                          <span className="text-sm font-bold text-slate-200">
-                            {sub.userName || 'KOREKORE 팬'} <span className="text-xs text-slate-500 font-normal ml-1">님</span>
-                          </span>
-                          <span className="text-xs text-slate-500">{sub.visitorId}</span>
-                        </div>
-                      </label>
-                    ))}
-
+                    <label key={sub.id} className="flex items-center gap-3 p-2 hover:bg-slate-800 rounded-md cursor-pointer transition-colors border border-transparent hover:border-slate-700">
+                      <input 
+                        type="checkbox" 
+                        className="w-4 h-4 rounded text-red-500 focus:ring-red-500 bg-slate-700 border-slate-600"
+                        checked={selectedSubscribers.includes(sub.visitorId)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedSubscribers(prev => [...prev, sub.visitorId]);
+                          } else {
+                            setSelectedSubscribers(prev => prev.filter(id => id !== sub.visitorId));
+                          }
+                        }}
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-sm font-bold text-slate-200">
+                          {sub.userName || 'KOREKORE 팬'} <span className="text-xs text-slate-500 font-normal ml-1">님</span>
+                        </span>
+                        <span className="text-xs text-slate-500">{sub.visitorId}</span>
+                      </div>
+                    </label>
+                  ))}
+                  
                   {subscribers.length === 0 && (
                     <div className="text-center p-4 text-sm text-slate-500">
                       아직 푸시 알림을 구독한 유저가 없습니다.
@@ -492,7 +495,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 </div>
                 <div className="flex justify-between items-center mt-2">
                   <p className="text-xs text-red-400 font-medium">선택 안 하면 전체 발송됩니다.</p>
-                  <button
+                  <button 
                     onClick={() => setSelectedSubscribers([])}
                     className="text-xs text-slate-400 hover:text-white"
                   >
@@ -517,15 +520,15 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                       alert('알림 내용을 입력해주세요.');
                       return;
                     }
-
+                    
                     const targetList = selectedSubscribers;
-
-                    const confirmMsg = targetList.length > 0
+                      
+                    const confirmMsg = targetList.length > 0 
                       ? `${targetList.length}명의 선택된 유저에게 푸시 알림을 발송하시겠습니까? (취소 불가)`
                       : '정말 모든 유저에게 푸시 알림을 발송하시겠습니까? (취소 불가)';
-
+                      
                     if (!confirm(confirmMsg)) return;
-
+                    
                     setIsSendingPush(true);
                     try {
                       const res = await fetch('/api/push/send', {
@@ -537,8 +540,8 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                         })
                       });
                       if (res.ok) {
-                        alert('푸시 알림이 성공적으로 발송되었습니다! 🚀');
-                        setPushPayload({ ...pushPayload, body: '' });
+                        alert('발송 명령이 서버에 전달되었습니다! 🚀\n실제 발송 성공 여부는 3초 후 하단의 "최근 발송 이력"에서 확인해주세요.');
+                        setPushPayload({...pushPayload, body: ''});
                         setSelectedSubscribers([]);
                         // 3초 후 데이터 새로고침
                         setTimeout(() => fetchAdminData(0), 3000);
@@ -556,7 +559,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   {isSendingPush ? '발송 중...' : (selectedSubscribers.length > 0 ? '선택 유저에게 쏘기 🎯' : '전체 유저에게 푸시 쏘기 💥')}
                 </button>
               </div>
-
+              
               <div className="pt-8 border-t border-slate-700 mt-6">
                 <h3 className="text-sm font-bold text-slate-300 mb-4">최근 발송 이력</h3>
                 <div className="space-y-3 max-h-80 overflow-y-auto custom-scrollbar pr-2">
@@ -572,7 +575,12 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                       </div>
                       <div>
                         <p className="text-sm font-bold text-slate-200">{log.title}</p>
-                        <p className="text-sm text-slate-400 line-clamp-2 mt-1">{log.body}</p>
+                        <p className="text-sm text-slate-400 line-clamp-2 mt-1">{log.content}</p>
+                        {log.url && (
+                          <a href={log.url} target="_blank" rel="noopener noreferrer" className="text-xs text-cyan-400 hover:underline mt-2 inline-block">
+                            🔗 {log.url}
+                          </a>
+                        )}
                       </div>
                       <div className="flex gap-4 mt-1 text-xs">
                         <span className="text-green-400">성공: {log.successCount}건</span>
