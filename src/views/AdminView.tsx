@@ -37,7 +37,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   const [selectedSubscribers, setSelectedSubscribers] = useState<string[]>([]);
 
   useEffect(() => {
-    fetchAdminData(0);
+    fetchAdminData(currentPage);
     const interval = setInterval(() => fetchAdminData(currentPage), 30000);
     return () => clearInterval(interval);
   }, [currentPage]);
@@ -86,7 +86,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-white p-4 sm:p-8 pb-32">
+    <div className="min-h-screen bg-[#09090b] font-['Outfit',sans-serif] text-white p-4 sm:p-8 pb-32">
       <div className="max-w-6xl mx-auto space-y-8">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2 sm:gap-4">
@@ -159,7 +159,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
         </div>
 
         {/* 탭 네비게이션 */}
-        <div className="flex gap-2 border-b border-slate-700/50 pb-2 mb-6 overflow-x-auto">
+        <div className="flex gap-2 sm:gap-4 border-b-2 border-slate-800 pb-4 mb-8 overflow-x-auto custom-scrollbar scroll-smooth">
           <button
             onClick={() => setActiveTab('stats')}
             className={`px-5 py-2.5 font-bold text-sm rounded-t-lg transition-colors border-b-2 whitespace-nowrap ${activeTab === 'stats'
@@ -176,7 +176,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/30'
               }`}
           >
-            📋 시스템 접속 로그
+            📋 시스템 로그
           </button>
           <button
             onClick={() => setActiveTab('push')}
@@ -185,7 +185,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               : 'border-transparent text-slate-400 hover:text-red-300 hover:bg-slate-800/30'
               }`}
           >
-            🚨 실시간 푸시 발송
+            🚨 푸시 발송
           </button>
         </div>
 
@@ -540,6 +540,8 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                         alert('푸시 알림이 성공적으로 발송되었습니다! 🚀');
                         setPushPayload({ ...pushPayload, body: '' });
                         setSelectedSubscribers([]);
+                        // 3초 후 데이터 새로고침
+                        setTimeout(() => fetchAdminData(0), 3000);
                       } else {
                         alert('발송 실패: 서버 오류');
                       }
@@ -574,7 +576,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                       </div>
                       <div className="flex gap-4 mt-1 text-xs">
                         <span className="text-green-400">성공: {log.successCount}건</span>
-                        <span className="text-red-400">실패: {log.failureCount}건</span>
+                        <span className="text-red-400">실패: {log.failCount}건</span>
                       </div>
                     </div>
                   ))}
