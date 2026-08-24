@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://korekore.vercel.app/sitemap.xml
