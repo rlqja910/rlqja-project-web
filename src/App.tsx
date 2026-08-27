@@ -72,13 +72,8 @@ function App() {
   const [visibleCount, setVisibleCount] = useState(5);
   const [visitorStats, setVisitorStats] = useState({ totalVisitors: 0, todayVisitors: 0 });
   const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
-  const [showNotice, setShowNotice] = useState(() => {
-    const dismissed = localStorage.getItem('korekore_notice_0827');
-    if (dismissed === 'true') return false;
-    // 3일 뒤(8월 30일)까지만 노출
-    const expiryDate = new Date('2026-08-30T00:00:00Z');
-    return new Date() < expiryDate;
-  });
+  // 점검 후 공지 배너 (평소엔 false, 점검 직후에만 true로 활성화)
+  const [showNotice, setShowNotice] = useState(false);
   const [logoClicks, setLogoClicks] = useState(0);
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(sessionStorage.getItem('admin_unlocked') === 'true');
   const [showLoyalModal, setShowLoyalModal] = useState(false);
