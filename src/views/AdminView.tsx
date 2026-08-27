@@ -27,10 +27,9 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   const [totalPages, setTotalPages] = useState(0);
   const [isSearchesExpanded, setIsSearchesExpanded] = useState(false);
   const [isPageViewsExpanded, setIsPageViewsExpanded] = useState(false);
-  const [activeTab, setActiveTab] = useState<'stats' | 'logs' | 'push' | 'feedbacks' | 'buybacks'>('stats');
+  const [activeTab, setActiveTab] = useState<'stats' | 'logs' | 'push' | 'feedbacks'>('stats');
   const [filterVisitorId, setFilterVisitorId] = useState<string>('');
   const [feedbacks, setFeedbacks] = useState<any[]>([]);
-  const [buybacks, setBuybacks] = useState<any[]>([]);
   const [pushPayload, setPushPayload] = useState({ title: '⚠️ [긴급] KOREKORE 속보', body: '', url: 'https://korekore.vercel.app', targetVisitorIds: '' });
   const [isSendingPush, setIsSendingPush] = useState(false);
   const [subscribers, setSubscribers] = useState<any[]>([]);
@@ -59,11 +58,6 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
       fetch('/api/admin/feedbacks')
         .then(res => res.json())
         .then(data => setFeedbacks(data))
-        .catch(console.error);
-    } else if (activeTab === 'buybacks') {
-      fetch('/api/buybacks')
-        .then(res => res.json())
-        .then(data => setBuybacks(data))
         .catch(console.error);
     }
   }, [activeTab]);
