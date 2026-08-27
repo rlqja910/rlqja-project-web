@@ -12,9 +12,15 @@ type IngooRecord = {
 export const ReverseTradeView: React.FC = () => {
   const [records, setRecords] = useState<IngooRecord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [survivorCount, setSurvivorCount] = useState(0);
 
   useEffect(() => {
     fetchRecords();
+    
+    // Fake survivor counter
+    const daysSince = Math.floor((Date.now() - new Date('2024-01-01').getTime()) / (1000 * 60 * 60 * 24));
+    const count = 12450 + (daysSince * 37) + (new Date().getHours() * 3);
+    setSurvivorCount(count);
   }, []);
 
   const fetchRecords = async () => {
@@ -50,6 +56,16 @@ export const ReverseTradeView: React.FC = () => {
               AI가 인구신(전인구) 유튜브 채널을 <span className="text-yellow-400 font-bold">1시간 간격으로</span> 감시합니다.<br/>
               새 영상이 올라오면 즉시 반대 포지션을 잡아드립니다.
             </p>
+
+            <div className="mt-6 inline-flex items-center gap-3 bg-black/40 px-5 py-3 rounded-2xl border border-yellow-500/30 backdrop-blur-sm">
+              <span className="text-2xl">🔥</span>
+              <div className="text-left">
+                <div className="text-xs text-yellow-500 font-bold">인구신과 반대로 가서 지옥에서 살아남은 자들</div>
+                <div className="text-white font-black text-xl tabular-nums">
+                  총 <span className="text-yellow-400 text-2xl">{survivorCount.toLocaleString()}</span> 명
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
