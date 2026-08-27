@@ -71,7 +71,7 @@ export const PORTAL_MENUS: MainCategory[] = [
         label: '사이트 소식',
         items: [
           { id: 'patchnotes', label: 'KOREKORE 패치 노트', icon: '📌', isReady: true },
-          { id: 'feedback', label: '사용자 건의 게시판', icon: '💬', isReady: false }
+          { id: 'feedback', label: '사용자 건의 게시판', icon: '💬', isReady: true }
         ]
       }
     ]

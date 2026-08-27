@@ -27,8 +27,9 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   const [totalPages, setTotalPages] = useState(0);
   const [isSearchesExpanded, setIsSearchesExpanded] = useState(false);
   const [isPageViewsExpanded, setIsPageViewsExpanded] = useState(false);
-  const [activeTab, setActiveTab] = useState<'stats' | 'logs' | 'push'>('stats');
+  const [activeTab, setActiveTab] = useState<'stats' | 'logs' | 'push' | 'feedbacks'>('stats');
   const [filterVisitorId, setFilterVisitorId] = useState<string>('');
+  const [feedbacks, setFeedbacks] = useState<any[]>([]);
   const [pushPayload, setPushPayload] = useState({ title: '⚠️ [긴급] KOREKORE 속보', body: '', url: 'https://korekore.vercel.app', targetVisitorIds: '' });
   const [isSendingPush, setIsSendingPush] = useState(false);
   const [subscribers, setSubscribers] = useState<any[]>([]);
@@ -52,6 +53,11 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
       fetch('/api/push/logs')
         .then(res => res.json())
         .then(data => setPushLogs(data))
+        .catch(console.error);
+    } else if (activeTab === 'feedbacks') {
+      fetch('/api/admin/feedbacks')
+        .then(res => res.json())
+        .then(data => setFeedbacks(data))
         .catch(console.error);
     }
   }, [activeTab]);
@@ -189,6 +195,16 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
             }`}
           >
             🚨 푸시 발송
+          </button>
+          <button
+            onClick={() => setActiveTab('feedbacks')}
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition-all whitespace-nowrap shadow-lg flex-1 ${
+              activeTab === 'feedbacks' 
+                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)] scale-[1.02]' 
+                : 'bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-700/50'
+            }`}
+          >
+            📬 건의함
           </button>
         </div>
 
@@ -592,6 +608,44 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                     <p className="text-xs text-slate-500 text-center py-4">발송 이력이 없습니다.</p>
                   )}
                 </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'feedbacks' && (
+          <div className="bg-slate-800/40 rounded-2xl border border-emerald-500/30 overflow-hidden shadow-lg max-w-4xl mx-auto">
+            <div className="p-5 border-b border-slate-700/50 bg-emerald-900/20 flex justify-between items-center">
+              <h2 className="text-xl font-bold text-emerald-400 flex items-center gap-2">
+                📬 유저 건의함
+              </h2>
+              <span className="text-sm text-slate-400 bg-slate-800 px-3 py-1 rounded-full">
+                총 {feedbacks.length}개의 건의
+              </span>
+            </div>
+            <div className="p-6">
+              <div className="space-y-4 max-h-[600px] overflow-y-auto custom-scrollbar pr-2">
+                {feedbacks.map((fb: any) => (
+                  <div key={fb.id} className="bg-slate-900/80 border border-slate-700 p-5 rounded-xl flex flex-col gap-3 hover:border-emerald-500/50 transition-colors">
+                    <div className="flex justify-between items-start border-b border-slate-800 pb-3">
+                      <span className="text-xs text-slate-400 font-mono">
+                        ID: {fb.visitorId}
+                      </span>
+                      <span className="text-xs text-slate-500 font-medium bg-slate-800 px-2 py-1 rounded">
+                        {new Date(fb.createdAt).toLocaleString('ko-KR')}
+                      </span>
+                    </div>
+                    <div className="text-slate-200 whitespace-pre-wrap leading-relaxed text-sm sm:text-base pt-1">
+                      {fb.message}
+                    </div>
+                  </div>
+                ))}
+                {feedbacks.length === 0 && (
+                  <div className="text-center py-10 text-slate-500">
+                    <span className="text-4xl block mb-4">📭</span>
+                    아직 등록된 건의사항이 없습니다.
+                  </div>
+                )}
               </div>
             </div>
           </div>
