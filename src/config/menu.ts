@@ -29,7 +29,8 @@ export const PORTAL_MENUS: MainCategory[] = [
           { id: 'report', label: '실시간 시황 리포트', icon: '🔥', isReady: true },
           { id: 'scouter', label: '주식 전투력 측정기', icon: '🔭', isReady: true },
           { id: 'fortune', label: '주식 포춘쿠키 (운세)', icon: '🥠', isReady: true },
-          { id: 'reverse-trade', label: '인구신 AI 스캐너', icon: '🤖', isReady: true }
+          { id: 'reverse-trade', label: '인구신 AI 스캐너', icon: '🤖', isReady: true },
+          { id: 'buyback', label: '기업 소각장 (자사주)', icon: '🔥', isReady: true }
         ]
       },
       {
