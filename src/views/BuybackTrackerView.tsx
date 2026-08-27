@@ -7,6 +7,7 @@ type Buyback = {
   targetValue: number;
   currentValue: number;
   unit: string;
+  marketType: 'KOSPI' | 'KOSDAQ';
   comment: string;
   updatedAt: string;
 };
@@ -14,9 +15,15 @@ type Buyback = {
 export const BuybackTrackerView: React.FC = () => {
   const [buybacks, setBuybacks] = useState<Buyback[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  
+  const [activeMarket, setActiveMarket] = useState<'ALL' | 'KOSPI' | 'KOSDAQ'>('ALL');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState<'progress' | 'targetValue' | 'newest'>('targetValue');
 
   useEffect(() => {
     fetchBuybacks();
+    const interval = setInterval(fetchBuybacks, 60000);
+    return () => clearInterval(interval);
   }, []);
 
   const fetchBuybacks = async () => {
@@ -33,11 +40,28 @@ export const BuybackTrackerView: React.FC = () => {
     }
   };
 
+  const filteredAndSortedBuybacks = buybacks
+    .filter(bb => {
+      if (activeMarket !== 'ALL' && bb.marketType !== activeMarket) return false;
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        return bb.companyName.toLowerCase().includes(query) || bb.ticker.toLowerCase().includes(query);
+      }
+      return true;
+    })
+    .sort((a, b) => {
+      if (sortBy === 'progress') {
+        return (b.currentValue / b.targetValue) - (a.currentValue / a.targetValue);
+      } else if (sortBy === 'targetValue') {
+        return b.targetValue - a.targetValue;
+      } else {
+        return b.id - a.id;
+      }
+    });
+
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500 pb-20">
-      {/* Header Section */}
       <div className="relative rounded-3xl overflow-hidden border border-red-500/30 shadow-[0_0_50px_rgba(220,38,38,0.2)]">
-        {/* Animated fiery background */}
         <div className="absolute inset-0 bg-gradient-to-br from-red-900 via-orange-900 to-yellow-900 opacity-80"></div>
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBjeD0iMTAiIGN5PSIxMCIgcj0iMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIwLjEiLz48L3N2Zz4=')]"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
@@ -51,35 +75,53 @@ export const BuybackTrackerView: React.FC = () => {
           </h2>
           <p className="text-orange-100/80 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed font-medium">
             국내 주주가치를 높이는 최고의 호재, <strong className="text-orange-400">자사주 매입 및 소각!</strong><br />
-            실시간 공시를 기반으로 국내 기업들이 약속한 자사주를 얼마나 불태우고 있는지 추적합니다.<br />
-            <span className="inline-block mt-3 px-3 py-1 bg-red-900/50 border border-red-500/50 text-red-200 text-xs sm:text-sm rounded-full font-bold shadow-[0_0_10px_rgba(220,38,38,0.3)]">
-              ⚠️ 100억 원 이상의 굵직한 빅딜(Big Deal) 공시만 취급합니다!
-            </span>
+            실시간 공시를 기반으로 국내 기업들이 약속한 자사주를 얼마나 불태우고 있는지 추적합니다.
           </p>
-          
-          <button 
-            onClick={fetchBuybacks}
-            className="mt-6 px-6 py-2.5 bg-black/40 hover:bg-black/60 border border-orange-500/30 text-orange-400 rounded-full font-bold text-sm transition-all flex items-center gap-2 mx-auto"
-          >
-            <span>현황 업데이트</span> 🔄
-          </button>
+
+          <div className="mt-8 flex flex-col md:flex-row gap-4 justify-between items-center bg-black/40 p-4 rounded-2xl border border-orange-500/20">
+            <div className="flex bg-slate-900 p-1 rounded-xl w-full md:w-auto">
+              {['ALL', 'KOSPI', 'KOSDAQ'].map(tab => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveMarket(tab as any)}
+                  className={`flex-1 md:px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeMarket === tab ? 'bg-orange-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
+                >
+                  {tab === 'ALL' ? '전체' : tab}
+                </button>
+              ))}
+            </div>
+
+            <div className="w-full relative">
+              <input 
+                type="text" 
+                placeholder="검색..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-slate-900 text-white px-4 py-2.5 rounded-xl border border-slate-700 focus:border-orange-500 outline-none"
+              />
+            </div>
+
+            <select 
+              value={sortBy} 
+              onChange={(e) => setSortBy(e.target.value as any)}
+              className="w-full md:w-auto bg-slate-900 text-white px-4 py-2.5 rounded-xl border border-slate-700 outline-none cursor-pointer"
+            >
+              <option value="targetValue">🔥 규모 큰 순</option>
+              <option value="progress">📈 진행률 높은 순</option>
+              <option value="newest">✨ 최신 순</option>
+            </select>
+          </div>
         </div>
       </div>
 
-      {/* Tracker List */}
       <div className="space-y-6">
         {isLoading ? (
-          <div className="text-center py-20 text-orange-500/50 animate-pulse font-bold text-lg">
-            🔥 용광로 온도 올리는 중...
-          </div>
-        ) : buybacks.length === 0 ? (
-          <div className="text-center py-20 bg-slate-900/50 rounded-3xl border border-slate-800 text-slate-500">
-            아직 추적 중인 기업이 없습니다.<br/>
-            (곧 역대급 소각 기업이 추가될 예정입니다!)
-          </div>
+          <div className="text-center py-20 text-orange-500/50 animate-pulse font-bold text-lg">🔥 용광로 온도 올리는 중...</div>
+        ) : filteredAndSortedBuybacks.length === 0 ? (
+          <div className="text-center py-20 bg-slate-900/50 rounded-3xl border border-slate-800 text-slate-500">조건에 맞는 공시가 없습니다.</div>
         ) : (
           <div className="grid gap-6">
-            {buybacks.map((buyback) => {
+            {filteredAndSortedBuybacks.map((buyback) => {
               const percentage = Math.min(100, Math.max(0, (buyback.currentValue / buyback.targetValue) * 100));
               const isCompleted = percentage >= 100;
               
