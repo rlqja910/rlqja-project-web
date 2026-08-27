@@ -163,17 +163,22 @@ function App() {
   const handlePostClick = (post: Post) => {
     setSelectedPost(post);
     
-    setPosts(prevPosts => prevPosts.map(p => 
-        p.id === post.id ? { ...p, viewCount: (p.viewCount || 0) + 1 } : p
-    ));
-
     const visitorId = localStorage.getItem('korekore_visitor_id');
     if (visitorId) {
-        fetch(`/api/posts/${post.id}/view`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ visitorId })
-        }).catch(console.error);
+        // 프론트엔드 시각적 주작(Optimistic Update) 중복 방지
+        const viewedKey = `viewed_${post.id}`;
+        if (!sessionStorage.getItem(viewedKey)) {
+            setPosts(prevPosts => prevPosts.map(p => 
+                p.id === post.id ? { ...p, viewCount: (p.viewCount || 0) + 1 } : p
+            ));
+            sessionStorage.setItem(viewedKey, 'true');
+
+            fetch(`/api/posts/${post.id}/view`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ visitorId })
+            }).catch(console.error);
+        }
     }
   };
 
