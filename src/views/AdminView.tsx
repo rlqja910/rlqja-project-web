@@ -27,7 +27,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   const [totalPages, setTotalPages] = useState(0);
   const [isSearchesExpanded, setIsSearchesExpanded] = useState(false);
   const [isPageViewsExpanded, setIsPageViewsExpanded] = useState(false);
-  const [activeTab, setActiveTab] = useState<'stats' | 'logs' | 'push' | 'feedbacks'>('stats');
+  const [activeTab, setActiveTab] = useState<'stats' | 'logs' | 'push' | 'feedbacks' | 'scheduler'>('stats');
   const [filterVisitorId, setFilterVisitorId] = useState<string>('');
   const [feedbacks, setFeedbacks] = useState<any[]>([]);
   const [pushPayload, setPushPayload] = useState({ title: '⚠️ [긴급] KOREKORE 속보', body: '', url: 'https://korekore.vercel.app', targetVisitorIds: '' });
@@ -36,6 +36,10 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   const [pushLogs, setPushLogs] = useState<any[]>([]);
   const [searchSubscriber, setSearchSubscriber] = useState('');
   const [selectedSubscribers, setSelectedSubscribers] = useState<string[]>([]);
+  
+  const [schedulerLogs, setSchedulerLogs] = useState<any[]>([]);
+  const [schedulerPage, setSchedulerPage] = useState(0);
+  const [schedulerTotalPages, setSchedulerTotalPages] = useState(0);
 
   useEffect(() => {
     fetchAdminData(currentPage);
@@ -59,8 +63,24 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
         .then(res => res.json())
         .then(data => setFeedbacks(data))
         .catch(console.error);
+    } else if (activeTab === 'scheduler') {
+      fetchSchedulerHistory(0);
     }
   }, [activeTab]);
+
+  const fetchSchedulerHistory = async (page = 0) => {
+    try {
+      const res = await fetch(`/api/admin/scheduler-history?page=${page}&size=15&t=` + new Date().getTime());
+      if (res.ok) {
+        const data = await res.json();
+        setSchedulerLogs(data.content);
+        setSchedulerTotalPages(data.totalPages);
+        setSchedulerPage(data.number);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const fetchAdminData = async (page = 0) => {
     setIsLoading(true);
@@ -205,6 +225,16 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
             }`}
           >
             📬 건의함
+          </button>
+          <button
+            onClick={() => setActiveTab('scheduler')}
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition-all whitespace-nowrap shadow-lg flex-1 ${
+              activeTab === 'scheduler' 
+                ? 'bg-gradient-to-r from-amber-600 to-yellow-600 text-white shadow-[0_0_15px_rgba(245,158,11,0.4)] scale-[1.02]' 
+                : 'bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-700/50'
+            }`}
+          >
+            ⏳ 스케줄러 이력
           </button>
         </div>
 
@@ -648,6 +678,83 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 )}
               </div>
             </div>
+          </div>
+        )}
+
+        {activeTab === 'scheduler' && (
+          <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden shadow-lg max-w-5xl mx-auto">
+            <div className="p-3 sm:p-5 border-b border-slate-700/50 bg-slate-800/60 flex justify-between items-center">
+              <h2 className="text-base sm:text-lg font-bold text-amber-400 flex items-center gap-2">
+                ⏳ 자동화 봇 & 스케줄러 실행 이력
+              </h2>
+              <button onClick={() => fetchSchedulerHistory(schedulerPage)} className="text-xs bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded transition-colors">새로고침</button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs sm:text-sm">
+                <thead className="bg-slate-800/80 text-slate-400">
+                  <tr>
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-medium">시간</th>
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-medium">작업명 (Job Name)</th>
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-medium text-center">결과</th>
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-medium text-right">소요 시간</th>
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-medium w-1/3">비고 / 에러</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-700/50">
+                  {schedulerLogs.map((log) => (
+                    <tr key={log.id} className="hover:bg-slate-700/20 transition-colors">
+                      <td className="px-2 sm:px-4 py-2 sm:py-3 text-slate-400 whitespace-nowrap">
+                        {new Date(log.executionTime).toLocaleString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                      </td>
+                      <td className="px-2 sm:px-4 py-2 sm:py-3 font-bold text-slate-200">
+                        {log.jobName}
+                      </td>
+                      <td className="px-2 sm:px-4 py-2 sm:py-3 text-center">
+                        <span className={`px-2 py-1 rounded text-xs font-bold ${log.status === 'SUCCESS' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
+                          {log.status === 'SUCCESS' ? '성공' : '실패'}
+                        </span>
+                      </td>
+                      <td className="px-2 sm:px-4 py-2 sm:py-3 text-slate-400 text-right font-mono">
+                        {log.durationMs ? `${log.durationMs}ms` : '-'}
+                      </td>
+                      <td className="px-2 sm:px-4 py-2 sm:py-3 text-slate-500 text-[10px] sm:text-xs">
+                        <div className="max-h-16 overflow-y-auto custom-scrollbar pr-1">
+                          {log.errorMessage || '-'}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                  {schedulerLogs.length === 0 && (
+                    <tr>
+                      <td colSpan={5} className="p-8 text-center text-slate-500">실행 이력이 없습니다.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+            
+            {/* Pagination */}
+            {schedulerTotalPages > 1 && (
+              <div className="p-4 border-t border-slate-700/50 bg-slate-800/30 flex justify-center gap-2 items-center">
+                <button 
+                  onClick={() => fetchSchedulerHistory(Math.max(0, schedulerPage - 1))}
+                  disabled={schedulerPage === 0}
+                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-medium transition-colors"
+                >
+                  이전
+                </button>
+                <span className="text-slate-400 text-sm font-medium px-4">
+                  {schedulerPage + 1} / {schedulerTotalPages}
+                </span>
+                <button 
+                  onClick={() => fetchSchedulerHistory(Math.min(schedulerTotalPages - 1, schedulerPage + 1))}
+                  disabled={schedulerPage === schedulerTotalPages - 1}
+                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-medium transition-colors"
+                >
+                  다음
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
