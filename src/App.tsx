@@ -72,6 +72,7 @@ function App() {
   const [visibleCount, setVisibleCount] = useState(5);
   const [visitorStats, setVisitorStats] = useState({ totalVisitors: 0, todayVisitors: 0 });
   const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
+  const [showNotice, setShowNotice] = useState(true);
   const [logoClicks, setLogoClicks] = useState(0);
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(sessionStorage.getItem('admin_unlocked') === 'true');
   const [showLoyalModal, setShowLoyalModal] = useState(false);
@@ -231,10 +232,11 @@ function App() {
           <div className="w-24 h-24 bg-slate-800/50 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-slate-700/50 shadow-2xl">
             <span className="text-5xl animate-bounce">🛠️</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">서비스 점검 중</h1>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">서버 맛탱이감 (점검중)</h1>
           <p className="text-slate-400 max-w-md mx-auto leading-relaxed text-sm sm:text-base">
-            더 나은 KOREKORE를 위해 시스템 점검을 진행하고 있습니다.<br />
-            잠시 후 다시 접속해 주세요.
+            이용자 폭주로 인해 서버가 터져서 임시 점검 중입니다... ㅠㅠ<br />
+            개발자가 <strong>노예(직장인)</strong>라서 퇴근 전까진 대처가 늦을 수 있습니다.<br />
+            최대한 빠르게 고쳐놓을테니 조금만 양해해 주시면 압도적 감사!! 🙏
           </p>
           <div className="pt-8">
             <button 
@@ -355,6 +357,26 @@ function App() {
             </div>
           </div>
         </header>
+
+        {showNotice && (
+          <div className="bg-gradient-to-r from-orange-900/40 via-red-900/40 to-orange-900/40 border-b border-orange-500/30 px-4 py-3 relative z-20">
+            <div className="max-w-6xl mx-auto flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl animate-bounce">🥵</span>
+                <p className="text-sm sm:text-[15px] text-orange-200 font-medium break-keep">
+                  <strong className="text-orange-400">[긴급 점검 완료]</strong> 서버 터진거 방금 땜빵했습니다... 
+                  개발자가 직장인이라 점검/복구가 느렸던 점 뼈저리게 반성합니다 ㅠㅠ 너그러운 양해 부탁드립니다!
+                </p>
+              </div>
+              <button 
+                onClick={() => setShowNotice(false)}
+                className="text-orange-400 hover:text-orange-300 p-2 shrink-0 rounded-lg hover:bg-orange-500/10 transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        )}
 
         <div className="p-4 sm:p-8 pb-40 md:pb-8 max-w-6xl mx-auto w-full">
           {activeTab === 'admin' && isAdminUnlocked && <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} />}
