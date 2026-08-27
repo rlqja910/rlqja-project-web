@@ -186,10 +186,16 @@ function App() {
   const fetchPosts = async () => {
     try {
       const response = await fetch('/api/posts?t=' + new Date().getTime(), { cache: 'no-store' });
+      if (!response.ok) throw new Error("Server error");
       const data = await response.json();
-      setPosts(data);
+      if (Array.isArray(data)) {
+        setPosts(data);
+      } else {
+        setPosts([]);
+      }
     } catch (error) {
       console.error("게시물을 불러오는데 실패했습니다.", error);
+      setPosts([]);
     } finally {
       setIsLoading(false);
     }
@@ -198,10 +204,16 @@ function App() {
   const fetchPatchNotes = async () => {
     try {
       const response = await fetch('/api/patch-notes?t=' + new Date().getTime(), { cache: 'no-store' });
+      if (!response.ok) throw new Error("Server error");
       const data = await response.json();
-      setPatchNotes(data);
+      if (Array.isArray(data)) {
+        setPatchNotes(data);
+      } else {
+        setPatchNotes([]);
+      }
     } catch (error) {
       console.error("패치노트를 불러오는데 실패했습니다.", error);
+      setPatchNotes([]);
     }
   };
 
