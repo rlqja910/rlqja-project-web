@@ -13,6 +13,7 @@ import { ReverseTradeView } from './views/ReverseTradeView';
 import { CompoundCalcView } from './views/CompoundCalcView';
 import { FeedbackView } from './views/FeedbackView';
 import { PushSubscriptionModal } from './components/PushSubscriptionModal';
+import { NoticePopup } from './components/NoticePopup';
 import { LoyalUserModal } from './components/LoyalUserModal';
 import { useMagaMode } from './hooks/useMagaMode';
 
@@ -301,6 +302,7 @@ function App() {
 
   return (
     <div className={`min-h-screen flex bg-[#0B0F19] text-slate-300 font-sans selection:bg-purple-500/30 relative ${isMagaMode ? 'border-[8px] border-red-600' : ''}`}>
+      <NoticePopup />
       {isMagaMode && (
         <div className="fixed inset-0 bg-gradient-to-b from-red-900/60 via-red-800/20 to-orange-900/40 mix-blend-color-dodge animate-pulse pointer-events-none z-[100] backdrop-blur-[1px]"></div>
       )}
