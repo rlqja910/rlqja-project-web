@@ -110,11 +110,17 @@ function App() {
       if (res.ok) {
         const data = await res.json();
         setVisitorStats(data);
+        // 서버 복구 감지 로직: 이전에 터진 걸 목격한 유저라면 띠배너 노출
+        if (localStorage.getItem('korekore_experienced_downtime') === 'true') {
+          setShowNotice(true);
+        }
       } else {
         setIsMaintenanceMode(true);
+        localStorage.setItem('korekore_experienced_downtime', 'true');
       }
     } catch (e) {
       setIsMaintenanceMode(true);
+      localStorage.setItem('korekore_experienced_downtime', 'true');
       console.error('Failed to fetch stats:', e);
     }
   };
@@ -371,7 +377,7 @@ function App() {
               </div>
               <button 
                 onClick={() => {
-                  localStorage.setItem('korekore_notice_0827', 'true');
+                  localStorage.removeItem('korekore_experienced_downtime');
                   setShowNotice(false);
                 }}
                 className="text-orange-400 hover:text-orange-300 p-2 shrink-0 rounded-lg hover:bg-orange-500/10 transition-colors"
