@@ -6,8 +6,8 @@ export const StockReportView: React.FC<{
   isLoading: boolean;
   visibleCount: number;
   setVisibleCount: React.Dispatch<React.SetStateAction<number>>;
-  setSelectedPost: React.Dispatch<React.SetStateAction<any>>;
-}> = ({ posts, isLoading, visibleCount, setVisibleCount, setSelectedPost }) => {
+  onPostClick: (post: any) => void;
+}> = ({ posts, isLoading, visibleCount, setVisibleCount, onPostClick }) => {
   const { isMagaMode } = useMagaMode();
 
   const renderMagaContent = (content: string) => {
@@ -67,13 +67,16 @@ export const StockReportView: React.FC<{
               {posts.slice(0, visibleCount).map((post) => (
                 <div
                   key={post.id}
-                  onClick={() => setSelectedPost(post)}
+                  onClick={() => onPostClick(post)}
                   className={`group p-5 sm:p-6 rounded-2xl bg-slate-900/80 backdrop-blur-sm border transition-all cursor-pointer shadow-lg active:scale-[0.98] sm:active:scale-100 ${isMagaMode ? 'border-red-900/50 hover:border-red-500 hover:shadow-[0_0_15px_rgba(220,38,38,0.2)]' : 'border-slate-800 hover:border-cyan-500/30 hover:shadow-cyan-500/10'}`}
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <h4 className={`text-base sm:text-lg font-bold break-keep transition-colors ${isMagaMode ? 'text-red-500 drop-shadow-[0_0_5px_rgba(239,68,68,0.8)] animate-pulse' : 'text-slate-100 group-hover:text-cyan-300'}`}>
+                      <h4 className={`text-base sm:text-lg font-bold break-keep transition-colors flex items-center gap-2 ${isMagaMode ? 'text-red-500 drop-shadow-[0_0_5px_rgba(239,68,68,0.8)] animate-pulse' : 'text-slate-100 group-hover:text-cyan-300'}`}>
                         {isMagaMode ? `🚀 [초강력 떡상] ${post.title}` : post.title}
+                        {(post.viewCount || 0) >= 500 && (
+                          <span className="px-2 py-0.5 rounded text-[10px] sm:text-xs font-black bg-red-500/20 text-red-500 border border-red-500/30 whitespace-nowrap">🔥 HOT</span>
+                        )}
                       </h4>
                     </div>
                   </div>
@@ -84,7 +87,12 @@ export const StockReportView: React.FC<{
 
                   <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-4 sm:gap-0 mt-4 pt-4 border-t border-slate-800/50">
                     <div className="flex justify-between items-center w-full sm:w-auto">
-                      <span className="text-xs font-medium text-slate-500">{new Date(post.createdAt).toLocaleString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-medium text-slate-500">{new Date(post.createdAt).toLocaleString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+                        <span className="text-xs font-medium text-slate-400 flex items-center gap-1">
+                          👁️ {post.viewCount || 0}
+                        </span>
+                      </div>
                       <span className="text-xs text-indigo-400 font-medium sm:hidden sm:group-hover:block ml-4">상세 리포트 보기 &rarr;</span>
                     </div>
                   </div>

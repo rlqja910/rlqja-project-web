@@ -21,6 +21,7 @@ interface Post {
   detailedContent: string;
   hashtags: string;
   createdAt: string;
+  viewCount?: number;
 }
 
 interface PatchNote {
@@ -158,6 +159,23 @@ function App() {
     fetchPosts();
     fetchPatchNotes();
   }, []);
+
+  const handlePostClick = (post: Post) => {
+    setSelectedPost(post);
+    
+    setPosts(prevPosts => prevPosts.map(p => 
+        p.id === post.id ? { ...p, viewCount: (p.viewCount || 0) + 1 } : p
+    ));
+
+    const visitorId = localStorage.getItem('korekore_visitor_id');
+    if (visitorId) {
+        fetch(`/api/posts/${post.id}/view`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ visitorId })
+        }).catch(console.error);
+    }
+  };
 
   const fetchPosts = async () => {
     try {
@@ -405,7 +423,7 @@ function App() {
               isLoading={isLoading} 
               visibleCount={visibleCount} 
               setVisibleCount={setVisibleCount} 
-              setSelectedPost={setSelectedPost} 
+              onPostClick={handlePostClick} 
             />
           )}
           {activeTab === 'patchnotes' && <PatchNotesView patchNotes={patchNotes} />}
