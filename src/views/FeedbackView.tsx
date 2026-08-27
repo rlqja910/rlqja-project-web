@@ -22,6 +22,8 @@ export const FeedbackView: React.FC = () => {
         setIsSuccess(true);
         setMessage('');
         setTimeout(() => setIsSuccess(false), 3000);
+      } else if (response.status === 429) {
+        alert('워워.. 대표님(노예) 숨 좀 고릅시다! 😡\n너무 많은 건의를 보냈습니다. 나중에 다시 시도해주세요.');
       } else {
         alert('전송에 실패했습니다 ㅠㅠ 다시 시도해주세요.');
       }
