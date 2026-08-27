@@ -45,29 +45,29 @@ export const ReverseTradeView: React.FC = () => {
           <div className="absolute top-0 left-0 w-full h-4 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgNDBoNDBMMCAwaC00MHoiIGZpbGw9IiNlYWIzMDgiLz48L3N2Zz4=')] opacity-80"></div>
           <div className="absolute bottom-0 left-0 w-full h-4 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgNDBoNDBMMCAwaC00MHoiIGZpbGw9IiNlYWIzMDgiLz48L3N2Zz4=')] opacity-80"></div>
 
-          <div className="text-center space-y-4 mb-2 mt-2 relative z-10">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-yellow-500/20 border border-yellow-500/50 mb-2">
-              <span className="text-3xl">🤖</span>
+          <div className="text-center space-y-3 mb-2 mt-2 relative z-10">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-yellow-500/20 border border-yellow-500/50 mb-1 shadow-lg shadow-yellow-500/20">
+              <span className="text-2xl">🤖</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white break-keep">
-              <span className="text-yellow-400">인구신 AI</span> 자동 스캐너
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white break-keep tracking-tight">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500">인구신 AI</span> 자동 스캐너
             </h2>
-            <p className="text-slate-400 text-sm sm:text-base break-keep">
-              AI가 인구신(전인구) 유튜브 채널을 <span className="text-yellow-400 font-bold">1시간 간격으로</span> 감시합니다.<br/>
+            <p className="text-slate-400 text-xs sm:text-sm break-keep max-w-md mx-auto leading-relaxed">
+              AI가 인구신 유튜브 채널을 <span className="text-yellow-400 font-bold">1시간 간격으로</span> 감시하여,<br className="hidden sm:block"/>
               새 영상이 올라오면 즉시 반대 포지션을 잡아드립니다.
             </p>
-            <div className="mt-6 mb-2">
-              <p className="text-yellow-500 font-black italic text-lg sm:text-xl drop-shadow-md">
+            <div className="mt-4 mb-2">
+              <p className="text-yellow-500/90 font-bold italic text-sm sm:text-base drop-shadow-md">
                 "인구는 신이다. 모두 틀리는 것은<br className="sm:hidden" /> 정답을 100% 알아야만 할 수 있는 것이다."
               </p>
             </div>
 
-            <div className="mt-4 inline-flex items-center gap-3 bg-black/40 px-5 py-3 rounded-2xl border border-yellow-500/30 backdrop-blur-sm">
-              <span className="text-2xl">🔥</span>
+            <div className="mt-4 inline-flex items-center gap-3 bg-black/40 px-4 py-2.5 rounded-xl border border-yellow-500/30 backdrop-blur-sm shadow-inner">
+              <span className="text-lg">🔥</span>
               <div className="text-left">
-                <div className="text-xs text-yellow-500 font-bold">인구신과 반대로 가서 지옥에서 살아남은 자들</div>
-                <div className="text-white font-black text-xl tabular-nums">
-                  총 <span className="text-yellow-400 text-2xl">{survivorCount.toLocaleString()}</span> 명
+                <div className="text-[10px] sm:text-xs text-yellow-500 font-bold tracking-wide">인구신과 반대로 가서 지옥에서 살아남은 자들</div>
+                <div className="text-white font-black text-sm sm:text-base tabular-nums">
+                  총 <span className="text-yellow-400 text-lg sm:text-xl">{survivorCount.toLocaleString()}</span> 명
                 </div>
               </div>
             </div>
