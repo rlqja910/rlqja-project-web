@@ -212,16 +212,6 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
           >
             📬 건의함
           </button>
-          <button
-            onClick={() => setActiveTab('buybacks')}
-            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition-all whitespace-nowrap shadow-lg flex-1 ${
-              activeTab === 'buybacks' 
-                ? 'bg-gradient-to-r from-orange-600 to-red-600 text-white shadow-[0_0_15px_rgba(234,88,12,0.4)] scale-[1.02]' 
-                : 'bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-700/50'
-            }`}
-          >
-            🔥 자사주 관리
-          </button>
         </div>
 
         {activeTab === 'stats' && (
@@ -663,70 +653,6 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   </div>
                 )}
               </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'buybacks' && (
-          <div className="bg-slate-800/40 rounded-2xl border border-orange-500/30 overflow-hidden shadow-lg max-w-4xl mx-auto p-6 space-y-6">
-            <h2 className="text-xl font-bold text-orange-400">🔥 자사주(Buyback) 소각장 관리</h2>
-            
-            <div className="bg-slate-900/80 p-5 rounded-xl border border-slate-700">
-              <h3 className="text-white font-bold mb-3">새 항목 추가</h3>
-              <form onSubmit={async (e) => {
-                e.preventDefault();
-                const fd = new FormData(e.currentTarget);
-                const req = {
-                  companyName: fd.get('companyName'),
-                  ticker: fd.get('ticker'),
-                  targetValue: Number(fd.get('targetValue')),
-                  currentValue: Number(fd.get('currentValue')),
-                  unit: fd.get('unit'),
-                  comment: fd.get('comment')
-                };
-                try {
-                  await fetch('/api/admin/buybacks', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(req)
-                  });
-                  alert('추가되었습니다!');
-                  const res = await fetch('/api/buybacks');
-                  setBuybacks(await res.json());
-                  (e.target as HTMLFormElement).reset();
-                } catch (err) {
-                  alert('에러 발생');
-                }
-              }} className="grid grid-cols-2 gap-4">
-                <input name="companyName" placeholder="회사명 (예: Apple)" required className="bg-slate-800 p-2 rounded text-white" />
-                <input name="ticker" placeholder="티커 (예: AAPL)" required className="bg-slate-800 p-2 rounded text-white" />
-                <input name="targetValue" type="number" step="0.01" placeholder="목표 규모 (예: 110)" required className="bg-slate-800 p-2 rounded text-white" />
-                <input name="currentValue" type="number" step="0.01" placeholder="현재 규모 (예: 50)" required className="bg-slate-800 p-2 rounded text-white" />
-                <input name="unit" placeholder="단위 (예: 억 달러)" required className="bg-slate-800 p-2 rounded text-white" />
-                <input name="comment" placeholder="코멘트" required className="bg-slate-800 p-2 rounded text-white" />
-                <button type="submit" className="col-span-2 bg-orange-600 hover:bg-orange-500 text-white font-bold py-2 rounded">추가하기</button>
-              </form>
-            </div>
-
-            <div className="space-y-4">
-              {buybacks.map((bb: any) => (
-                <div key={bb.id} className="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
-                  <div>
-                    <div className="font-bold text-white">{bb.companyName} ({bb.ticker})</div>
-                    <div className="text-sm text-slate-400">
-                      진행: {bb.currentValue} / {bb.targetValue} {bb.unit}
-                    </div>
-                  </div>
-                  <button onClick={async () => {
-                    if (confirm('삭제하시겠습니까?')) {
-                      await fetch('/api/admin/buybacks/' + bb.id, { method: 'DELETE' });
-                      setBuybacks(buybacks.filter((b: any) => b.id !== bb.id));
-                    }
-                  }} className="text-red-500 hover:text-red-400 font-bold text-sm">
-                    삭제
-                  </button>
-                </div>
-              ))}
             </div>
           </div>
         )}
