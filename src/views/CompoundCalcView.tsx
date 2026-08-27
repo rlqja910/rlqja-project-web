@@ -33,6 +33,8 @@ interface CalcResult {
   fxImpactAmount?: number;
   initialFx?: number;
   currentFx?: number;
+  initialPrice?: number;
+  currentPrice?: number;
   chartData?: ChartData[];
   error?: string;
 }
@@ -199,7 +201,25 @@ export function CompoundCalcView() {
             <h2 className="text-2xl font-bold text-white mb-1">
               <span className="text-cyan-400">{result.ticker}</span> 수익률 분석
             </h2>
-            <p className="text-slate-400 text-sm">({startDate} ~ 현재)</p>
+            <p className="text-slate-400 text-sm mb-4">({startDate} ~ 현재)</p>
+
+            {result.initialPrice !== undefined && result.currentPrice !== undefined && (
+              <div className="flex justify-center gap-4 sm:gap-6 mb-6">
+                <div className="bg-slate-800/40 rounded-xl px-4 sm:px-6 py-3 border border-slate-700/50 flex flex-col items-center">
+                  <div className="text-slate-400 text-xs font-bold mb-1">매수 주가</div>
+                  <div className="text-lg sm:text-xl font-black text-slate-200">
+                    {result.isUsStock ? `$${result.initialPrice.toFixed(2)}` : `${result.initialPrice.toLocaleString()}원`}
+                  </div>
+                </div>
+                <div className="text-slate-600 flex items-center justify-center font-black text-xl sm:text-2xl">➔</div>
+                <div className="bg-slate-800/40 rounded-xl px-4 sm:px-6 py-3 border border-slate-700/50 flex flex-col items-center">
+                  <div className="text-slate-400 text-xs font-bold mb-1">현재 주가</div>
+                  <div className={`text-lg sm:text-xl font-black ${result.currentPrice > result.initialPrice ? 'text-cyan-400' : (result.currentPrice < result.initialPrice ? 'text-red-400' : 'text-slate-200')}`}>
+                    {result.isUsStock ? `$${result.currentPrice.toFixed(2)}` : `${result.currentPrice.toLocaleString()}원`}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 relative z-10">
