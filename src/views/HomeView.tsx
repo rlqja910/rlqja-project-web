@@ -80,7 +80,7 @@ export const HomeView: React.FC = () => {
             </span>
           </div>
         )}
-        <h2 className="relative text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight break-keep tracking-tight">
+        <h2 className="relative text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight break-keep tracking-tight">
           당신의 모든 것을 위한 <br />
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">
             KOREKORE 

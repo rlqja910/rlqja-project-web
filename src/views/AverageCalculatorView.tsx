@@ -279,7 +279,7 @@ export const AverageCalculatorView: React.FC = () => {
                 <div className="flex justify-between items-end">
                   <span className="text-cyan-400 font-bold">총 필요 자금 (원기옥)</span>
                   <div className="text-right">
-                    <span className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 drop-shadow-sm">
+                    <span className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 drop-shadow-sm">
                       {formatNumber(result.requiredCapital!)}
                     </span>
                     <span className="text-cyan-600 font-bold ml-2">원</span>

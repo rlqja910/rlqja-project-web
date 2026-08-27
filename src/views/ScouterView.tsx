@@ -327,7 +327,7 @@ export const ScouterView: React.FC = () => {
 
             <div className="flex flex-col items-center justify-center py-8 mb-2 relative">
               <div className="text-cyan-400/80 mb-2 tracking-[0.3em] text-sm font-black">POWER LEVEL</div>
-              <div className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 drop-shadow-[0_0_20px_rgba(6,182,212,0.6)]">
+              <div className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 drop-shadow-[0_0_20px_rgba(6,182,212,0.6)]">
                 {scannedPower.toLocaleString()}
               </div>
             </div>
