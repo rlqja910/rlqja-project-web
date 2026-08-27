@@ -51,7 +51,10 @@ export const BuybackTrackerView: React.FC = () => {
           </h2>
           <p className="text-orange-100/80 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed font-medium">
             국내 주주가치를 높이는 최고의 호재, <strong className="text-orange-400">자사주 매입 및 소각!</strong><br />
-            실시간 공시를 기반으로 국내 기업들이 약속한 자사주를 얼마나 불태우고 있는지 실시간으로 추적합니다.
+            실시간 공시를 기반으로 국내 기업들이 약속한 자사주를 얼마나 불태우고 있는지 추적합니다.<br />
+            <span className="inline-block mt-3 px-3 py-1 bg-red-900/50 border border-red-500/50 text-red-200 text-xs sm:text-sm rounded-full font-bold shadow-[0_0_10px_rgba(220,38,38,0.3)]">
+              ⚠️ 100억 원 이상의 굵직한 빅딜(Big Deal) 공시만 취급합니다!
+            </span>
           </p>
           
           <button 
