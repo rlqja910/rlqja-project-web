@@ -56,8 +56,13 @@ export const ReverseTradeView: React.FC = () => {
               AI가 인구신(전인구) 유튜브 채널을 <span className="text-yellow-400 font-bold">1시간 간격으로</span> 감시합니다.<br/>
               새 영상이 올라오면 즉시 반대 포지션을 잡아드립니다.
             </p>
+            <div className="mt-6 mb-2">
+              <p className="text-yellow-500 font-black italic text-lg sm:text-xl drop-shadow-md">
+                "인구는 신이다. 모두 틀리는 것은<br className="sm:hidden" /> 정답을 100% 알아야만 할 수 있는 것이다."
+              </p>
+            </div>
 
-            <div className="mt-6 inline-flex items-center gap-3 bg-black/40 px-5 py-3 rounded-2xl border border-yellow-500/30 backdrop-blur-sm">
+            <div className="mt-4 inline-flex items-center gap-3 bg-black/40 px-5 py-3 rounded-2xl border border-yellow-500/30 backdrop-blur-sm">
               <span className="text-2xl">🔥</span>
               <div className="text-left">
                 <div className="text-xs text-yellow-500 font-bold">인구신과 반대로 가서 지옥에서 살아남은 자들</div>
