@@ -72,7 +72,13 @@ function App() {
   const [visibleCount, setVisibleCount] = useState(5);
   const [visitorStats, setVisitorStats] = useState({ totalVisitors: 0, todayVisitors: 0 });
   const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
-  const [showNotice, setShowNotice] = useState(true);
+  const [showNotice, setShowNotice] = useState(() => {
+    const dismissed = localStorage.getItem('korekore_notice_0827');
+    if (dismissed === 'true') return false;
+    // 3일 뒤(8월 30일)까지만 노출
+    const expiryDate = new Date('2026-08-30T00:00:00Z');
+    return new Date() < expiryDate;
+  });
   const [logoClicks, setLogoClicks] = useState(0);
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(sessionStorage.getItem('admin_unlocked') === 'true');
   const [showLoyalModal, setShowLoyalModal] = useState(false);
@@ -369,7 +375,10 @@ function App() {
                 </p>
               </div>
               <button 
-                onClick={() => setShowNotice(false)}
+                onClick={() => {
+                  localStorage.setItem('korekore_notice_0827', 'true');
+                  setShowNotice(false);
+                }}
                 className="text-orange-400 hover:text-orange-300 p-2 shrink-0 rounded-lg hover:bg-orange-500/10 transition-colors"
               >
                 ✕
