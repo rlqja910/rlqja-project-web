@@ -47,7 +47,7 @@ export const ReverseTradeView: React.FC = () => {
               <span className="text-yellow-400">인구신 AI</span> 자동 스캐너
             </h2>
             <p className="text-slate-400 text-sm sm:text-base break-keep">
-              AI가 인구신(전인구) 유튜브 채널을 24시간 감시합니다.<br/>
+              AI가 인구신(전인구) 유튜브 채널을 <span className="text-yellow-400 font-bold">1시간 간격으로</span> 감시합니다.<br/>
               새 영상이 올라오면 즉시 반대 포지션을 잡아드립니다.
             </p>
           </div>
@@ -88,17 +88,20 @@ export const ReverseTradeView: React.FC = () => {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
-                    <div className="shrink-0 flex flex-col items-center">
-                      <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-2xl flex flex-col items-center justify-center border-2 ${
+                    <div className="shrink-0 flex flex-col gap-3">
+                      <a href={`https://www.youtube.com/watch?v=${record.videoId}`} target="_blank" rel="noreferrer" className="block relative group rounded-xl overflow-hidden border border-slate-700/50 w-full sm:w-48 aspect-video">
+                        <img src={`https://img.youtube.com/vi/${record.videoId}/mqdefault.jpg`} alt="YouTube Thumbnail" className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                          <span className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">▶ 증거 영상 보기</span>
+                        </div>
+                      </a>
+                      <div className={`w-full h-12 rounded-xl flex items-center justify-center border-2 ${
                         record.actionType === 'SHORT' ? 'border-blue-500 bg-blue-500/10 text-blue-400'
                         : record.actionType === 'LONG' ? 'border-red-500 bg-red-500/10 text-red-400'
                         : 'border-slate-500 bg-slate-500/10 text-slate-400'
                       }`}>
-                        <span className="text-2xl sm:text-3xl mb-1">
-                          {record.actionType === 'SHORT' ? '📉' : record.actionType === 'LONG' ? '🚀' : '🤷‍♂️'}
-                        </span>
                         <span className="font-black tracking-wider text-sm sm:text-base">
-                          {record.actionType === 'SHORT' ? '공매도' : record.actionType === 'LONG' ? '풀매수' : '관망'}
+                          {record.actionType === 'SHORT' ? '📉 공매도 추천' : record.actionType === 'LONG' ? '🚀 풀매수 추천' : '🤷‍♂️ 관망'}
                         </span>
                       </div>
                     </div>
