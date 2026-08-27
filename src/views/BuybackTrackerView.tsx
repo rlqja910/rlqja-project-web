@@ -81,13 +81,14 @@ export const BuybackTrackerView: React.FC = () => {
           <div className="grid gap-6">
             {buybacks.map((buyback) => {
               const percentage = Math.min(100, Math.max(0, (buyback.currentValue / buyback.targetValue) * 100));
+              const isCompleted = percentage >= 100;
               
               return (
-                <div key={buyback.id} className="bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 hover:border-orange-500/50 rounded-3xl p-6 sm:p-8 transition-all hover:shadow-[0_0_30px_rgba(249,115,22,0.15)] group relative overflow-hidden">
+                <div key={buyback.id} className={`bg-slate-900/80 backdrop-blur-sm border ${isCompleted ? 'border-yellow-500/80 shadow-[0_0_20px_rgba(234,179,8,0.3)]' : 'border-slate-700/50 hover:border-orange-500/50'} rounded-3xl p-6 sm:p-8 transition-all hover:shadow-[0_0_30px_rgba(249,115,22,0.15)] group relative overflow-hidden`}>
                   
                   {/* Subtle background glow based on progress */}
                   <div 
-                    className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity" 
+                    className={`absolute inset-0 bg-gradient-to-r ${isCompleted ? 'from-yellow-500/10 to-yellow-600/10' : 'from-orange-500/5 to-red-500/5'} opacity-0 group-hover:opacity-100 transition-opacity`} 
                     style={{ width: `${percentage}%` }}
                   ></div>
 
@@ -97,7 +98,14 @@ export const BuybackTrackerView: React.FC = () => {
                         <span className="text-xs font-black bg-slate-800 text-slate-300 px-2 py-1 rounded-md border border-slate-700">
                           {buyback.ticker}
                         </span>
-                        <h3 className="text-2xl sm:text-3xl font-black text-white">{buyback.companyName}</h3>
+                        <h3 className="text-2xl sm:text-3xl font-black text-white flex items-center gap-2">
+                          {buyback.companyName}
+                          {isCompleted && (
+                            <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 whitespace-nowrap">
+                              👑 완료 (명예의 전당)
+                            </span>
+                          )}
+                        </h3>
                       </div>
                       <p className="text-orange-400 font-bold text-sm sm:text-base">
                         {buyback.comment}
@@ -107,10 +115,10 @@ export const BuybackTrackerView: React.FC = () => {
                     <div className="text-left sm:text-right bg-black/30 p-4 rounded-2xl border border-slate-800/80 shrink-0">
                       <div className="text-xs text-slate-500 font-medium mb-1">소각 목표 진행률</div>
                       <div className="text-3xl font-black text-white flex items-baseline gap-1 justify-start sm:justify-end">
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
+                        <span className={`text-transparent bg-clip-text ${isCompleted ? 'bg-gradient-to-r from-yellow-300 to-yellow-500' : 'bg-gradient-to-r from-yellow-400 to-orange-500'}`}>
                           {percentage.toFixed(1)}
                         </span>
-                        <span className="text-lg text-orange-500">%</span>
+                        <span className={`text-lg ${isCompleted ? 'text-yellow-500' : 'text-orange-500'}`}>%</span>
                       </div>
                     </div>
                   </div>
@@ -124,7 +132,7 @@ export const BuybackTrackerView: React.FC = () => {
                     
                     <div className="h-4 sm:h-6 w-full bg-slate-950 rounded-full overflow-hidden border border-slate-800/80 p-0.5">
                       <div 
-                        className="h-full rounded-full bg-gradient-to-r from-yellow-500 via-orange-500 to-red-600 relative overflow-hidden transition-all duration-1000 ease-out"
+                        className={`h-full rounded-full relative overflow-hidden transition-all duration-1000 ease-out ${isCompleted ? 'bg-gradient-to-r from-yellow-300 via-yellow-500 to-yellow-600 shadow-[0_0_15px_rgba(234,179,8,0.8)]' : 'bg-gradient-to-r from-yellow-500 via-orange-500 to-red-600'}`}
                         style={{ width: `${percentage}%` }}
                       >
                         {/* Shimmer effect inside the bar */}
@@ -133,8 +141,8 @@ export const BuybackTrackerView: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="absolute top-4 right-6 opacity-10 group-hover:opacity-20 transition-opacity pointer-events-none">
-                    <span className="text-8xl">🔥</span>
+                  <div className={`absolute top-4 right-6 transition-opacity pointer-events-none ${isCompleted ? 'opacity-30 drop-shadow-[0_0_15px_rgba(234,179,8,1)]' : 'opacity-10 group-hover:opacity-20'}`}>
+                    <span className="text-8xl">{isCompleted ? '👑' : '🔥'}</span>
                   </div>
                 </div>
               );
