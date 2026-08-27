@@ -47,11 +47,11 @@ export const BuybackTrackerView: React.FC = () => {
             <span className="text-4xl animate-bounce">🔥</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-500 to-red-500 tracking-tight drop-shadow-lg">
-            기업 소각장 (Buyback Tracker)
+            국장 자사주 소각장
           </h2>
           <p className="text-orange-100/80 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed font-medium">
-            주주가치를 높이는 최고의 호재, <strong className="text-orange-400">자사주 매입 및 소각!</strong><br />
-            대형주들이 약속한 자사주를 얼마나 불태우고 있는지 실시간으로 추적합니다.
+            국내 주주가치를 높이는 최고의 호재, <strong className="text-orange-400">자사주 매입 및 소각!</strong><br />
+            실시간 공시를 기반으로 국내 기업들이 약속한 자사주를 얼마나 불태우고 있는지 실시간으로 추적합니다.
           </p>
           
           <button 
