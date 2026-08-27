@@ -165,20 +165,21 @@ function App() {
     
     const visitorId = localStorage.getItem('korekore_visitor_id');
     if (visitorId) {
-        // 프론트엔드 시각적 주작(Optimistic Update) 중복 방지
+        // 프론트엔드 시각적 주작(Optimistic Update) 중복 방지 (같은 브라우저 탭 세션 내에서만)
         const viewedKey = `viewed_${post.id}`;
         if (!sessionStorage.getItem(viewedKey)) {
             setPosts(prevPosts => prevPosts.map(p => 
                 p.id === post.id ? { ...p, viewCount: (p.viewCount || 0) + 1 } : p
             ));
             sessionStorage.setItem(viewedKey, 'true');
-
-            fetch(`/api/posts/${post.id}/view`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ visitorId })
-            }).catch(console.error);
         }
+
+        // 백엔드에는 무조건 찔러보고, 백엔드가 24시간 중복 여부 알아서 컷(차단)함
+        fetch(`/api/posts/${post.id}/view`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ visitorId })
+        }).catch(console.error);
     }
   };
 
