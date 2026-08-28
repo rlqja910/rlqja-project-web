@@ -285,7 +285,7 @@ function App() {
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">서버가 잠시 기절했습니다 💦</h1>
           <p className="text-slate-400 max-w-md mx-auto leading-relaxed text-sm sm:text-base">
             앗! 접속량이 폭발해서 서버가 잠시 로그아웃해버렸어요 😱<br />
-            개발자가 <strong>현생을 사는 K-직장인</strong>이라 평일엔 퇴근 전까지, 주말엔 기력 방전으로 복구가 쪼오끔 늦어질 수 있습니다 🥲<br />
+            개발자가 <strong>{new Date().getDay() === 0 || new Date().getDay() === 6 ? '주말이라 기력 방전으로 누워있어서' : '현생을 사는 K-직장인이라 퇴근 전까지는'}</strong> 복구가 쪼오끔 늦어질 수 있습니다 🥲<br />
             빛의 속도로 심폐소생술 중이니 조금만 기다려 주시면 <strong>압도적 감사!!</strong> 🙏
           </p>
           <div className="pt-8">
@@ -415,7 +415,7 @@ function App() {
               <div className="flex items-center gap-3">
                 <span className="text-2xl animate-bounce">🥵</span>
                 <p className="text-sm sm:text-[15px] text-orange-200 font-medium break-keep">
-                  <strong className="text-cyan-400">🎉 [복구 완료]</strong> 오래 기다리셨습니다! 기절했던 서버 멱살 잡고 살려왔어요 🚀
+                  <strong className="text-cyan-400">🎉 [복구 완료]</strong> {new Date().getDay() === 0 || new Date().getDay() === 6 ? '주말에 쉬지도 못하고 기절했던 서버 멱살 잡고 살려왔어요 🚀' : '업무 중에 몰래(?) 기절했던 서버 멱살 잡고 살려왔어요 🚀'}
                   불편을 드려 뎨송합니다.. 🥲 앞으로는 평일 주말 할 것 없이 끄떡없는 강철 서버로 모시겠습니다! (많관부 💙)
                 </p>
               </div>
