@@ -26,7 +26,8 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
     totalActions: number, 
     topPages?: {endpoint: string, count: number}[],
     isSubscribed?: boolean,
-    userName?: string
+    userName?: string,
+    lastAccess?: string
   }[]>([]);
   const [recentLogs, setRecentLogs] = useState<AccessLog[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -381,6 +382,17 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                               <span className="text-slate-500 text-[10px]">
                                 총 {visitor.totalActions}회 활동
                               </span>
+                              {visitor.lastAccess && (
+                                <span className="text-emerald-400/80 font-medium text-[9px] mt-1 bg-emerald-900/20 px-1.5 py-0.5 rounded">
+                                  {(() => {
+                                    const diffMins = Math.floor((new Date().getTime() - new Date(visitor.lastAccess).getTime()) / 60000);
+                                    if (diffMins < 1) return '방금 전 접속';
+                                    if (diffMins < 60) return `${diffMins}분 전 접속`;
+                                    if (diffMins < 1440) return `${Math.floor(diffMins / 60)}시간 전 접속`;
+                                    return `${Math.floor(diffMins / 1440)}일 전 접속`;
+                                  })()}
+                                </span>
+                              )}
                             </div>
                           </div>
                           {visitor.topPages && visitor.topPages.length > 0 && (
