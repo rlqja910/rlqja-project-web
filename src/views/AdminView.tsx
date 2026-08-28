@@ -20,7 +20,14 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   const [stats, setStats] = useState<StatData | null>(null);
   const [topSearches, setTopSearches] = useState<{term: string, count: number}[]>([]);
   const [topPageViews, setTopPageViews] = useState<{endpoint: string, count: number}[]>([]);
-  const [topReturningVisitors, setTopReturningVisitors] = useState<{visitorId: string, daysVisited: number, totalActions: number, topPages?: {endpoint: string, count: number}[]}[]>([]);
+  const [topReturningVisitors, setTopReturningVisitors] = useState<{
+    visitorId: string, 
+    daysVisited: number, 
+    totalActions: number, 
+    topPages?: {endpoint: string, count: number}[],
+    isSubscribed?: boolean,
+    userName?: string
+  }[]>([]);
   const [recentLogs, setRecentLogs] = useState<AccessLog[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -338,16 +345,34 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                           <div className="flex justify-between items-center">
                             <div className="flex items-center gap-3 w-1/2">
                               <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-purple-400' : 'text-slate-500'}`}>{idx + 1}</span>
-                              <button 
-                                onClick={() => {
-                                  setFilterVisitorId(visitor.visitorId);
-                                  setActiveTab('logs');
-                                }}
-                                className="font-medium text-slate-200 text-xs truncate hover:text-cyan-400 hover:underline text-left" 
-                                title={visitor.visitorId}
-                              >
-                                {visitor.visitorId}
-                              </button>
+                              <div className="flex flex-col gap-1.5 items-start">
+                                <button 
+                                  onClick={() => {
+                                    setFilterVisitorId(visitor.visitorId);
+                                    setActiveTab('logs');
+                                  }}
+                                  className="font-medium text-slate-200 text-xs hover:text-cyan-400 hover:underline text-left flex items-center gap-1.5" 
+                                  title={visitor.visitorId}
+                                >
+                                  {visitor.userName ? (
+                                    <>
+                                      <span className="text-yellow-400 font-black text-[13px] max-w-[100px] truncate">{visitor.userName}</span>
+                                      <span className="text-slate-500 text-[9px] truncate max-w-[60px]">({visitor.visitorId.substring(0, 8)}...)</span>
+                                    </>
+                                  ) : (
+                                    <span className="truncate max-w-[140px]">{visitor.visitorId}</span>
+                                  )}
+                                </button>
+                                {visitor.isSubscribed ? (
+                                  <span className="bg-red-500/20 text-red-400 text-[9px] px-1.5 py-0.5 rounded font-bold border border-red-500/30 whitespace-nowrap flex items-center gap-0.5">
+                                    🔔 푸시 구독 유저
+                                  </span>
+                                ) : (
+                                  <span className="bg-slate-700/50 text-slate-500 text-[9px] px-1.5 py-0.5 rounded font-bold whitespace-nowrap flex items-center gap-0.5">
+                                    🔕 미구독
+                                  </span>
+                                )}
+                              </div>
                             </div>
                             <div className="flex flex-col items-end gap-1">
                               <span className="text-purple-400 font-bold bg-purple-900/30 px-2 py-0.5 rounded text-xs">
