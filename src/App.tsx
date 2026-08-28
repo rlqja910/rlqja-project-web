@@ -41,10 +41,10 @@ const getMaintenanceText = () => {
   const hour = now.getHours();
   const isWeekend = day === 0 || day === 6;
 
-  if (isWeekend) return "주말이라 기력 방전으로 누워있어서";
-  if (hour >= 9 && hour < 18) return "본업(회사) 중에 몰래 폰으로 고쳐야 해서";
-  if (hour >= 18 && hour <= 23) return "퇴근하고 너덜너덜한 몸을 이끌고 고쳐야 해서";
-  return "새벽에 꿀잠 자다가 비상 알람 듣고 깨서 비몽사몽이라";
+  if (isWeekend) return "개발자가 주말이라 기력 방전으로 뻗어 있어서, 서버 복구 쿨타임이 제법 길게 돌 수 있습니다 💀";
+  if (hour >= 9 && hour < 18) return "개발자가 현생(회사)에서 상사 눈치 보며 몰래 고쳐야 하므로, 복구가 스릴 넘치게 지연될 수 있습니다 🥷";
+  if (hour >= 18 && hour <= 23) return "개발자가 퇴근 후 너덜너덜해진 멘탈로 키보드 샷건 치며 땜빵 중이라 시간이 좀 걸릴 수 있습니다 🤬";
+  return "개발자가 새벽에 비상 알람 맞고 좀비처럼 일어난 상태라, 눈 감고 코딩하느라 복구가 더딜 수 있습니다 🧟‍♂️";
 };
 
 const getPostMaintenanceText = () => {
@@ -309,7 +309,7 @@ function App() {
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">서버가 잠시 기절했습니다 💦</h1>
           <p className="text-slate-400 max-w-md mx-auto leading-relaxed text-sm sm:text-base">
             앗! 접속량이 폭발해서 서버가 잠시 로그아웃해버렸어요 😱<br />
-            개발자가 <strong>{getMaintenanceText()}</strong> 복구가 쪼오끔 늦어질 수 있습니다 🥲<br />
+            <strong>{getMaintenanceText()}</strong><br />
             빛의 속도로 심폐소생술 중이니 조금만 기다려 주시면 <strong>압도적 감사!!</strong> 🙏
           </p>
           <div className="pt-8">
