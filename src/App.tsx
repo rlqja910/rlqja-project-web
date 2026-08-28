@@ -282,11 +282,11 @@ function App() {
           <div className="w-24 h-24 bg-slate-800/50 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-slate-700/50 shadow-2xl">
             <span className="text-5xl animate-bounce">🛠️</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">서버 맛탱이감 (점검중)</h1>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 tracking-tight">🚨 서버 뻗음 (긴급 점검)</h1>
           <p className="text-slate-400 max-w-md mx-auto leading-relaxed text-sm sm:text-base">
-            이용자 폭주로 인해 서버가 터져서 임시 점검 중입니다... ㅠㅠ<br />
-            개발자가 <strong>노예(직장인)</strong>라서 퇴근 전까진 대처가 늦을 수 있습니다.<br />
-            최대한 빠르게 고쳐놓을테니 조금만 양해해 주시면 압도적 감사!! 🙏
+            갑작스러운 트래픽 폭주로 서버가 장렬히 전사했습니다... ㅠㅠ<br />
+            개발자가 <strong>K-직장인</strong>이라 평일엔 퇴근 전까지, <strong>주말엔 파업(휴식)</strong>이라 서버 복구가 매우 늦어질 수 있습니다.<br />
+            어떻게든 멱살 잡고 다시 살려놓을테니 조금만 기다려 주시면 압도적 감사!! 🙏
           </p>
           <div className="pt-8">
             <button 
@@ -415,8 +415,8 @@ function App() {
               <div className="flex items-center gap-3">
                 <span className="text-2xl animate-bounce">🥵</span>
                 <p className="text-sm sm:text-[15px] text-orange-200 font-medium break-keep">
-                  <strong className="text-orange-400">[긴급 점검 완료]</strong> 서버 터진거 방금 땜빵했습니다... 
-                  개발자가 직장인이라 점검/복구가 느렸던 점 뼈저리게 반성합니다 ㅠㅠ 너그러운 양해 부탁드립니다!
+                  <strong className="text-orange-400">[긴급 복구 완료]</strong> 뒤졌던 서버 다시 살려놨습니다 🔥
+                  평일/주말 가리지 않고 터지는 서버 때문에 킹받으시겠지만 너그러운 양해 부탁드립니다! (주말엔 저도 좀 쉽시다 ㅠㅠ)
                 </p>
               </div>
               <button 
