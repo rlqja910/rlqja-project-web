@@ -13,6 +13,7 @@ import { ReverseTradeView } from './views/ReverseTradeView';
 import { CompoundCalcView } from './views/CompoundCalcView';
 import { BuybackTrackerView } from './views/BuybackTrackerView';
 import { FeedbackView } from './views/FeedbackView';
+import FomoView from './views/FomoView';
 import { PushSubscriptionModal } from './components/PushSubscriptionModal';
 import { NoticePopup } from './components/NoticePopup';
 import { LoyalUserModal } from './components/LoyalUserModal';
@@ -485,8 +486,9 @@ function App() {
           {activeTab === 'kore-live' && <KoreLiveView />}
           {activeTab === 'fortune' && <FortuneCookieView />}
           {activeTab === 'calc-compound' && <CompoundCalcView />}
+          {activeTab === 'fomo' && <FomoView />}
           
-          {activeTab !== 'home' && activeTab !== 'report' && activeTab !== 'patchnotes' && activeTab !== 'scouter' && activeTab !== 'calc-avg' && activeTab !== 'calc-compound' && activeTab !== 'admin-secret-2026' && activeTab !== 'kore-live' && activeTab !== 'fortune' && activeTab !== 'admin' && activeTab !== 'reverse-trade' && activeTab !== 'buyback' && activeTab !== 'feedback' && (
+          {activeTab !== 'home' && activeTab !== 'report' && activeTab !== 'patchnotes' && activeTab !== 'scouter' && activeTab !== 'calc-avg' && activeTab !== 'calc-compound' && activeTab !== 'fomo' && activeTab !== 'admin-secret-2026' && activeTab !== 'kore-live' && activeTab !== 'fortune' && activeTab !== 'admin' && activeTab !== 'reverse-trade' && activeTab !== 'buyback' && activeTab !== 'feedback' && (
              <div className="text-center py-32 text-slate-400">
                <div className="text-6xl mb-6">🚧</div>
                <h2 className="text-2xl font-bold text-white mb-2">공사 중입니다</h2>

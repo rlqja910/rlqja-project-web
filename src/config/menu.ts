@@ -37,7 +37,8 @@ export const PORTAL_MENUS: MainCategory[] = [
         label: '투자 계산기',
         items: [
           { id: 'calc-avg', label: '물타기(평단가) 계산기', icon: '🛟', isReady: true },
-          { id: 'calc-compound', label: '레버리지 계좌 엑스레이 (X-Ray)', icon: '🔥', isReady: true }
+          { id: 'calc-compound', label: '레버리지 계좌 엑스레이 (X-Ray)', icon: '🔥', isReady: true },
+          { id: 'fomo', label: 'FOMO 타임머신', icon: '🕰️', isReady: true }
         ]
       }
     ]

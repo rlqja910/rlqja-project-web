@@ -1,0 +1,223 @@
+import React, { useState } from 'react';
+
+const PRESETS = [
+  { label: '코로나 폭락장 (2020년 3월)', date: '2020-03-19' },
+  { label: '비트코인 상투 (2018년 1월)', date: '2018-01-06' },
+  { label: '리먼 브라더스 (2008년 9월)', date: '2008-09-15' },
+  { label: '작년 이맘때', date: new Date(Date.now() - 365*24*60*60*1000).toISOString().split('T')[0] }
+];
+
+export default function FomoView() {
+  const [stockName, setStockName] = useState('엔비디아');
+  const [date, setDate] = useState('2020-03-19');
+  const [amount, setAmount] = useState('10000000');
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const calculateFomo = async () => {
+    setLoading(true);
+    setError(null);
+    setResult(null);
+    
+    try {
+      const API_URL = import.meta.env.VITE_FASTAPI_URL || 'http://localhost:8000';
+      const response = await fetch(`${API_URL}/api/fomo`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          stockName,
+          date,
+          amount: parseFloat(amount)
+        })
+      });
+      
+      const data = await response.json();
+      if (data.success) {
+        setResult(data);
+      } else {
+        setError(data.error || '알 수 없는 오류가 발생했습니다.');
+      }
+    } catch (err) {
+      setError('서버와 통신 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const isProfit = result?.profit_pct > 0;
+  
+  return (
+    <div className="min-h-screen bg-[#0B0F19] text-slate-300 font-sans p-6 pb-24">
+      <div className="max-w-3xl mx-auto space-y-10">
+        
+        {/* Header */}
+        <div className="text-center space-y-4">
+          <div className="inline-flex items-center justify-center p-3 bg-purple-500/20 rounded-2xl border border-purple-500/30 mb-2">
+            <span className="text-4xl">🕰️</span>
+          </div>
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 tracking-tight">
+            FOMO 타임머신
+          </h1>
+          <p className="text-slate-400 text-lg">
+            "아... 그때 그걸 샀더라면..." 지금 바로 뼈 맞아보세요 🦴
+          </p>
+        </div>
+
+        {/* Input Form */}
+        <div className="bg-slate-800/50 p-6 sm:p-8 rounded-3xl border border-slate-700 shadow-2xl space-y-8 backdrop-blur-sm">
+          <div className="space-y-6">
+            
+            {/* 시점 선택 */}
+            <div className="space-y-3">
+              <label className="block text-sm font-semibold text-slate-300">언제로 돌아갈까요? (YYYY-MM-DD)</label>
+              <input 
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="w-full bg-slate-900/50 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+              />
+              <div className="flex flex-wrap gap-2 pt-1">
+                {PRESETS.map((preset) => (
+                  <button
+                    key={preset.label}
+                    onClick={() => setDate(preset.date)}
+                    className="text-xs bg-slate-700/50 hover:bg-slate-600 text-slate-300 px-3 py-1.5 rounded-full transition-colors border border-slate-600/50"
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 종목 입력 */}
+            <div className="space-y-3">
+              <label className="block text-sm font-semibold text-slate-300">어떤 종목을 살까요?</label>
+              <input 
+                type="text"
+                value={stockName}
+                onChange={(e) => setStockName(e.target.value)}
+                placeholder="예: 삼성전자, 테슬라, 엔비디아, 비트코인"
+                className="w-full bg-slate-900/50 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all placeholder:text-slate-500"
+              />
+              <p className="text-xs text-slate-500 pl-1">AI가 찰떡같이 알아서 종목(티커)을 찾아줍니다 🤖</p>
+            </div>
+
+            {/* 금액 입력 */}
+            <div className="space-y-3">
+              <label className="block text-sm font-semibold text-slate-300">얼마를 투자할까요? (원)</label>
+              <input 
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="w-full bg-slate-900/50 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all font-mono text-lg"
+              />
+              <div className="flex flex-wrap gap-2 pt-1">
+                {[1000000, 5000000, 10000000, 50000000, 100000000].map((val) => (
+                  <button
+                    key={val}
+                    onClick={() => setAmount(val.toString())}
+                    className="text-xs bg-slate-700/50 hover:bg-slate-600 text-slate-300 px-3 py-1.5 rounded-full transition-colors border border-slate-600/50 font-mono"
+                  >
+                    +{(val / 10000).toLocaleString()}만
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <button 
+            onClick={calculateFomo}
+            disabled={loading}
+            className="w-full py-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-bold rounded-2xl shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all hover:shadow-[0_0_30px_rgba(168,85,247,0.6)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg"
+          >
+            {loading ? (
+              <>
+                <span className="animate-spin text-xl">🌀</span> 타임머신 가동 중...
+              </>
+            ) : (
+              <>
+                🚀 과거로 돌아가기
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* Error */}
+        {error && (
+          <div className="bg-red-500/10 border border-red-500/50 text-red-400 p-4 rounded-xl flex items-center gap-3">
+            <span className="text-xl">⚠️</span> {error}
+          </div>
+        )}
+
+        {/* Result Area */}
+        {result && (
+          <div className={`p-8 rounded-3xl border shadow-2xl relative overflow-hidden transition-all duration-700 animate-in fade-in slide-in-from-bottom-10 ${
+            isProfit 
+              ? 'bg-gradient-to-br from-green-900/40 to-emerald-900/20 border-green-500/30' 
+              : 'bg-gradient-to-br from-blue-900/40 to-slate-900/40 border-blue-500/30 grayscale-[50%]'
+          }`}>
+            
+            {/* Background Icon */}
+            <div className="absolute -right-10 -top-10 opacity-10 text-9xl">
+              {isProfit ? '💸' : '🌧️'}
+            </div>
+
+            <div className="relative z-10 space-y-6 text-center">
+              <div className="inline-block px-4 py-1.5 rounded-full bg-slate-900/50 border border-slate-700 text-sm font-medium text-slate-300">
+                {result.actual_date} 기준 ({result.ticker})
+              </div>
+
+              <h2 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
+                그때 {result.real_stock_name}에<br/>
+                <span className="text-purple-400">{parseFloat(amount).toLocaleString()}원</span>을 넣었더라면...
+              </h2>
+
+              <div className="py-6">
+                <div className={`text-5xl sm:text-6xl font-extrabold tracking-tighter ${
+                  isProfit ? 'text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-300' : 'text-blue-400'
+                }`}>
+                  {result.current_value.toLocaleString()}원
+                </div>
+                <div className={`text-xl font-semibold mt-2 ${isProfit ? 'text-green-400' : 'text-blue-400'}`}>
+                  {isProfit ? '+' : ''}{result.profit_pct.toLocaleString()}% ({result.multiplier}배)
+                </div>
+              </div>
+
+              <div className="bg-slate-900/60 rounded-2xl p-5 border border-slate-700/50 flex justify-between items-center text-sm sm:text-base">
+                <div className="text-left">
+                  <div className="text-slate-400">당시 주가</div>
+                  <div className="font-mono text-white">{result.past_price.toLocaleString()}</div>
+                </div>
+                <div className="text-2xl text-slate-600">→</div>
+                <div className="text-right">
+                  <div className="text-slate-400">현재 주가</div>
+                  <div className="font-mono text-white">{result.current_price.toLocaleString()}</div>
+                </div>
+              </div>
+
+              <div className="pt-4">
+                {isProfit ? (
+                  <p className="text-lg sm:text-xl font-bold text-emerald-300">
+                    "지금쯤 한강뷰 아파트 자가인데... 💸"
+                  </p>
+                ) : (
+                  <p className="text-lg sm:text-xl font-bold text-slate-400">
+                    "휴... 안 사길 다행이다 ☠️ (압도적 감사)"
+                  </p>
+                )}
+              </div>
+              
+              {isProfit && result.profit_pct > 1000 && (
+                <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden mix-blend-screen opacity-30">
+                   <div className="text-9xl animate-pulse">🚀🤑🚀</div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}
