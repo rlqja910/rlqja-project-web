@@ -284,9 +284,9 @@ function App() {
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 tracking-tight">🚨 서버 뻗음 (긴급 점검)</h1>
           <p className="text-slate-400 max-w-md mx-auto leading-relaxed text-sm sm:text-base">
-            갑작스러운 트래픽 폭주로 서버가 장렬히 전사했습니다... ㅠㅠ<br />
-            개발자가 <strong>K-직장인</strong>이라 평일엔 퇴근 전까지, <strong>주말엔 파업(휴식)</strong>이라 서버 복구가 매우 늦어질 수 있습니다.<br />
-            어떻게든 멱살 잡고 다시 살려놓을테니 조금만 기다려 주시면 압도적 감사!! 🙏
+            폭발적인 트래픽으로 인해 서버가 잠시 기절했습니다... ㅠㅠ<br />
+            개발자가 1인 K-직장인인 관계로, 업무 시간이나 주말에는 즉각적인 대응이 다소 지연될 수 있습니다.<br />
+            빛의 속도로 심폐소생술을 진행할 테니 조금만 기다려 주시면 압도적 감사!! 🙏
           </p>
           <div className="pt-8">
             <button 
@@ -415,8 +415,8 @@ function App() {
               <div className="flex items-center gap-3">
                 <span className="text-2xl animate-bounce">🥵</span>
                 <p className="text-sm sm:text-[15px] text-orange-200 font-medium break-keep">
-                  <strong className="text-orange-400">[긴급 복구 완료]</strong> 뒤졌던 서버 다시 살려놨습니다 🔥
-                  평일/주말 가리지 않고 터지는 서버 때문에 킹받으시겠지만 너그러운 양해 부탁드립니다! (주말엔 저도 좀 쉽시다 ㅠㅠ)
+                  <strong className="text-orange-400">[긴급 복구 완료]</strong> 기절했던 서버의 심폐소생술이 완료되었습니다 🔥
+                  불편을 드려 대단히 죄송합니다. 앞으로는 주말에도 끄떡없는 강철 서버를 깎아오겠습니다. 너그러운 양해 압도적 감사!!
                 </p>
               </div>
               <button 
