@@ -20,7 +20,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   const [stats, setStats] = useState<StatData | null>(null);
   const [topSearches, setTopSearches] = useState<{term: string, count: number}[]>([]);
   const [topPageViews, setTopPageViews] = useState<{endpoint: string, count: number}[]>([]);
-  const [topReturningVisitors, setTopReturningVisitors] = useState<{visitorId: string, daysVisited: number, totalActions: number}[]>([]);
+  const [topReturningVisitors, setTopReturningVisitors] = useState<{visitorId: string, daysVisited: number, totalActions: number, topPages?: {endpoint: string, count: number}[]}[]>([]);
   const [recentLogs, setRecentLogs] = useState<AccessLog[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -334,31 +334,45 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   {topReturningVisitors.length > 0 ? (
                     <ul className="divide-y divide-slate-700/50">
                       {topReturningVisitors.map((visitor, idx) => (
-                        <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
-                          <div className="flex items-center gap-3 w-1/2">
-                            <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-purple-400' : 'text-slate-500'}`}>{idx + 1}</span>
-                            <button 
-                              onClick={() => {
-                                setFilterVisitorId(visitor.visitorId);
-                                setActiveTab('logs');
-                                // The useEffect or a direct call will fetch the filtered data.
-                                // We'll rely on the fetchAdminData call below by passing page 0.
-                                // But since state update is async, we can just call it here with the id directly or add useEffect.
-                              }}
-                              className="font-medium text-slate-200 text-xs truncate hover:text-cyan-400 hover:underline text-left" 
-                              title={visitor.visitorId}
-                            >
-                              {visitor.visitorId}
-                            </button>
+                        <li key={idx} className="flex flex-col p-4 hover:bg-slate-700/20 transition-colors gap-3">
+                          <div className="flex justify-between items-center">
+                            <div className="flex items-center gap-3 w-1/2">
+                              <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-purple-400' : 'text-slate-500'}`}>{idx + 1}</span>
+                              <button 
+                                onClick={() => {
+                                  setFilterVisitorId(visitor.visitorId);
+                                  setActiveTab('logs');
+                                }}
+                                className="font-medium text-slate-200 text-xs truncate hover:text-cyan-400 hover:underline text-left" 
+                                title={visitor.visitorId}
+                              >
+                                {visitor.visitorId}
+                              </button>
+                            </div>
+                            <div className="flex flex-col items-end gap-1">
+                              <span className="text-purple-400 font-bold bg-purple-900/30 px-2 py-0.5 rounded text-xs">
+                                {visitor.daysVisited}일 접속
+                              </span>
+                              <span className="text-slate-500 text-[10px]">
+                                총 {visitor.totalActions}회 활동
+                              </span>
+                            </div>
                           </div>
-                          <div className="flex flex-col items-end gap-1">
-                            <span className="text-purple-400 font-bold bg-purple-900/30 px-2 py-0.5 rounded text-xs">
-                              {visitor.daysVisited}일 접속
-                            </span>
-                            <span className="text-slate-500 text-[10px]">
-                              총 {visitor.totalActions}회 활동
-                            </span>
-                          </div>
+                          {visitor.topPages && visitor.topPages.length > 0 && (
+                            <div className="pl-9 pr-2">
+                              <div className="text-[10px] text-slate-500 mb-1.5 font-bold">주요 방문 페이지</div>
+                              <div className="flex flex-wrap gap-2">
+                                {visitor.topPages.map((page, pIdx) => (
+                                  <div key={pIdx} className="flex items-center gap-1.5 bg-slate-800/80 border border-slate-700/50 rounded-md px-2 py-1">
+                                    <span className="text-[10px] text-slate-300 truncate max-w-[150px]" title={page.endpoint}>
+                                      {page.endpoint === '/' ? '메인 홈' : page.endpoint}
+                                    </span>
+                                    <span className="text-[9px] font-bold text-cyan-400 bg-cyan-900/40 px-1 rounded-sm">{page.count}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
                         </li>
                       ))}
                     </ul>
