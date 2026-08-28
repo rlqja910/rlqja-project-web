@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const PRESETS = [
   { label: '코로나 폭락장 (2020년 3월)', date: '2020-03-19' },
