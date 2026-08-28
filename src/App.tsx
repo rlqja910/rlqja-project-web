@@ -282,11 +282,11 @@ function App() {
           <div className="w-24 h-24 bg-slate-800/50 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-slate-700/50 shadow-2xl">
             <span className="text-5xl animate-bounce">🛠️</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">시스템 점검 안내</h1>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">잠시 쉬어가는 중입니다 🛠️</h1>
           <p className="text-slate-400 max-w-md mx-auto leading-relaxed text-sm sm:text-base">
-            현재 트래픽 증가로 인해 안정적인 서비스 제공을 위한 임시 점검을 진행하고 있습니다.<br />
-            최대한 빠른 시간 내에 복구를 완료할 예정이나, 주말 및 공휴일의 경우 평일 대비 작업 시간이 다소 지연될 수 있는 점 너른 양해 부탁드립니다.<br />
-            서비스 이용에 불편을 드려 대단히 죄송합니다.
+            현재 예상치 못한 접속량 증가로 인해 서버가 잠시 숨을 고르고 있습니다.<br />
+            최대한 빠르게 정상화하기 위해 땀내나게 달리고 있으나, 주말의 경우 평일 대비 대응이 다소 지연될 수 있는 점 너른 양해 부탁드립니다.<br />
+            이용에 불편을 드려 정말 죄송합니다. 조금만 기다려주세요! 🙏
           </p>
           <div className="pt-8">
             <button 
@@ -415,8 +415,8 @@ function App() {
               <div className="flex items-center gap-3">
                 <span className="text-2xl animate-bounce">🥵</span>
                 <p className="text-sm sm:text-[15px] text-orange-200 font-medium break-keep">
-                  <strong className="text-cyan-400">[시스템 점검 완료]</strong> 서버 복구 작업이 완료되어 현재 정상적으로 서비스를 이용하실 수 있습니다. 
-                  서비스 이용에 불편을 드린 점 진심으로 사과드리며, 앞으로 더욱 안정적인 환경을 제공할 수 있도록 최선을 다하겠습니다.
+                  <strong className="text-cyan-400">🎉 [점검 완료]</strong> 오래 기다리셨습니다! 서버 복구가 무사히 완료되었습니다. 
+                  이용에 불편을 드린 점 다시 한번 사과드리며, 앞으로는 더 쾌적하고 탄탄한 서비스를 제공하기 위해 최선을 다하겠습니다. 🚀
                 </p>
               </div>
               <button 
