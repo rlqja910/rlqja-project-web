@@ -90,7 +90,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
     }
   };
 
-  const fetchAdminData = async (page = 0) => {
+  const fetchAdminData = async (page = 0, overrideVisitorId?: string) => {
     setIsLoading(true);
     try {
       const statsRes = await fetch('/api/logs/stats?t=' + new Date().getTime());
@@ -105,7 +105,8 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
       const retentionRes = await fetch('/api/admin/stats/retention?t=' + new Date().getTime());
       if (retentionRes.ok) setTopReturningVisitors(await retentionRes.json());
 
-      const visitorQuery = filterVisitorId ? `&visitorId=${encodeURIComponent(filterVisitorId)}` : '';
+      const activeVisitorId = overrideVisitorId !== undefined ? overrideVisitorId : filterVisitorId;
+      const visitorQuery = activeVisitorId ? `&visitorId=${encodeURIComponent(activeVisitorId)}` : '';
       const logsRes = await fetch(`/api/admin/logs?page=${page}&size=15${visitorQuery}&t=` + new Date().getTime());
       if (logsRes.ok) {
         const pageData = await logsRes.json();
@@ -351,6 +352,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                                   onClick={() => {
                                     setFilterVisitorId(visitor.visitorId);
                                     setActiveTab('logs');
+                                    fetchAdminData(0, visitor.visitorId);
                                   }}
                                   className="font-medium text-slate-200 text-xs hover:text-cyan-400 hover:underline text-left flex items-center gap-1.5" 
                                   title={visitor.visitorId}
@@ -434,6 +436,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   <button 
                     onClick={() => {
                       setFilterVisitorId('');
+                      fetchAdminData(0, '');
                     }}
                     className="text-xs bg-red-500/20 text-red-400 hover:bg-red-500/30 px-3 py-1.5 rounded font-bold transition-colors"
                   >
