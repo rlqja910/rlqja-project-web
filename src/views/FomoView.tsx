@@ -21,8 +21,7 @@ export default function FomoView() {
     setResult(null);
     
     try {
-      const API_URL = import.meta.env.VITE_FASTAPI_URL || 'http://localhost:8000';
-      const response = await fetch(`${API_URL}/api/fomo`, {
+      const response = await fetch('/api/fomo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
