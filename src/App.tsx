@@ -282,11 +282,11 @@ function App() {
           <div className="w-24 h-24 bg-slate-800/50 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-slate-700/50 shadow-2xl">
             <span className="text-5xl animate-bounce">🛠️</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">서버가 잠시 숨 고르는 중입니다 💦</h1>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">서버가 잠시 기절했습니다 💦</h1>
           <p className="text-slate-400 max-w-md mx-auto leading-relaxed text-sm sm:text-base">
-            앗! 너무 많은 분들이 찾아주셔서 서버가 잠시 휴식에 들어갔어요.<br />
-            개발자가 불꽃 타이핑으로 땀나게 복구 중이지만, 주말에는 평일보다 시간이 조금 더 걸릴 수 있습니다 🥲<br />
-            불편을 드려 정말 죄송합니다. 최대한 빨리 살려놓을게요! 🙏
+            앗! 접속량이 폭발해서 서버가 잠시 로그아웃해버렸어요 😱<br />
+            개발자가 <strong>현생을 사는 K-직장인</strong>이라 평일엔 퇴근 전까지, 주말엔 기력 방전으로 복구가 쪼오끔 늦어질 수 있습니다 🥲<br />
+            빛의 속도로 심폐소생술 중이니 조금만 기다려 주시면 <strong>압도적 감사!!</strong> 🙏
           </p>
           <div className="pt-8">
             <button 
@@ -415,8 +415,8 @@ function App() {
               <div className="flex items-center gap-3">
                 <span className="text-2xl animate-bounce">🥵</span>
                 <p className="text-sm sm:text-[15px] text-orange-200 font-medium break-keep">
-                  <strong className="text-cyan-400">🎉 [복구 완료]</strong> 오래 기다리셨습니다! 기절했던 서버가 다시 깨어났어요 🚀
-                  불편을 드려 정말 죄송합니다. 앞으로는 주말에도 끄떡없는 튼튼한 서비스로 보답하겠습니다! 따뜻한 양해 감사드려요 💙
+                  <strong className="text-cyan-400">🎉 [복구 완료]</strong> 오래 기다리셨습니다! 기절했던 서버 멱살 잡고 살려왔어요 🚀
+                  불편을 드려 뎨송합니다.. 🥲 앞으로는 평일 주말 할 것 없이 끄떡없는 강철 서버로 모시겠습니다! (많관부 💙)
                 </p>
               </div>
               <button 
