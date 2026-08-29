@@ -7,6 +7,40 @@ const PRESETS = [
   { label: '작년 이맘때', date: new Date(Date.now() - 365*24*60*60*1000).toISOString().split('T')[0] }
 ];
 
+const getSavageComment = (pct: number) => {
+  if (pct >= 1000) return { text: "이때 샀으면 이미 퇴사하고 하와이에서 모히또 마시고 있을텐데 🍹", color: "text-emerald-300" };
+  if (pct >= 500) return { text: "강남에 집 사고 람보르기니 뽑았을 텐데... 🏎️", color: "text-emerald-300" };
+  if (pct >= 300) return { text: "지금쯤 포르쉐 계약하러 갔을텐데... 🚙", color: "text-emerald-400" };
+  if (pct >= 200) return { text: "이때 전재산 몰빵했으면 인생이 달라졌을텐데 💸", color: "text-emerald-400" };
+  if (pct >= 150) return { text: "아... 그때 샀으면 벤츠 E클래스 뽑았을텐데... 🚗", color: "text-green-300" };
+  if (pct >= 100) return { text: "두 배라니... 내 월급이 몇 달치야 이게 😭", color: "text-green-300" };
+  if (pct >= 80) return { text: "명품백 몇 개가 날아간거냐... 👜", color: "text-green-400" };
+  if (pct >= 60) return { text: "이번 달 카드값 걱정은 안 해도 됐을텐데 💳", color: "text-green-400" };
+  if (pct >= 40) return { text: "최신형 아이폰이랑 맥북 풀옵션 샀을텐데 💻", color: "text-green-500" };
+  if (pct >= 30) return { text: "호캉스 한 달 내내 가도 남았을텐데 🏨", color: "text-green-500" };
+  if (pct >= 25) return { text: "한 달 생활비는 거뜬히 벌었을텐데 💵", color: "text-green-500" };
+  if (pct >= 20) return { text: "오마카세 몇 번을 공짜로 먹을 수 있었는데 🍣", color: "text-green-500" };
+  if (pct >= 15) return { text: "소고기 1++ 투뿔 회식을 몇 번을 하는데 🥩", color: "text-green-500" };
+  if (pct >= 10) return { text: "치킨이 도대체 몇 마리야... 🍗", color: "text-green-500" };
+  if (pct >= 5) return { text: "국밥 몇 그릇이 허공으로 날아갔네 🍲", color: "text-green-500" };
+  if (pct > 0) return { text: "땅 파면 십원 한 장 나오냐... 그래도 아깝다 🪙", color: "text-green-500" };
+  if (pct === 0) return { text: "본전치기... 아무 일도 일어나지 않았다 😑", color: "text-slate-400" };
+  
+  if (pct > -5) return { text: "뭐 이정도면 점심값 날린 셈 치자 🍔", color: "text-blue-300" };
+  if (pct > -10) return { text: "아... 안 사길 잘했네 국밥값 굳었다 😋", color: "text-blue-300" };
+  if (pct > -15) return { text: "치킨 파티 취소될 뻔했네 다행이다 😮‍💨", color: "text-blue-400" };
+  if (pct > -20) return { text: "오마카세 돈 주고 내상입을 뻔했네 🤮", color: "text-blue-400" };
+  if (pct > -25) return { text: "한 달 생활비가 삭제될 뻔했습니다 ✂️", color: "text-blue-400" };
+  if (pct > -30) return { text: "휴... 안 사길 다행이다 ☠️ (압도적 감사)", color: "text-blue-500" };
+  if (pct > -40) return { text: "지금 샀으면 한강물 온도 재고 있을 뻔... 🥶", color: "text-blue-500" };
+  if (pct > -50) return { text: "진짜 큰일날 뻔했네 ㄷㄷ 명의도용 당할 뻔 😨", color: "text-red-300" };
+  if (pct > -60) return { text: "와... 이거 샀으면 지금쯤 파산했네 📉", color: "text-red-400" };
+  if (pct > -80) return { text: "반의 반토막... 조상님이 도왔다! 모니터에 절 한번 하십쇼 🙇‍♂️", color: "text-red-500" };
+  if (pct > -95) return { text: "상장폐지 수준... 지옥에서 돌아온 것을 환영합니다 👹", color: "text-red-600" };
+  return { text: "이건 주식이 아니라 휴지조각입니다 🧻", color: "text-red-600" };
+};
+
+
 export default function FomoView() {
   const [stockName, setStockName] = useState('엔비디아');
   const [date, setDate] = useState('2020-03-19');
@@ -196,20 +230,19 @@ export default function FomoView() {
               </div>
 
               <div className="pt-4">
-                {isProfit ? (
-                  <p className="text-lg sm:text-xl font-bold text-emerald-300">
-                    "지금쯤 한강뷰 아파트 자가인데... 💸"
-                  </p>
-                ) : (
-                  <p className="text-lg sm:text-xl font-bold text-slate-400">
-                    "휴... 안 사길 다행이다 ☠️ (압도적 감사)"
-                  </p>
-                )}
+                <p className={`text-lg sm:text-xl font-bold ${getSavageComment(result.profit_pct).color}`}>
+                  {getSavageComment(result.profit_pct).text}
+                </p>
               </div>
               
-              {isProfit && result.profit_pct > 1000 && (
+              {result.profit_pct >= 1000 && (
                 <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden mix-blend-screen opacity-30">
                    <div className="text-9xl animate-pulse">🚀🤑🚀</div>
+                </div>
+              )}
+              {result.profit_pct <= -50 && (
+                <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden mix-blend-screen opacity-20">
+                   <div className="text-9xl animate-pulse">💀📉💀</div>
                 </div>
               )}
             </div>

@@ -57,9 +57,18 @@ export function CompoundCalcView() {
     "https://media.giphy.com/media/NTur7XlVDUdqM/giphy.gif",
     "https://media.giphy.com/media/JtBZm3Getg3dqxEXLU/giphy.gif",
     "https://media.giphy.com/media/Y2ZUWLrTy63j9T6qrK/giphy.gif",
-    "https://media.giphy.com/media/11ISwbgCxEzMyY/giphy.gif"
+    "https://media.giphy.com/media/11ISwbgCxEzMyY/giphy.gif",
+    "https://media.giphy.com/media/3oriO5t2QB4bbOoGzu/giphy.gif",
+    "https://media.giphy.com/media/l41lFw057lAJQMwg0/giphy.gif",
+    "https://media.giphy.com/media/QMHoU66sBXqqLqYvGO/giphy.gif",
+    "https://media.giphy.com/media/xT5LMO3LOn4BPHltf2/giphy.gif",
+    "https://media.giphy.com/media/6Q3M4BIK0lX44/giphy.gif",
+    "https://media.giphy.com/media/z9AUvhAEiXOqA/giphy.gif",
+    "https://media.giphy.com/media/V8PO3o4IIPgDPK2DsL/giphy.gif"
   ];
-  const todayMeme = MEMES[new Date().getDate() % MEMES.length];
+  
+  // 랜덤 짤 노출 (상태로 관리해서 렌더링 시마다 바뀌지 않게 고정)
+  const [todayMeme] = useState(() => MEMES[Math.floor(Math.random() * MEMES.length)]);
 
   const formatMoney = (val: number, cur: string = 'KRW') => {
     if (cur === 'USD') {
