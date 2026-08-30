@@ -65,6 +65,19 @@ export const PORTAL_MENUS: MainCategory[] = [
     ]
   },
   {
+    id: 'games',
+    label: '게임 / 오락',
+    icon: '🎮',
+    subCategories: [
+      {
+        label: '클래식 / 향수',
+        items: [
+          { id: 'classic-games', label: '클래식 게임 핫이슈', icon: '🔥', isReady: true }
+        ]
+      }
+    ]
+  },
+  {
     id: 'trends',
     label: '트렌드 / 커뮤니티',
     icon: '🎙️',
@@ -74,19 +87,6 @@ export const PORTAL_MENUS: MainCategory[] = [
         items: [
           { id: 'patchnotes', label: 'KOREKORE 패치 노트', icon: '📌', isReady: true },
           { id: 'feedback', label: '사용자 건의 게시판', icon: '💬', isReady: true }
-        ]
-      }
-    ]
-  },
-  {
-    id: 'games',
-    label: '게임 / 오락',
-    icon: '🎮',
-    subCategories: [
-      {
-        label: '클래식 / 향수',
-        items: [
-          { id: 'classic-games', label: '클래식 게임 핫이슈', icon: '🔥', isReady: true }
         ]
       }
     ]

@@ -10,7 +10,7 @@ interface MarketPredict {
 }
 
 export const HomeView: React.FC = () => {
-  const [expandedCats, setExpandedCats] = useState<string[]>(['finance', 'utilities', 'trends']);
+  const [expandedCats, setExpandedCats] = useState<string[]>(['finance', 'utilities', 'trends', 'games']);
   const [marketStatus, setMarketStatus] = useState<{ kr_closed: boolean, us_closed: boolean } | null>(null);
   const [predictData, setPredictData] = useState<MarketPredict | null>(null);
   const [fearAndGreed, setFearAndGreed] = useState<{ value: number, classification: string } | null>(null);

@@ -10,7 +10,7 @@ interface GameUpdate {
 }
 
 export default function GameView() {
-  const [activeGame, setActiveGame] = useState<'mapleland' | 'baram_classic' | 'darkness'>('baram_classic');
+  const [activeGame, setActiveGame] = useState<'baram_classic' | 'darkness'>('baram_classic');
   const [updates, setUpdates] = useState<GameUpdate[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -63,16 +63,6 @@ export default function GameView() {
           🌪️ 바람의나라 클래식
         </button>
         <button
-          onClick={() => setActiveGame('mapleland')}
-          className={`px-4 sm:px-6 py-3 rounded-xl font-bold transition-all duration-300 ${
-            activeGame === 'mapleland' 
-              ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/30 scale-105' 
-              : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-          }`}
-        >
-          🍁 메이플랜드
-        </button>
-        <button
           onClick={() => setActiveGame('darkness')}
           className={`px-4 sm:px-6 py-3 rounded-xl font-bold transition-all duration-300 ${
             activeGame === 'darkness' 
@@ -82,6 +72,7 @@ export default function GameView() {
         >
           🦇 넥슨 어둠의전설
         </button>
+
       </div>
 
       {loading ? (
