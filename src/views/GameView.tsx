@@ -80,7 +80,7 @@ export default function GameView() {
               : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
           }`}
         >
-          🦇 어둠의전설
+          🦇 넥슨 어둠의전설
         </button>
       </div>
 
