@@ -77,6 +77,19 @@ export const PORTAL_MENUS: MainCategory[] = [
         ]
       }
     ]
+  },
+  {
+    id: 'games',
+    label: '게임 / 오락',
+    icon: '🎮',
+    subCategories: [
+      {
+        label: '클래식 / 향수',
+        items: [
+          { id: 'classic-games', label: '클래식 게임 핫이슈', icon: '🔥', isReady: true }
+        ]
+      }
+    ]
   }
 ];
 
