@@ -70,7 +70,7 @@ function App() {
   };
 
   const [activeTab, setActiveTab] = useState<string>(getInitialTab);
-  const [expandedMenus, setExpandedMenus] = useState<string[]>(['finance', 'utilities', 'trends']);
+  const [expandedMenus, setExpandedMenus] = useState<string[]>(['finance', 'utilities', 'trends', 'games']);
 
   const toggleMenu = (id: string) => {
     setExpandedMenus(prev => 

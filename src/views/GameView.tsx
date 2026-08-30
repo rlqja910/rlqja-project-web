@@ -18,10 +18,21 @@ export default function GameView() {
     const fetchUpdates = async () => {
       try {
         const res = await fetch('/api/games/updates');
-        const data = await res.json();
-        setUpdates(data);
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data)) {
+            setUpdates(data);
+          } else {
+            console.error("API did not return an array", data);
+            setUpdates([]);
+          }
+        } else {
+          console.error("API returned error", res.status);
+          setUpdates([]);
+        }
       } catch (e) {
         console.error("Failed to fetch game updates", e);
+        setUpdates([]);
       } finally {
         setLoading(false);
       }
