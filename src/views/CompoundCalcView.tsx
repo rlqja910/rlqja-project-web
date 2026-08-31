@@ -116,17 +116,18 @@ export function CompoundCalcView() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 pb-20 animate-fade-in pt-4">
-      <div className="text-center space-y-2 mb-8 px-2">
-        <h1 className="text-2xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500 animate-pulse tracking-tight drop-shadow-[0_0_15px_rgba(192,38,211,0.5)] break-keep">
+    <div className="max-w-4xl mx-auto space-y-6 pb-20 animate-in fade-in duration-500 pt-4">
+      <div className="text-center space-y-4 mb-12 relative">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <h1 className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500 tracking-tight drop-shadow-sm relative z-10 break-keep">
           🎢 야수의 심장 계좌 엑스레이
         </h1>
-        <p className="text-slate-300 text-sm sm:text-base font-bold mt-3 bg-slate-800/50 inline-block px-4 py-2 rounded-full border border-slate-700/50 shadow-lg break-keep leading-relaxed">
+        <p className="text-slate-400 text-[13px] sm:text-sm font-medium relative z-10">
           내 계좌가 얼마나 녹아내렸을까? 레버리지 롤러코스터 탑승 시뮬레이터 🐯🔥
         </p>
       </div>
 
-      <div className="bg-slate-900/50 backdrop-blur-md border border-slate-700/50 rounded-2xl p-6 sm:p-8 shadow-2xl">
+      <div className="bg-gradient-to-br from-slate-900/80 to-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-6 sm:p-8 shadow-xl">
         <div className="flex justify-center mb-8">
           <img src={todayMeme} alt="meme" className="h-32 sm:h-48 rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.5)] border border-slate-600/50 object-cover" />
         </div>

@@ -182,9 +182,12 @@ export const AverageCalculatorView: React.FC = () => {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500 max-w-2xl mx-auto">
-      <div className="text-center space-y-2 mb-12 relative">
-        <h2 className="text-3xl font-extrabold text-white relative z-10">🔮 원기옥 물타기 계산기</h2>
-        <p className="text-slate-400 text-sm relative z-10">네 평단가를 구출하기 위해 우주의 기(현금)를 모아라.</p>
+      <div className="text-center space-y-4 mb-12 relative">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <h2 className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 tracking-tight drop-shadow-sm relative z-10">
+          🔮 원기옥 물타기 계산기
+        </h2>
+        <p className="text-slate-400 text-[13px] sm:text-sm font-medium relative z-10">네 평단가를 구출하기 위해 우주의 기(현금)를 모아라.</p>
       </div>
 
       <div className="relative h-64 flex items-center justify-center overflow-hidden rounded-3xl bg-slate-900 border border-slate-800 mb-8">
@@ -207,7 +210,7 @@ export const AverageCalculatorView: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 relative overflow-hidden">
+      <div className="bg-gradient-to-br from-slate-900/80 to-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-6 sm:p-8 space-y-6 relative overflow-hidden shadow-xl">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10">
           <div className="space-y-2">
             <label className="text-sm font-bold text-slate-400">현재 평단가 (₩)</label>

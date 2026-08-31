@@ -62,24 +62,35 @@ export const BuybackTrackerView: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500 pb-20 px-2 sm:px-0">
-      <div className="relative rounded-3xl overflow-hidden border border-red-500/30 shadow-[0_0_50px_rgba(220,38,38,0.2)] max-w-4xl mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-br from-red-900 via-orange-900 to-yellow-900 opacity-80"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBjeD0iMTAiIGN5PSIxMCIgcj0iMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIwLjEiLz48L3N2Zz4=')]"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-        
-        <div className="relative z-10 p-8 sm:p-12 text-center space-y-4">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-orange-500/20 border border-orange-500/50 mb-2 shadow-[0_0_30px_rgba(249,115,22,0.5)]">
-            <span className="text-4xl animate-bounce">🔥</span>
+    <div className="w-full mx-auto space-y-6 sm:space-y-8 animate-in fade-in duration-500 pb-12">
+      <div className="relative flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-slate-800/80 pb-6">
+        {/* 장식용 글로우 배경 */}
+        <div className="absolute -top-10 -left-10 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute -top-10 right-20 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div className="relative z-10 w-full">
+          <div className="flex items-center gap-3 mb-3">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.8)]"></span>
+            </span>
+            <span className="text-xs font-black tracking-[0.2em] text-orange-400 uppercase bg-orange-950/40 px-2.5 py-1 rounded-md border border-orange-800/50">
+              Live Tracker
+            </span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-500 to-red-500 tracking-tight drop-shadow-lg">
-            국장 자사주 소각장
+          
+          <h2 className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white via-orange-100 to-red-400 tracking-tight drop-shadow-sm mb-3">
+            자사주 소각 트래커
           </h2>
-          <p className="text-orange-100/80 text-xs sm:text-base max-w-2xl mx-auto leading-relaxed font-medium">
-            국내 주주가치를 높이는 최고의 호재, <strong className="text-orange-400">자사주 매입 및 소각!</strong><br />
-            실시간 공시를 기반으로 국내 기업들이 약속한 자사주를 얼마나 불태우고 있는지 추적합니다.
+          
+          <p className="text-slate-400 text-[13px] sm:text-sm font-medium leading-relaxed max-w-2xl mb-6">
+            한국 주식 시장의 주주환원(자사주 취득 및 소각) 현황을 실시간으로 추적합니다.<br />
+            <span className="inline-flex items-center gap-1.5 mt-2 bg-slate-800/60 border border-slate-700/50 text-slate-300 px-3 py-1.5 rounded-lg text-xs shadow-inner">
+              <span className="text-orange-400">💡</span> 진도율 100% 달성 시 명예의 전당으로 이동합니다.
+            </span>
           </p>
 
-          <div className="mt-8 flex flex-col md:flex-row gap-4 justify-between items-center bg-black/40 p-4 rounded-2xl border border-orange-500/20">
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-between w-full bg-slate-900/40 backdrop-blur-md p-4 rounded-2xl border border-slate-800">
             <div className="flex bg-slate-900 p-1 rounded-xl w-full md:w-auto">
               {['ALL', 'KOSPI', 'KOSDAQ'].map(tab => (
                 <button
@@ -152,26 +163,25 @@ export const BuybackTrackerView: React.FC = () => {
 
             return (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {displayList.map((buyback) => {
-                  const percentage = Math.min(100, Math.max(0, (buyback.currentValue / buyback.targetValue) * 100));
+                {displayList.map((bb, index) => {
+                  const percentage = Math.min(100, Math.max(0, (bb.currentValue / bb.targetValue) * 100));
                   const isCompleted = percentage >= 100;
                   
                   return (
-                    <div key={buyback.id} className={`bg-slate-900/80 backdrop-blur-sm border ${isCompleted ? 'border-yellow-500/80 shadow-[0_0_15px_rgba(234,179,8,0.2)]' : 'border-slate-700/50 hover:border-orange-500/50'} rounded-2xl p-4 sm:p-5 transition-all hover:shadow-[0_0_20px_rgba(249,115,22,0.1)] group relative overflow-hidden flex flex-col justify-between h-full`}>
-                      
-                      <div 
-                        className={`absolute inset-0 bg-gradient-to-r ${isCompleted ? 'from-yellow-500/10 to-yellow-600/10' : 'from-orange-500/5 to-red-500/5'} opacity-0 group-hover:opacity-100 transition-opacity`} 
-                        style={{ width: `${percentage}%` }}
-                      ></div>
-
+                    <div 
+                      key={bb.id} 
+                      className={`relative overflow-hidden group bg-gradient-to-br from-slate-900/80 to-slate-800/40 backdrop-blur-xl rounded-2xl p-5 border border-slate-700/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(249,115,22,0.15)] hover:border-orange-500/50 animate-in fade-in slide-in-from-bottom-4`}
+                      style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'both' }}
+                    >
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-orange-500/5 to-red-500/5 rounded-full blur-2xl group-hover:from-orange-500/10 group-hover:to-red-500/10 transition-colors"></div>
                       <div className="relative z-10 flex flex-col sm:flex-row gap-4 sm:items-center justify-between mb-5">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
                             <span className="text-[10px] font-black bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded border border-slate-700">
-                              {buyback.ticker}
+                              {bb.ticker}
                             </span>
                             <h3 className="text-lg sm:text-xl font-black text-white flex items-center gap-1.5 truncate">
-                              {buyback.companyName}
+                              {bb.companyName}
                               {isCompleted && (
                                 <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 whitespace-nowrap">
                                   👑 완료
@@ -180,7 +190,7 @@ export const BuybackTrackerView: React.FC = () => {
                             </h3>
                           </div>
                           <p className="text-orange-400 font-bold text-xs sm:text-sm line-clamp-2 leading-snug">
-                            {buyback.comment}
+                            {bb.comment}
                           </p>
                         </div>
                         
@@ -197,8 +207,8 @@ export const BuybackTrackerView: React.FC = () => {
 
                       <div className="relative z-10">
                         <div className="flex justify-between text-[10px] sm:text-xs text-slate-400 mb-1.5 font-bold">
-                          <span>{buyback.currentValue.toLocaleString()} {buyback.unit}</span>
-                          <span>목표 {buyback.targetValue.toLocaleString()} {buyback.unit}</span>
+                          <span>{bb.currentValue.toLocaleString()} {bb.unit}</span>
+                          <span>목표 {bb.targetValue.toLocaleString()} {bb.unit}</span>
                         </div>
                         
                         <div className="h-3 w-full bg-slate-950 rounded-full overflow-hidden border border-slate-800/80 p-0.5">

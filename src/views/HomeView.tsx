@@ -254,17 +254,18 @@ export const HomeView: React.FC = () => {
                 </svg>
               </div>
               
-              <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 transition-all duration-500 overflow-hidden ${isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0 !m-0'}`}>
-                {main.subCategories.map((sub) => (
-                  sub.items.map((item) => (
+              <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 transition-all duration-500 overflow-hidden ${isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0 !m-0'}`}>
+                {main.subCategories.map((sub, sIdx) => (
+                  sub.items.map((item, iIdx) => (
                     <div
                       key={item.id}
                       onClick={() => handleCardClick(item.id, item.isReady)}
-                      className={`relative overflow-hidden group rounded-2xl p-4 transition-all duration-300 ${
+                      className={`relative overflow-hidden group rounded-2xl p-4 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 ${
                         item.isReady
-                          ? 'bg-slate-800/30 hover:bg-slate-800/80 border-slate-700/50 hover:border-cyan-500/50 cursor-pointer shadow-lg hover:shadow-cyan-500/10 active:scale-[0.98]'
+                          ? 'bg-gradient-to-br from-slate-900/80 to-slate-800/40 hover:from-slate-800/80 hover:to-slate-700/50 border-slate-700/50 hover:border-cyan-500/50 cursor-pointer shadow-lg hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(6,182,212,0.15)]'
                           : 'bg-slate-900/30 border-slate-800/50 cursor-not-allowed opacity-60 grayscale'
-                      } border backdrop-blur-sm flex items-center text-left gap-4`}
+                      } border backdrop-blur-xl flex items-center text-left gap-4`}
+                      style={{ animationDelay: `${(sIdx * 3 + iIdx) * 40}ms`, animationFillMode: 'both' }}
                     >
                       {!item.isReady && (
                         <div className="absolute top-0 right-0 bg-slate-800 text-slate-400 text-[9px] font-bold px-2 py-0.5 rounded-bl-lg border-b border-l border-slate-700">
@@ -279,7 +280,7 @@ export const HomeView: React.FC = () => {
                       </div>
                       
                       <div className="flex-1 min-w-0">
-                        <h4 className={`text-sm sm:text-[15px] font-bold mb-0.5 break-keep leading-tight transition-colors ${item.isReady ? 'text-slate-200 group-hover:text-cyan-300' : 'text-slate-500'}`}>
+                        <h4 className={`text-sm sm:text-[15px] font-black tracking-tight mb-0.5 break-keep leading-tight transition-colors ${item.isReady ? 'text-slate-200 group-hover:text-cyan-300' : 'text-slate-500'}`}>
                           {item.label}
                         </h4>
                         <p className="text-[11px] text-slate-500 break-keep leading-tight mt-1">

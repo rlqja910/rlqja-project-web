@@ -251,15 +251,16 @@ export const ScouterView: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-4 sm:py-8 px-2 sm:px-4">
-      <div className="text-center mb-10">
-        <h2 className="text-2xl sm:text-3xl font-black mb-4">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">🔥 주식 전투력 측정기</span>
+    <div className="w-full max-w-4xl mx-auto py-4 sm:py-8 px-2 sm:px-4 animate-in fade-in duration-500">
+      <div className="text-center mb-10 relative">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <h2 className="relative text-3xl sm:text-4xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 tracking-tight drop-shadow-sm">
+          🔥 주식 전투력 측정기
         </h2>
-        <p className="text-gray-400 text-lg">종목명(한글/영문)을 입력하면 AI 스카우터가 팩폭과 함께 매수 매력도를 측정해 드립니다.</p>
+        <p className="relative text-slate-400 text-[13px] sm:text-sm font-medium">종목명(한글/영문)을 입력하면 AI 스카우터가 팩폭과 함께 매수 매력도를 측정해 드립니다.</p>
       </div>
 
-      <div className="bg-slate-800/50 backdrop-blur-md rounded-2xl p-6 border border-slate-700/50 shadow-2xl mb-8">
+      <div className="bg-gradient-to-br from-slate-900/80 to-slate-800/40 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50 shadow-xl mb-8 transition-all hover:border-cyan-500/50 hover:shadow-[0_4px_20px_rgba(6,182,212,0.15)]">
         <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
           <input
             type="text"

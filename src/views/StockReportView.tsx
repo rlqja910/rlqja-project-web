@@ -30,19 +30,19 @@ export const StockReportView: React.FC<{
 
   return (
     <>
-      <section className={`relative rounded-3xl p-6 sm:p-10 overflow-hidden bg-gradient-to-br from-slate-900 to-slate-900 border ${isMagaMode ? 'border-red-600 shadow-[0_0_80px_rgba(220,38,38,0.6)]' : 'border-slate-800/60 shadow-2xl'} transition-all duration-500`}>
+      <section className={`relative rounded-3xl p-6 sm:p-10 overflow-hidden bg-gradient-to-br from-slate-900/80 to-slate-800/40 backdrop-blur-xl border ${isMagaMode ? 'border-red-600 shadow-[0_0_80px_rgba(220,38,38,0.6)]' : 'border-slate-700/50 shadow-xl'} transition-all duration-500`}>
         {isMagaMode && (
           <div className="absolute inset-0 bg-gradient-to-b from-red-600/20 to-red-900/40 mix-blend-color-dodge animate-pulse pointer-events-none z-0"></div>
         )}
-        <div className={`absolute top-0 right-0 -mr-20 -mt-20 w-64 sm:w-96 h-64 sm:h-96 ${isMagaMode ? 'bg-red-600/40' : 'bg-purple-600/20'} rounded-full blur-3xl pointer-events-none transition-colors duration-1000 z-0`}></div>
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 sm:w-80 h-64 sm:h-80 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className={`absolute top-0 right-0 -mr-20 -mt-20 w-64 sm:w-96 h-64 sm:h-96 ${isMagaMode ? 'bg-red-600/40' : 'bg-cyan-500/10'} rounded-full blur-3xl pointer-events-none transition-colors duration-1000 z-0`}></div>
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 sm:w-80 h-64 sm:h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="relative z-10 max-w-2xl space-y-4 sm:space-y-6">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight break-keep">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 tracking-tight drop-shadow-sm leading-tight break-keep">
             KOREKORE가 분석하는 <br className="hidden sm:block" />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-cyan-400">실시간 증시 리포트</span>
+            실시간 증시 리포트
           </h2>
-          <p className="text-base sm:text-lg text-slate-400 leading-relaxed break-keep">
+          <p className="text-[13px] sm:text-sm text-slate-400 font-medium leading-relaxed break-keep">
             KOREKORE가 하루 3번, 7시 12시 20시에 핵심 뉴스만 선별하여 증시 동향, 수급, 그리고 주목할 섹터를 한눈에 보기 쉽게 요약해 드립니다.
           </p>
         </div>
@@ -68,7 +68,7 @@ export const StockReportView: React.FC<{
                 <div
                   key={post.id}
                   onClick={() => onPostClick(post)}
-                  className={`group p-5 sm:p-6 rounded-2xl bg-slate-900/80 backdrop-blur-sm border transition-all cursor-pointer shadow-lg active:scale-[0.98] sm:active:scale-100 ${isMagaMode ? 'border-red-900/50 hover:border-red-500 hover:shadow-[0_0_15px_rgba(220,38,38,0.2)]' : 'border-slate-800 hover:border-cyan-500/30 hover:shadow-cyan-500/10'}`}
+                  className={`group p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-800/40 backdrop-blur-xl border transition-all cursor-pointer shadow-lg animate-in fade-in slide-in-from-bottom-4 ${isMagaMode ? 'border-red-900/50 hover:border-red-500 hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(220,38,38,0.2)]' : 'border-slate-700/50 hover:border-cyan-500/50 hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(6,182,212,0.15)]'}`}
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
