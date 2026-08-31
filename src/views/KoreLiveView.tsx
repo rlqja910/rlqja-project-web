@@ -66,62 +66,61 @@ export const KoreLiveView: React.FC = () => {
 
     // 지리는 프리미엄 스타일링 (Glassmorphism + Neon Glow)
     const bgBase = isMagaMode
-      ? 'bg-gradient-to-br from-red-950/80 to-red-900/40 border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:shadow-[0_0_30px_rgba(239,68,68,0.6)]'
+      ? 'bg-gradient-to-br from-red-950/80 to-red-900/40 border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:shadow-[0_0_25px_rgba(239,68,68,0.6)]'
       : isUp
-        ? 'bg-gradient-to-br from-[#1e1b4b]/80 to-[#0f172a]/90 border-red-500/30 shadow-[0_4px_20px_-5px_rgba(239,68,68,0.15)] hover:shadow-[0_0_25px_rgba(239,68,68,0.35)] hover:border-red-400/60'
-        : 'bg-gradient-to-br from-[#082f49]/80 to-[#0f172a]/90 border-blue-500/30 shadow-[0_4px_20px_-5px_rgba(59,130,246,0.15)] hover:shadow-[0_0_25px_rgba(59,130,246,0.35)] hover:border-blue-400/60';
+        ? 'bg-gradient-to-br from-[#1e1b4b]/60 to-[#0f172a]/80 border-slate-700/50 shadow-sm hover:shadow-[0_0_15px_rgba(239,68,68,0.25)] hover:border-red-500/50'
+        : 'bg-gradient-to-br from-[#082f49]/60 to-[#0f172a]/80 border-slate-700/50 shadow-sm hover:shadow-[0_0_15px_rgba(59,130,246,0.25)] hover:border-blue-500/50';
 
     const titleColor = isMagaMode 
       ? 'text-orange-200 group-hover:text-red-100'
-      : 'text-slate-300 group-hover:text-white';
+      : 'text-slate-400 group-hover:text-slate-200';
 
     const priceColor = isMagaMode
       ? 'text-orange-400 drop-shadow-[0_0_8px_rgba(251,146,60,0.8)]'
-      : 'text-white';
+      : isUp ? 'text-red-400 drop-shadow-[0_0_3px_rgba(248,113,113,0.3)]' : 'text-blue-400 drop-shadow-[0_0_3px_rgba(96,165,250,0.3)]';
 
     const badgeBg = isMagaMode
-      ? 'bg-red-500/20 text-red-300 border border-red-500/50'
+      ? 'text-red-300'
       : isUp
-        ? 'bg-red-500/10 text-red-400 border border-red-500/20'
-        : 'bg-blue-500/10 text-blue-400 border border-blue-500/20';
+        ? 'text-red-400'
+        : 'text-blue-400';
 
     return (
       <div 
         key={item.symbol} 
-        className={`group relative backdrop-blur-xl border rounded-2xl p-3.5 transition-all duration-300 hover:-translate-y-1 ${bgBase} animate-in fade-in slide-in-from-bottom-4`}
-        style={{ animationDelay: `${index * 30}ms`, animationFillMode: 'both' }}
+        className={`group relative backdrop-blur-md border rounded-xl p-2.5 transition-all duration-300 hover:-translate-y-0.5 ${bgBase} animate-in fade-in slide-in-from-bottom-2`}
+        style={{ animationDelay: `${index * 15}ms`, animationFillMode: 'both' }}
       >
         {/* 추정가 표시 (은은한 글로우 바) */}
         {item.is_estimated && (
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-70 blur-[1px]"></div>
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-80 blur-[0.5px]"></div>
         )}
 
-        <div className="flex justify-between items-start mb-2">
-          <h4 className={`font-bold text-[13px] tracking-tight leading-snug transition-colors truncate pr-2 ${titleColor}`}>
+        <div className="flex justify-between items-center mb-1.5">
+          <h4 className={`font-bold text-[11px] tracking-tight leading-none transition-colors truncate pr-1 ${titleColor}`}>
             {item.name}
           </h4>
           {item.is_estimated && (
-            <span className="text-[9px] font-black tracking-widest text-cyan-300 bg-cyan-950/50 px-1.5 py-0.5 rounded border border-cyan-500/30 shadow-[0_0_5px_rgba(34,211,238,0.4)] whitespace-nowrap">EST</span>
+            <span className="text-[8px] font-black tracking-widest text-cyan-300 bg-cyan-950/40 px-1 py-0.5 rounded border border-cyan-500/20 shadow-[0_0_3px_rgba(34,211,238,0.3)] whitespace-nowrap">EST</span>
           )}
         </div>
 
-        <div className="flex flex-col">
-          <div className="flex items-baseline gap-1 mb-1.5">
-            {!isKrw && <span className="text-slate-400 text-sm font-semibold">{finalPrefix}</span>}
-            <span className={`text-lg sm:text-[22px] font-black tracking-tighter ${priceColor}`}>
+        <div className="flex items-end justify-between">
+          <div className="flex items-baseline gap-0.5">
+            {!isKrw && <span className="text-slate-500 text-[10px] font-semibold">{finalPrefix}</span>}
+            <span className={`text-[15px] font-black tracking-tighter leading-none ${priceColor}`}>
               {displayCurrent.toLocaleString(undefined, formatOptions)}
             </span>
-            {isKrw && <span className="text-slate-400 text-sm font-semibold ml-0.5">원</span>}
           </div>
           
           <div className="flex items-center">
-            <span className={`text-[12px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 backdrop-blur-sm transition-colors ${badgeBg}`}>
+            <span className={`text-[10px] font-bold flex items-center gap-0.5 transition-colors ${badgeBg}`}>
               {isUp ? (
-                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
                 </svg>
               ) : (
-                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
               )}
@@ -137,15 +136,15 @@ export const KoreLiveView: React.FC = () => {
     if (!items || items.length === 0) return null;
     return (
       <div className="mb-8 animate-in fade-in duration-700">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="h-px bg-gradient-to-r from-slate-700 to-transparent flex-1"></div>
-          <h3 className="text-sm font-black text-slate-300 tracking-widest flex items-center gap-2 uppercase">
-            <span className="text-lg">{icon}</span> {title}
+        <div className="flex items-center gap-3 mb-3">
+          <div className="h-px bg-gradient-to-r from-slate-700/50 to-transparent flex-1"></div>
+          <h3 className="text-[11px] sm:text-xs font-black text-slate-400 tracking-widest flex items-center gap-1.5 uppercase">
+            <span className="text-sm">{icon}</span> {title}
           </h3>
-          <div className="h-px bg-gradient-to-l from-slate-700 to-transparent flex-1"></div>
+          <div className="h-px bg-gradient-to-l from-slate-700/50 to-transparent flex-1"></div>
         </div>
         
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-2 sm:gap-2.5">
           {items.map((item, idx) => renderCard(item, prefix, idx))}
         </div>
       </div>
