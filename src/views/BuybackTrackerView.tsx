@@ -61,7 +61,6 @@ export const BuybackTrackerView: React.FC = () => {
     });
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500 pb-20 px-2 sm:px-0">
     <div className="w-full mx-auto space-y-6 sm:space-y-8 animate-in fade-in duration-500 pb-12">
       <div className="relative flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-slate-800/80 pb-6">
         {/* 장식용 글로우 배경 */}

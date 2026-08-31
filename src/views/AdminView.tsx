@@ -260,6 +260,23 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 <p className="text-2xl sm:text-4xl font-bold text-cyan-400">{stats?.totalVisitors || 0}<span className="text-sm sm:text-lg text-slate-500 ml-1 sm:ml-2">명</span></p>
               </div>
             </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* 인기 검색어 */}
+              <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1 shadow-lg">
+                <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex items-center justify-between">
+                  <h2 className="text-lg font-bold">🔥 인기 검색어 TOP 10</h2>
+                </div>
+                <div className="p-0">
+                  {topSearches.length > 0 ? (
+                    <>
+                      <ul className="divide-y divide-slate-700/50">
+                        {(isSearchesExpanded ? topSearches : topSearches.slice(0, 6)).map((search, idx) => (
+                          <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
+                            <div className="flex items-center gap-3">
+                              <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-yellow-400' : 'text-slate-500'}`}>{idx + 1}</span>
+                              <span className="font-medium text-slate-200">{search.term}</span>
+                            </div>
                             <span className="text-cyan-400 font-bold bg-cyan-900/30 px-3 py-1 rounded-full text-sm">
                               {search.count}회
                             </span>
