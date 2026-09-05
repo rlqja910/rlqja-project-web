@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PORTAL_MENUS } from '../config/menu';
 import { useMagaMode } from '../hooks/useMagaMode';
+import { FearGreedGauge } from '../components/FearGreedGauge';
 
 interface MarketPredict {
   ewy: { current: number; change_amt: number; change_pct: number; };
@@ -13,7 +14,7 @@ export const HomeView: React.FC = () => {
   const [expandedCats, setExpandedCats] = useState<string[]>(['finance', 'utilities', 'trends', 'games']);
   const [marketStatus, setMarketStatus] = useState<{ kr_closed: boolean, us_closed: boolean } | null>(null);
   const [predictData, setPredictData] = useState<MarketPredict | null>(null);
-  const [fearAndGreed, setFearAndGreed] = useState<{ value: number, classification: string } | null>(null);
+  const [fearAndGreed, setFearAndGreed] = useState<{ us: {value: number, classification: string}, kr: {value: number, classification: string} } | null>(null);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const { isMagaMode } = useMagaMode();
 
@@ -25,7 +26,7 @@ export const HomeView: React.FC = () => {
     usdkrw: predictData.usdkrw ? { ...predictData.usdkrw, current: predictData.usdkrw.current * 0.845, change_pct: -15.5, change_amt: predictData.usdkrw.current * -0.155 } : undefined
   } : predictData;
 
-  const displayFearAndGreed = isMagaMode ? { value: 100, classification: 'Extreme Greed' } : fearAndGreed;
+  const displayFearAndGreed = isMagaMode ? { us: { value: 100, classification: 'Extreme Greed' }, kr: { value: 100, classification: 'Extreme Greed' } } : fearAndGreed;
 
   useEffect(() => {
     fetch('/api/market-status?t=' + new Date().getTime(), { cache: 'no-store' })
@@ -36,7 +37,7 @@ export const HomeView: React.FC = () => {
     fetch('/api/fear-and-greed?t=' + new Date().getTime(), { cache: 'no-store' })
       .then(res => res.json())
       .then(data => {
-        if (data.success) setFearAndGreed({ value: data.value, classification: data.classification });
+        if (data.success) setFearAndGreed({ us: data.us, kr: data.kr });
       })
       .catch(err => console.error(err));
 
@@ -150,64 +151,19 @@ export const HomeView: React.FC = () => {
 
         {displayFearAndGreed && (
           <div className="mt-5 flex flex-col items-center gap-4">
-            {/* Fear & Greed Index */}
-            <div className={`inline-flex items-center gap-6 bg-slate-900/60 border ${isMagaMode ? 'border-red-500 shadow-[0_0_20px_rgba(220,38,38,0.4)] scale-105' : 'border-slate-700/50'} rounded-full px-6 py-3 relative overflow-hidden shadow-xl backdrop-blur-sm transition-all duration-500`}>
-              <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 opacity-50"></div>
-              
-              <div className="flex flex-col items-start shrink-0">
-                <h3 className="text-[10px] font-bold text-slate-400 tracking-wider uppercase flex items-center gap-1.5">
-                글로벌 위험자산 투심
-                <button 
-                  onClick={() => setIsInfoModalOpen(true)}
-                  className="w-4 h-4 rounded-full bg-slate-700 flex items-center justify-center hover:bg-cyan-500/80 transition-colors shadow-sm"
-                  title="지표 설명 보기"
-                >
-                  <span className="text-[10px] font-black text-white leading-none">?</span>
-                </button>
-              </h3>
-                <div className={`text-xl sm:text-2xl font-black text-transparent bg-clip-text ${isMagaMode ? 'bg-gradient-to-b from-red-400 to-red-600' : 'bg-gradient-to-b from-white to-slate-400'} drop-shadow-sm transition-all`}>
-                  {displayFearAndGreed.value}
-                </div>
-              </div>
-
-              <div className="w-px h-8 bg-slate-700/50 hidden sm:block"></div>
-
-              <div className="flex flex-col gap-1.5 w-32 sm:w-48">
-                <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden relative">
-                  <div 
-                    className={`absolute top-0 left-0 h-full rounded-full transition-all duration-1000 ease-out ${
-                      displayFearAndGreed.value <= 25 ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]' :
-                      displayFearAndGreed.value <= 45 ? 'bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.8)]' :
-                      displayFearAndGreed.value <= 55 ? 'bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.8)]' :
-                      displayFearAndGreed.value <= 75 ? 'bg-lime-500 shadow-[0_0_8px_rgba(132,204,22,0.8)]' :
-                      'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]'
-                    }`}
-                    style={{ width: `${Math.min(Math.max(displayFearAndGreed.value, 0), 100)}%` }}
-                  />
-                </div>
-                <div className="flex justify-between w-full text-[9px] font-bold text-slate-500 px-0.5">
-                  <span>공포</span>
-                  <span>탐욕</span>
-                </div>
-              </div>
-
-              <div className={`shrink-0 px-4 py-1.5 rounded-full font-black text-sm sm:text-base border shadow-sm ${
-                displayFearAndGreed.value <= 25 ? 'bg-red-500/10 text-red-400 border-red-500/30' :
-                displayFearAndGreed.value <= 45 ? 'bg-orange-500/10 text-orange-400 border-orange-500/30' :
-                displayFearAndGreed.value <= 55 ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30' :
-                displayFearAndGreed.value <= 75 ? 'bg-lime-500/10 text-lime-400 border-lime-500/30' :
-                'bg-green-500/10 text-green-400 border-green-500/30'
-              } ${isMagaMode ? 'bg-green-500 text-white animate-bounce' : ''}`}>
-                {
-                  isMagaMode ? '🤑 가즈아아앗!' :
-                  displayFearAndGreed.value <= 25 ? '😱 극단적 공포' :
-                  displayFearAndGreed.value <= 45 ? '😨 공포' :
-                  displayFearAndGreed.value <= 55 ? '😐 중립' :
-                  displayFearAndGreed.value <= 75 ? '😏 탐욕' :
-                  '🤑 극단적 탐욕'
-                }
-              </div>
+            <div className="flex flex-wrap justify-center gap-6 w-full">
+              <FearGreedGauge 
+                value={displayFearAndGreed.us.value} 
+                classification={displayFearAndGreed.us.classification} 
+                title="🦅 미국 (S&P 500)" 
+              />
+              <FearGreedGauge 
+                value={displayFearAndGreed.kr.value} 
+                classification={displayFearAndGreed.kr.classification} 
+                title="🐯 한국 (KOSPI)" 
+              />
             </div>
+
 
             {/* Pentagon Pizza Index */}
             <div className={`inline-flex items-center gap-2.5 bg-slate-900/60 border ${isMagaMode ? 'border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.3)]' : 'border-slate-700/50'} rounded-full px-5 py-2.5 shadow-xl backdrop-blur-sm cursor-help transition-all`} title="지정학적 위기(공포)가 커지면 펜타곤 야근이 늘어나 피자 배달이 급증한다는 금융권 밈 지수">
@@ -224,7 +180,7 @@ export const HomeView: React.FC = () => {
               <div className="flex gap-0.5 ml-1">
                 {[...Array(5)].map((_, i) => (
                   <span key={i} className={`text-base transition-all duration-500 ${
-                    i < (displayFearAndGreed.value <= 25 ? 5 : displayFearAndGreed.value <= 45 ? 3 : displayFearAndGreed.value <= 55 ? 2 : 1) 
+                    i < (displayFearAndGreed.us.value <= 25 ? 5 : displayFearAndGreed.us.value <= 45 ? 3 : displayFearAndGreed.us.value <= 55 ? 2 : 1) 
                     ? 'opacity-100 scale-110 drop-shadow-[0_0_4px_rgba(239,68,68,0.8)]' 
                     : 'opacity-20 grayscale'
                   }`}>🍕</span>
