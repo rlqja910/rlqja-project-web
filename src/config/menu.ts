@@ -26,6 +26,7 @@ export const PORTAL_MENUS: MainCategory[] = [
       {
         label: '주식',
         items: [
+          { id: 'whale', label: '세력 포착기 (스마트머니)', icon: '🐳', isReady: true },
           { id: 'report', label: '실시간 시황 리포트', icon: '🔥', isReady: true },
           { id: 'scouter', label: '주식 전투력 측정기', icon: '🔭', isReady: true },
           { id: 'fortune', label: '주식 포춘쿠키 (운세)', icon: '🥠', isReady: true },
