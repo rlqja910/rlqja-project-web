@@ -49,6 +49,23 @@ export const NoticePopup: React.FC = () => {
         <div className="p-6 space-y-4">
           
           <button 
+            onClick={() => navigateTo('whale')}
+            className="w-full group text-left bg-slate-800/50 hover:bg-slate-800 border border-slate-700 hover:border-cyan-500/50 p-4 rounded-2xl transition-all flex items-start gap-4"
+          >
+            <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 border border-cyan-500/20 group-hover:scale-110 transition-transform">
+              <span className="text-2xl">🐳</span>
+            </div>
+            <div>
+              <h3 className="font-bold text-white text-lg flex items-center gap-2">
+                세력 포착기 (스마트 머니) <span className="text-[10px] font-black bg-cyan-500 text-white px-2 py-0.5 rounded-full animate-pulse tracking-wider">NEW</span>
+              </h3>
+              <p className="text-sm text-slate-400 mt-1 leading-relaxed">
+                폭발 전야의 에너지가 응축된 종목을 AI가 매일 장 마감 후 발굴합니다! 
+              </p>
+            </div>
+          </button>
+
+          <button 
             onClick={() => navigateTo('reverse-trade')}
             className="w-full group text-left bg-slate-800/50 hover:bg-slate-800 border border-slate-700 hover:border-yellow-500/50 p-4 rounded-2xl transition-all flex items-start gap-4"
           >
@@ -74,27 +91,10 @@ export const NoticePopup: React.FC = () => {
             </div>
             <div>
               <h3 className="font-bold text-white text-lg flex items-center gap-2">
-                국장 자사주 소각장 <span className="text-[10px] font-black bg-orange-500 text-white px-2 py-0.5 rounded-full animate-pulse tracking-wider">NEW</span>
+                국장 자사주 소각장
               </h3>
               <p className="text-sm text-slate-400 mt-1 leading-relaxed">
                 삼전 10조, 하이닉스 40조 소각? 100억 이상 진짜배기 자사주 소각/매입 진행률을 실시간으로 추적하세요!
-              </p>
-            </div>
-          </button>
-
-          <button 
-            onClick={() => navigateTo('feedback')}
-            className="w-full group text-left bg-slate-800/50 hover:bg-slate-800 border border-slate-700 hover:border-purple-500/50 p-4 rounded-2xl transition-all flex items-start gap-4"
-          >
-            <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center shrink-0 border border-purple-500/20 group-hover:scale-110 transition-transform">
-              <span className="text-2xl">📮</span>
-            </div>
-            <div>
-              <h3 className="font-bold text-white text-lg">
-                유저 건의함 (개발해주세요!)
-              </h3>
-              <p className="text-sm text-slate-400 mt-1 leading-relaxed">
-                운영자에게 바라는 기능이나 아이디어가 있다면 익명으로 마음껏 날려주세요.
               </p>
             </div>
           </button>

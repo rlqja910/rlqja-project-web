@@ -65,7 +65,7 @@ export const WhaleDetectorView: React.FC = () => {
       ) : (
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between text-sm text-slate-500">
-            <span>발굴된 개십지리는 종목: <strong className="text-slate-300">{stocks.length}개</strong></span>
+            <span>포착된 유망 종목: <strong className="text-slate-300">{stocks.length}개</strong></span>
             <span>최근 스캔: {updatedAt}</span>
           </div>
 
