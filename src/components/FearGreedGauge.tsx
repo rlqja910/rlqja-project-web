@@ -35,6 +35,17 @@ export const FearGreedGauge: React.FC<FearGreedGaugeProps> = ({ value, classific
   // Calculate rotation for the needle (-90deg to 90deg)
   const rotation = (value / 100) * 180 - 90;
 
+  const translateClassification = (cls: string) => {
+    switch (cls.toLowerCase()) {
+      case 'extreme fear': return '극도의 공포 (패닉)';
+      case 'fear': return '공포 (곡소리)';
+      case 'neutral': return '중립 (눈치싸움)';
+      case 'greed': return '탐욕 (가즈아)';
+      case 'extreme greed': return '극도의 탐욕 (광기)';
+      default: return cls;
+    }
+  };
+
   return (
     <div className="flex flex-col items-center p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 relative overflow-hidden flex-1">
       {/* Subtle background glow based on current state */}
@@ -81,7 +92,7 @@ export const FearGreedGauge: React.FC<FearGreedGaugeProps> = ({ value, classific
           {value}
         </span>
         <span className="text-sm font-medium px-3 py-1 rounded-full bg-slate-900/50 border whitespace-nowrap" style={{ color, borderColor: `${color}40` }}>
-          {emoji} {classification}
+          {emoji} {translateClassification(classification)}
         </span>
       </div>
     </div>
