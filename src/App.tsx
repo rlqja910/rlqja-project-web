@@ -16,6 +16,7 @@ import { FeedbackView } from './views/FeedbackView';
 import { WhaleDetectorView } from './views/WhaleDetectorView';
 import GameView from './views/GameView';
 import FomoView from './views/FomoView';
+import { PushSubscriptionModal } from './components/PushSubscriptionModal';
 import { PPINoticePopup } from './components/PPINoticePopup';
 import { LoyalUserModal } from './components/LoyalUserModal';
 import { useMagaMode } from './hooks/useMagaMode';
