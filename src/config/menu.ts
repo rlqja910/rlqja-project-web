@@ -35,6 +35,12 @@ export const PORTAL_MENUS: MainCategory[] = [
         ]
       },
       {
+        label: '고급 정보 (Alpha)',
+        items: [
+          { id: 'info-board', label: '증시 꿀팁 / 인사이트', icon: '💎', isReady: true }
+        ]
+      },
+      {
         label: '투자 계산기',
         items: [
           { id: 'calc-avg', label: '물타기(평단가) 계산기', icon: '🛟', isReady: true },

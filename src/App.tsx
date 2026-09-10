@@ -16,10 +16,10 @@ import { FeedbackView } from './views/FeedbackView';
 import { WhaleDetectorView } from './views/WhaleDetectorView';
 import GameView from './views/GameView';
 import FomoView from './views/FomoView';
-import { PushSubscriptionModal } from './components/PushSubscriptionModal';
-import { NoticePopup } from './components/NoticePopup';
+import { PPINoticePopup } from './components/PPINoticePopup';
 import { LoyalUserModal } from './components/LoyalUserModal';
 import { useMagaMode } from './hooks/useMagaMode';
+import { InfoBoardView } from './views/InfoBoardView';
 
 interface Post {
   id: number;
@@ -330,7 +330,7 @@ function App() {
 
   return (
     <div className={`min-h-screen flex bg-[#0B0F19] text-slate-300 font-sans selection:bg-purple-500/30 relative ${isMagaMode ? 'border-[8px] border-red-600' : ''}`}>
-      <NoticePopup />
+      <PPINoticePopup />
       {isMagaMode && (
         <div className="fixed inset-0 bg-gradient-to-b from-red-900/60 via-red-800/20 to-orange-900/40 mix-blend-color-dodge animate-pulse pointer-events-none z-[100] backdrop-blur-[1px]"></div>
       )}
@@ -491,8 +491,9 @@ function App() {
           {activeTab === 'calc-compound' && <CompoundCalcView />}
           {activeTab === 'fomo' && <FomoView />}
           {activeTab === 'classic-games' && <GameView />}
+          {activeTab === 'info-board' && <InfoBoardView />}
           
-          {activeTab !== 'home' && activeTab !== 'whale' && activeTab !== 'report' && activeTab !== 'patchnotes' && activeTab !== 'scouter' && activeTab !== 'calc-avg' && activeTab !== 'calc-compound' && activeTab !== 'fomo' && activeTab !== 'admin-secret-2026' && activeTab !== 'kore-live' && activeTab !== 'fortune' && activeTab !== 'admin' && activeTab !== 'reverse-trade' && activeTab !== 'buyback' && activeTab !== 'feedback' && activeTab !== 'classic-games' && (
+          {activeTab !== 'home' && activeTab !== 'whale' && activeTab !== 'report' && activeTab !== 'patchnotes' && activeTab !== 'scouter' && activeTab !== 'calc-avg' && activeTab !== 'calc-compound' && activeTab !== 'fomo' && activeTab !== 'admin-secret-2026' && activeTab !== 'kore-live' && activeTab !== 'fortune' && activeTab !== 'admin' && activeTab !== 'reverse-trade' && activeTab !== 'buyback' && activeTab !== 'feedback' && activeTab !== 'classic-games' && activeTab !== 'info-board' && (
              <div className="text-center py-32 text-slate-400">
                <div className="text-6xl mb-6">🚧</div>
                <h2 className="text-2xl font-bold text-white mb-2">공사 중입니다</h2>
