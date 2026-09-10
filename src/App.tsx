@@ -73,10 +73,17 @@ function App() {
 
   const [activeTab, setActiveTab] = useState<string>(getInitialTab);
   const [expandedMenus, setExpandedMenus] = useState<string[]>(['finance', 'utilities', 'trends', 'games']);
+  const [expandedSubMenus, setExpandedSubMenus] = useState<string[]>(['finance-주식']);
 
   const toggleMenu = (id: string) => {
     setExpandedMenus(prev => 
       prev.includes(id) ? prev.filter(m => m !== id) : [...prev, id]
+    );
+  };
+
+  const toggleSubMenu = (subId: string) => {
+    setExpandedSubMenus(prev => 
+      prev.includes(subId) ? prev.filter(m => m !== subId) : [...prev, subId]
     );
   };
 
@@ -392,20 +399,31 @@ function App() {
                     const readySubItems = sub.items.filter(item => item.isReady);
                     if (readySubItems.length === 0) return null;
                     
+                    const subId = `${main.id}-${sub.label}`;
+                    const isSubExpanded = expandedSubMenus.includes(subId);
+                    
                     return (
                       <div key={idx} className="mb-2">
-                        <div className="px-4 py-1 flex items-center text-[11px] font-bold text-slate-600 mb-0.5 ml-5 uppercase tracking-widest">
-                          {sub.label}
+                        <button
+                          onClick={() => toggleSubMenu(subId)}
+                          className="w-full px-4 py-1.5 flex items-center justify-between text-[11px] font-bold text-slate-500 hover:text-slate-300 mb-0.5 uppercase tracking-widest transition-colors"
+                        >
+                          <span className="ml-5">{sub.label}</span>
+                          <svg className={`w-3 h-3 transition-transform duration-200 text-slate-600 mr-2 ${isSubExpanded ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                        <div className={`overflow-hidden transition-all duration-300 ${isSubExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                          {readySubItems.map(item => (
+                            <button
+                              key={item.id}
+                              onClick={() => handleTabChange(item.id)}
+                              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all pl-10 ${activeTab === item.id ? 'bg-slate-800/50 text-white border border-slate-700/50' : 'hover:bg-slate-800/30 text-slate-400 border border-transparent'}`}
+                            >
+                              <span className="text-lg opacity-70">{item.icon}</span> {item.label}
+                            </button>
+                          ))}
                         </div>
-                        {readySubItems.map(item => (
-                          <button
-                            key={item.id}
-                            onClick={() => handleTabChange(item.id)}
-                            className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all pl-10 ${activeTab === item.id ? 'bg-slate-800/50 text-white border border-slate-700/50' : 'hover:bg-slate-800/30 text-slate-400 border border-transparent'}`}
-                          >
-                            <span className="text-lg opacity-70">{item.icon}</span> {item.label}
-                          </button>
-                        ))}
                       </div>
                     );
                   })}
