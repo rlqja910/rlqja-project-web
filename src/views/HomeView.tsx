@@ -210,42 +210,49 @@ export const HomeView: React.FC = () => {
                 </svg>
               </div>
               
-              <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 transition-all duration-500 overflow-hidden ${isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0 !m-0'}`}>
-                {main.subCategories.map((sub, sIdx) => (
-                  sub.items.map((item, iIdx) => (
-                    <div
-                      key={item.id}
-                      onClick={() => handleCardClick(item.id, item.isReady)}
-                      className={`relative overflow-hidden group rounded-2xl p-4 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 ${
-                        item.isReady
-                          ? 'bg-gradient-to-br from-slate-900/80 to-slate-800/40 hover:from-slate-800/80 hover:to-slate-700/50 border-slate-700/50 hover:border-cyan-500/50 cursor-pointer shadow-lg hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(6,182,212,0.15)]'
-                          : 'bg-slate-900/30 border-slate-800/50 cursor-not-allowed opacity-60 grayscale'
-                      } border backdrop-blur-xl flex items-center text-left gap-4`}
-                      style={{ animationDelay: `${(sIdx * 3 + iIdx) * 40}ms`, animationFillMode: 'both' }}
-                    >
-                      {!item.isReady && (
-                        <div className="absolute top-0 right-0 bg-slate-800 text-slate-400 text-[9px] font-bold px-2 py-0.5 rounded-bl-lg border-b border-l border-slate-700">
-                          준비 중
-                        </div>
-                      )}
-                      
-                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors ${item.isReady ? 'bg-slate-700/50 group-hover:bg-cyan-500/10' : 'bg-slate-800/50'}`}>
-                        <span className={`text-2xl transition-transform duration-300 ${item.isReady ? 'group-hover:scale-110' : ''}`}>
-                          {item.icon}
-                        </span>
-                      </div>
-                      
-                      <div className="flex-1 min-w-0">
-                        <h4 className={`text-sm sm:text-[15px] font-black tracking-tight mb-0.5 break-keep leading-tight transition-colors ${item.isReady ? 'text-slate-200 group-hover:text-cyan-300' : 'text-slate-500'}`}>
-                          {item.label}
-                        </h4>
-                        <p className="text-[11px] text-slate-500 break-keep leading-tight mt-1">
-                          {sub.label}
-                        </p>
+              <div className={`transition-all duration-500 overflow-hidden ${isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0 !m-0'}`}>
+                {main.subCategories.map((sub, sIdx) => {
+                  const readyItems = sub.items;
+                  if (readyItems.length === 0) return null;
+                  
+                  return (
+                    <div key={sIdx} className="mb-6 last:mb-0">
+                      <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 pl-1">{sub.label}</h4>
+                      <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-4 custom-scrollbar snap-x snap-mandatory">
+                        {readyItems.map((item, iIdx) => (
+                          <div
+                            key={item.id}
+                            onClick={() => handleCardClick(item.id, item.isReady)}
+                            className={`shrink-0 snap-start w-32 sm:w-40 relative overflow-hidden group rounded-2xl p-4 sm:p-5 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 ${
+                              item.isReady
+                                ? 'bg-gradient-to-br from-slate-900/90 to-slate-800/80 hover:from-slate-800/90 hover:to-slate-700/80 border-slate-700/50 hover:border-cyan-500/50 cursor-pointer shadow-lg hover:-translate-y-2 hover:shadow-[0_8px_25px_rgba(6,182,212,0.2)]'
+                                : 'bg-slate-900/30 border-slate-800/50 cursor-not-allowed opacity-50 grayscale'
+                            } border backdrop-blur-xl flex flex-col items-start gap-3 sm:gap-4`}
+                            style={{ animationDelay: `${(sIdx * 3 + iIdx) * 40}ms`, animationFillMode: 'both' }}
+                          >
+                            {!item.isReady && (
+                              <div className="absolute top-0 right-0 bg-slate-800 text-slate-400 text-[9px] font-bold px-2 py-0.5 rounded-bl-lg border-b border-l border-slate-700">
+                                준비 중
+                              </div>
+                            )}
+                            
+                            <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center transition-all duration-300 ${item.isReady ? 'bg-gradient-to-br from-slate-700/50 to-slate-800/50 group-hover:from-cyan-500/20 group-hover:to-blue-500/10' : 'bg-slate-800/50'}`}>
+                              <span className={`text-2xl sm:text-3xl transition-transform duration-300 ${item.isReady ? 'group-hover:scale-125' : ''}`}>
+                                {item.icon}
+                              </span>
+                            </div>
+                            
+                            <div className="w-full">
+                              <h4 className={`text-sm sm:text-base font-black tracking-tight mb-1 break-keep leading-tight transition-colors ${item.isReady ? 'text-slate-200 group-hover:text-cyan-300' : 'text-slate-500'}`}>
+                                {item.label}
+                              </h4>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                  ))
-                ))}
+                  );
+                })}
               </div>
             </div>
           );
