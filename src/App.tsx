@@ -343,7 +343,7 @@ function App() {
   };
 
   return (
-    <div className={`min-h-screen flex bg-transparent text-gray-200 font-sans selection:bg-purple-500/50 relative ${isMagaMode ? 'border-[8px] border-red-600' : ''}`}>
+    <div className={`min-h-screen flex bg-transparent text-gray-200 font-pixel selection:bg-purple-500/50 relative ${isMagaMode ? 'border-[8px] border-red-600' : ''}`}>
       <PPINoticePopup />
       {isMagaMode && (
         <div className="fixed inset-0 bg-gradient-to-b from-red-900/60 via-red-800/20 to-orange-900/40 mix-blend-color-dodge animate-pulse pointer-events-none z-[100] backdrop-blur-[1px]"></div>
