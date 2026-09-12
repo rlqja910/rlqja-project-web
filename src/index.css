@@ -3,8 +3,8 @@
 @import "tailwindcss";
 
 @font-face {
-    font-family: 'Galmuri11';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Galmuri11.woff') format('woff');
+    font-family: 'DungGeunMo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -12,22 +12,22 @@
 @theme {
   --color-primary: #3b82f6;
   --color-secondary: #10b981;
-  --font-sans: 'Galmuri11', "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-sans: 'DungGeunMo', "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 body {
   @apply bg-[#0f0c29] text-gray-200 antialiased;
-  font-family: 'Galmuri11', "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-family: 'DungGeunMo', "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
   min-height: 100vh;
 }
 
 @layer utilities {
   .font-pixel {
-    font-family: 'Galmuri11', sans-serif;
+    font-family: 'DungGeunMo', sans-serif;
   }
   .pokemon-title {
-    font-family: 'Galmuri11', sans-serif;
+    font-family: 'DungGeunMo', sans-serif;
     color: #facc15; /* Tailwind yellow-400 */
     text-shadow: 
       -3px -3px 0 #27272a,
@@ -38,7 +38,7 @@ body {
     letter-spacing: 0.1em;
   }
   .pokemon-text {
-    font-family: 'Galmuri11', sans-serif;
+    font-family: 'DungGeunMo', sans-serif;
     text-shadow: 
       -2px -2px 0 #27272a,
       2px -2px 0 #27272a,
