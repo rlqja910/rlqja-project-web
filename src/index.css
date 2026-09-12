@@ -9,8 +9,10 @@
 }
 
 body {
-  @apply bg-gray-50 text-gray-900 antialiased;
+  @apply bg-[#0f0c29] text-gray-200 antialiased;
   font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
+  min-height: 100vh;
 }
 
 @layer utilities {
@@ -18,16 +20,24 @@ body {
     font-family: 'DungGeunMo', sans-serif;
   }
   .brutal-border {
-    border: 4px solid #111827;
+    border: 3px solid #7c3aed;
+    box-shadow: inset 0 0 10px rgba(124, 58, 237, 0.5);
+  }
+  .brutal-border-accent {
+    border: 3px solid #06b6d4;
+    box-shadow: inset 0 0 10px rgba(6, 182, 212, 0.5);
   }
   .brutal-shadow {
-    box-shadow: 4px 4px 0px 0px #111827;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.8), 0 0 15px rgba(124, 58, 237, 0.4);
   }
   .brutal-shadow-sm {
-    box-shadow: 2px 2px 0px 0px #111827;
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.8);
   }
   .brutal-shadow-lg {
-    box-shadow: 6px 6px 0px 0px #111827;
+    box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.8), 0 0 25px rgba(6, 182, 212, 0.4);
+  }
+  .pixel-icon {
+    filter: drop-shadow(1px 1px 0px #000) drop-shadow(-1px -1px 0px #000) drop-shadow(1px -1px 0px #000) drop-shadow(-1px 1px 0px #000);
   }
 }
 

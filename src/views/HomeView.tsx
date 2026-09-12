@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { PORTAL_MENUS } from '../config/menu';
 import { useMagaMode } from '../hooks/useMagaMode';
 import { FearGreedGauge } from '../components/FearGreedGauge';
+import * as LucideIcons from 'lucide-react';
 
 interface MarketPredict {
   ewy: { current: number; change_amt: number; change_pct: number; };
@@ -81,56 +82,56 @@ export const HomeView: React.FC = () => {
             </span>
           </div>
         )}
-        <h2 className="relative text-3xl sm:text-4xl md:text-5xl font-pixel text-white leading-tight break-keep tracking-widest drop-shadow-[4px_4px_0_rgba(0,0,0,1)]">
+        <h2 className="relative text-3xl sm:text-4xl md:text-5xl font-pixel text-white leading-tight break-keep tracking-widest drop-shadow-[2px_2px_0_#7c3aed]">
           당신의 모든 것을 위한 <br />
-          <span className="text-yellow-400">
+          <span className="text-cyan-400 drop-shadow-[0_0_15px_rgba(6,182,212,0.6)]">
             KOREKORE 
           </span>
         </h2>
-        <p className="relative text-base sm:text-lg text-slate-300 max-w-2xl mx-auto break-keep mt-4 font-pixel tracking-wider bg-black/50 py-2 px-4 rounded-xl inline-block brutal-border">
+        <p className="relative text-base sm:text-lg text-gray-300 max-w-2xl mx-auto break-keep mt-4 font-pixel tracking-wider bg-[#1a103c]/80 py-2 px-4 rounded-xl inline-block brutal-border">
           실시간 글로벌 금융 데이터부터 AI 심층 분석까지!
         </p>
 
         {displayPredictData && (
-          <div className={`mt-6 max-w-3xl mx-auto bg-cyan-300 brutal-border brutal-shadow-lg p-4 sm:p-5 relative flex flex-col items-center gap-4 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_0_0_0_#111827]`}>
-            <div className={`absolute top-0 left-0 w-full h-2 bg-pink-400 border-b-4 border-black`}></div>
+          <div className={`mt-6 max-w-3xl mx-auto bg-[#1a103c] brutal-border-accent brutal-shadow-lg p-4 sm:p-5 relative flex flex-col items-center gap-4 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(6,182,212,0.6)]`}>
+            <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-500`}></div>
             
-            <div className="flex items-center gap-2 text-sm sm:text-base font-pixel font-bold text-black mt-2">
+            <div className="flex items-center gap-2 text-sm sm:text-base font-pixel font-bold text-gray-200 mt-2">
               <span>🔮 국장 픽셀 라이브 예측</span>
               <span className="flex h-3 w-3 relative ml-1">
-                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75`}></span>
-                <span className={`relative inline-flex rounded-full h-3 w-3 bg-red-500 border border-black`}></span>
+                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75`}></span>
+                <span className={`relative inline-flex rounded-full h-3 w-3 bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,1)]`}></span>
               </span>
             </div>
             
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-3 sm:gap-6 text-sm sm:text-base w-full px-1 font-pixel tracking-wider font-bold">
-              <div className="flex items-center gap-1 sm:gap-2 shrink-0 bg-white px-3 py-1 brutal-border brutal-shadow-sm">
-                <span className="text-black">코스피</span>
-                <span className="text-blue-600">{displayPredictData.kospi.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                <span className={`${displayPredictData.kospi.change_pct >= 0 ? 'text-red-500' : 'text-blue-500'}`}>
+              <div className="flex items-center gap-1 sm:gap-2 shrink-0 bg-[#2d1b54] px-3 py-1 brutal-border-accent brutal-shadow-sm">
+                <span className="text-gray-300">코스피</span>
+                <span className="text-white">{displayPredictData.kospi.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className={`${displayPredictData.kospi.change_pct >= 0 ? 'text-green-400 drop-shadow-[0_0_5px_rgba(74,222,128,0.8)]' : 'text-red-400 drop-shadow-[0_0_5px_rgba(248,113,113,0.8)]'}`}>
                   {displayPredictData.kospi.change_pct >= 0 ? '▲' : '▼'}{Math.abs(displayPredictData.kospi.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
               </div>
               
-              <div className="flex items-center gap-1 sm:gap-2 shrink-0 bg-white px-3 py-1 brutal-border brutal-shadow-sm">
-                <span className="text-black">코스닥</span>
-                <span className="text-blue-600">{displayPredictData.kosdaq.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                <span className={`${displayPredictData.kosdaq.change_pct >= 0 ? 'text-red-500' : 'text-blue-500'}`}>
+              <div className="flex items-center gap-1 sm:gap-2 shrink-0 bg-[#2d1b54] px-3 py-1 brutal-border-accent brutal-shadow-sm">
+                <span className="text-gray-300">코스닥</span>
+                <span className="text-white">{displayPredictData.kosdaq.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className={`${displayPredictData.kosdaq.change_pct >= 0 ? 'text-green-400 drop-shadow-[0_0_5px_rgba(74,222,128,0.8)]' : 'text-red-400 drop-shadow-[0_0_5px_rgba(248,113,113,0.8)]'}`}>
                   {displayPredictData.kosdaq.change_pct >= 0 ? '▲' : '▼'}{Math.abs(displayPredictData.kosdaq.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
               </div>
               
-              <div className="flex items-center gap-1 sm:gap-2 shrink-0 bg-white px-3 py-1 brutal-border brutal-shadow-sm">
-                <span className="text-black">EWY</span>
-                <span className={`${displayPredictData.ewy.change_pct >= 0 ? 'text-red-500' : 'text-blue-500'}`}>
+              <div className="flex items-center gap-1 sm:gap-2 shrink-0 bg-[#2d1b54] px-3 py-1 brutal-border-accent brutal-shadow-sm">
+                <span className="text-gray-300">EWY</span>
+                <span className={`${displayPredictData.ewy.change_pct >= 0 ? 'text-green-400 drop-shadow-[0_0_5px_rgba(74,222,128,0.8)]' : 'text-red-400 drop-shadow-[0_0_5px_rgba(248,113,113,0.8)]'}`}>
                   {displayPredictData.ewy.change_pct > 0 ? '+' : ''}{displayPredictData.ewy.change_pct}%
                 </span>
               </div>
               {displayPredictData.usdkrw && (
-                <div className="flex items-center gap-1 sm:gap-2 shrink-0 bg-white px-3 py-1 brutal-border brutal-shadow-sm">
-                  <span className="text-black">환율</span>
-                  <span className="text-blue-600">{displayPredictData.usdkrw.current.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                  <span className={`${displayPredictData.usdkrw.change_pct >= 0 ? 'text-red-500' : 'text-blue-500'}`}>
+                <div className="flex items-center gap-1 sm:gap-2 shrink-0 bg-[#2d1b54] px-3 py-1 brutal-border-accent brutal-shadow-sm">
+                  <span className="text-gray-300">환율</span>
+                  <span className="text-white">{displayPredictData.usdkrw.current.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  <span className={`${displayPredictData.usdkrw.change_pct >= 0 ? 'text-green-400 drop-shadow-[0_0_5px_rgba(74,222,128,0.8)]' : 'text-red-400 drop-shadow-[0_0_5px_rgba(248,113,113,0.8)]'}`}>
                     {displayPredictData.usdkrw.change_pct > 0 ? '+' : ''}{displayPredictData.usdkrw.change_pct}%
                   </span>
                 </div>
@@ -139,7 +140,7 @@ export const HomeView: React.FC = () => {
 
             <button 
               onClick={() => window.location.hash = 'kore-live'}
-              className="mt-3 bg-yellow-400 hover:bg-yellow-300 brutal-border brutal-shadow px-6 py-2 text-sm sm:text-base font-pixel text-black transition-all hover:-translate-y-1 hover:shadow-none flex items-center gap-2"
+              className="mt-3 bg-[#7c3aed] hover:bg-[#6d28d9] brutal-border brutal-shadow px-6 py-2 text-sm sm:text-base font-pixel text-white transition-all hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(124,58,237,0.8)] flex items-center gap-2"
             >
               한국 주식 24h 라이브 입장 <span>›</span>
             </button>
@@ -212,39 +213,35 @@ export const HomeView: React.FC = () => {
                   const readyItems = sub.items;
                   if (readyItems.length === 0) return null;
                   
-                  const colors = ['bg-yellow-400', 'bg-cyan-400', 'bg-pink-400', 'bg-green-400', 'bg-purple-400'];
-                  
                   return (
                     <div key={sIdx} className="mb-6 last:mb-0">
-                      <h4 className="text-xs font-bold font-pixel text-slate-400 uppercase tracking-widest mb-3 pl-1">{sub.label}</h4>
+                      <h4 className="text-xs font-bold font-pixel text-purple-400 uppercase tracking-widest mb-3 pl-1 drop-shadow-[1px_1px_0_#000]">{sub.label}</h4>
                       <div className="flex gap-4 sm:gap-5 overflow-x-auto pb-6 custom-scrollbar snap-x snap-mandatory px-1">
                         {readyItems.map((item, iIdx) => {
-                          const color = colors[(sIdx + iIdx) % colors.length];
+                          const IconComponent = (LucideIcons as any)[item.icon] || LucideIcons.HelpCircle;
                           return (
                           <div
                             key={item.id}
                             onClick={() => handleCardClick(item.id, item.isReady)}
                             className={`shrink-0 snap-start w-36 sm:w-44 relative overflow-visible group rounded-xl p-4 sm:p-5 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 ${
                               item.isReady
-                                ? `${color} brutal-border brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[0_0_0_0_#111827] cursor-pointer`
-                                : 'bg-gray-300 brutal-border cursor-not-allowed opacity-70 grayscale'
+                                ? `bg-[#1a103c] brutal-border brutal-shadow hover:-translate-y-1 hover:translate-x-1 hover:shadow-[0_0_25px_rgba(124,58,237,0.8)] cursor-pointer`
+                                : 'bg-[#0f0c29] border-[3px] border-gray-700 cursor-not-allowed opacity-70 grayscale'
                             } flex flex-col items-center gap-3 text-center`}
                             style={{ animationDelay: `${(sIdx * 3 + iIdx) * 40}ms`, animationFillMode: 'both' }}
                           >
                             {!item.isReady && (
-                              <div className="absolute top-0 right-0 bg-black text-white font-pixel text-[9px] px-2 py-1 border-l-2 border-b-2 border-black rounded-bl-lg">
+                              <div className="absolute top-0 right-0 bg-red-600 text-white font-pixel text-[9px] px-2 py-1 brutal-border rounded-bl-lg">
                                 준비중
                               </div>
                             )}
                             
-                            <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center transition-all duration-300 brutal-border bg-white shadow-[2px_2px_0_0_#111827] ${item.isReady ? 'group-hover:scale-110 group-hover:rotate-6' : ''}`}>
-                              <span className={`text-3xl sm:text-4xl transition-transform duration-300`}>
-                                {item.icon}
-                              </span>
+                            <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center transition-all duration-300 ${item.isReady ? 'brutal-border-accent bg-[#2d1b54] shadow-[0_0_15px_rgba(6,182,212,0.4)] group-hover:scale-110 group-hover:rotate-3' : 'bg-gray-800'}`}>
+                              <IconComponent className={`w-8 h-8 sm:w-10 sm:h-10 transition-transform duration-300 ${item.isReady ? 'text-cyan-400 pixel-icon' : 'text-gray-500'}`} />
                             </div>
                             
                             <div className="w-full mt-2">
-                              <h4 className={`text-sm sm:text-base font-pixel font-black tracking-widest break-keep leading-tight ${item.isReady ? 'text-black' : 'text-gray-600'}`}>
+                              <h4 className={`text-sm sm:text-base font-pixel tracking-widest break-keep leading-tight ${item.isReady ? 'text-gray-200 group-hover:text-cyan-300 drop-shadow-[1px_1px_0_#000]' : 'text-gray-600'}`}>
                                 {item.label}
                               </h4>
                             </div>
