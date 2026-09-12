@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { PORTAL_MENUS } from './config/menu';
 import { HomeView } from './views/HomeView';
 import { StockReportView } from './views/StockReportView';
-import { PatchNotesView } from './views/PatchNotesView';
-import { PPINoticePopup } from './components/PPINoticePopup';
-import { useMagaMode } from './hooks/useMagaMode';
-import * as LucideIcons from 'lucide-react';
+import { ScouterView } from './views/ScouterView';
+import { AdminView } from './views/AdminView';
 import { AverageCalculatorView } from './views/AverageCalculatorView';
 import { KoreLiveView } from './views/KoreLiveView';
 import { FortuneCookieView } from './views/FortuneCookieView';
@@ -22,6 +20,8 @@ import { PPINoticePopup } from './components/PPINoticePopup';
 import { LoyalUserModal } from './components/LoyalUserModal';
 import { useMagaMode } from './hooks/useMagaMode';
 import { InfoBoardView } from './views/InfoBoardView';
+import { PatchNotesView } from './views/PatchNotesView';
+import * as LucideIcons from 'lucide-react';
 
 interface Post {
   id: number;
@@ -335,6 +335,8 @@ function App() {
         </div>
       </div>
     );
+  }
+
   const renderIcon = (iconName: string) => {
     const IconComponent = (LucideIcons as any)[iconName];
     return IconComponent ? <IconComponent className="w-5 h-5 pixel-icon text-cyan-400" /> : <LucideIcons.HelpCircle className="w-5 h-5 text-gray-500" />;
@@ -360,7 +362,7 @@ function App() {
             <div className="w-8 h-8 bg-[#0f0c29] brutal-border-accent flex items-center justify-center text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.5)]">
               <LucideIcons.Gamepad2 className="w-5 h-5" />
             </div>
-            <h1 className="text-xl font-pixel font-bold tracking-widest text-cyan-400 drop-shadow-[2px_2px_0_#000]">
+            <h1 className="text-xl font-bold pokemon-title">
               KOREKORE
             </h1>
           </div>
@@ -440,7 +442,7 @@ function App() {
             <div className="w-6 h-6 bg-[#0f0c29] brutal-border-accent flex items-center justify-center text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.5)]">
               <LucideIcons.Gamepad2 className="w-4 h-4" />
             </div>
-            <h1 className="text-lg font-pixel font-bold tracking-widest text-cyan-400 drop-shadow-[2px_2px_0_#000]">
+            <h1 className="text-lg font-bold pokemon-title">
               KOREKORE
             </h1>
           </div>

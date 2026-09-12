@@ -10,7 +10,7 @@
 
 body {
   @apply bg-[#0f0c29] text-gray-200 antialiased;
-  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-family: 'DungGeunMo', "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
   min-height: 100vh;
 }
@@ -18,6 +18,27 @@ body {
 @layer utilities {
   .font-pixel {
     font-family: 'DungGeunMo', sans-serif;
+  }
+  .pokemon-title {
+    font-family: 'DungGeunMo', sans-serif;
+    color: #facc15; /* Tailwind yellow-400 */
+    text-shadow: 
+      -3px -3px 0 #27272a,
+      3px -3px 0 #27272a,
+      -3px 3px 0 #27272a,
+      3px 3px 0 #27272a,
+      5px 5px 0 #27272a;
+    letter-spacing: 0.1em;
+  }
+  .pokemon-text {
+    font-family: 'DungGeunMo', sans-serif;
+    text-shadow: 
+      -2px -2px 0 #27272a,
+      2px -2px 0 #27272a,
+      -2px 2px 0 #27272a,
+      2px 2px 0 #27272a,
+      3px 3px 0 #27272a;
+    letter-spacing: 0.05em;
   }
   .brutal-border {
     border: 3px solid #7c3aed;

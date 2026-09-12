@@ -84,7 +84,7 @@ export const HomeView: React.FC = () => {
         )}
         <h2 className="relative text-3xl sm:text-4xl md:text-5xl font-pixel text-white leading-tight break-keep tracking-widest drop-shadow-[2px_2px_0_#7c3aed]">
           당신의 모든 것을 위한 <br />
-          <span className="text-cyan-400 drop-shadow-[0_0_15px_rgba(6,182,212,0.6)]">
+          <span className="pokemon-title block mt-2 text-4xl sm:text-5xl md:text-6xl">
             KOREKORE 
           </span>
         </h2>
@@ -96,7 +96,7 @@ export const HomeView: React.FC = () => {
           <div className={`mt-6 max-w-3xl mx-auto bg-[#1a103c] brutal-border-accent brutal-shadow-lg p-4 sm:p-5 relative flex flex-col items-center gap-4 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(6,182,212,0.6)]`}>
             <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-500`}></div>
             
-            <div className="flex items-center gap-2 text-sm sm:text-base font-pixel font-bold text-gray-200 mt-2">
+            <div className="flex items-center gap-2 text-sm sm:text-base pokemon-text text-white mt-2">
               <span>🔮 국장 픽셀 라이브 예측</span>
               <span className="flex h-3 w-3 relative ml-1">
                 <span className={`animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75`}></span>
