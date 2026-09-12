@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import * as LucideIcons from 'lucide-react';
+import { PixelIcon } from '../components/PixelIcon';
 
 interface WhaleStock {
   ticker: string;
@@ -45,7 +45,7 @@ export const WhaleDetectorView: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-pixel pokemon-title text-slate-100 flex items-center gap-2 drop-shadow-[2px_2px_0_#7c3aed]">
-            <LucideIcons.Fish className="w-8 h-8 text-cyan-400 pixel-icon" />
+            <PixelIcon name="target" className="w-8 h-8 text-cyan-400" />
             세력 포착기 <span className="text-sm font-pixel text-emerald-400 bg-emerald-400/10 px-2 py-1 brutal-border shadow-[0_0_10px_rgba(52,211,153,0.5)]">BETA</span>
           </h2>
           <p className="text-slate-400 mt-1 font-medium">
@@ -80,7 +80,7 @@ export const WhaleDetectorView: React.FC = () => {
                 {idx === 0 && (
                   <div className="absolute top-0 right-0">
                     <div className="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg shadow-lg flex items-center gap-1">
-                      <LucideIcons.Flame className="w-3.5 h-3.5" /> 폭발 1순위
+                      <PixelIcon name="zap" className="w-3.5 h-3.5" /> 폭발 1순위
                     </div>
                   </div>
                 )}

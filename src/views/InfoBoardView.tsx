@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import * as LucideIcons from 'lucide-react';
+import { PixelIcon } from '../components/PixelIcon';
 
 interface InfoPost {
   id: number;
@@ -54,7 +54,7 @@ export const InfoBoardView: React.FC = () => {
       {/* Header Section */}
       <div className="mb-8 relative flex items-center gap-3">
         <div className="w-12 h-12 bg-[#2d1b54] brutal-border-accent flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.5)]">
-          <LucideIcons.BookOpen className="w-6 h-6 text-cyan-400 pixel-icon" />
+          <PixelIcon name="book" className="w-6 h-6 text-cyan-400" />
         </div>
         <div>
           <h1 className="text-3xl sm:text-4xl pokemon-title drop-shadow-[2px_2px_0_#7c3aed]">
@@ -85,7 +85,7 @@ export const InfoBoardView: React.FC = () => {
 
       {/* Posts Grid */}
       {isLoading ? (
-        <div className="flex justify-center py-20"><LucideIcons.Loader className="w-10 h-10 text-cyan-400 animate-spin" /></div>
+        <div className="flex justify-center py-20"><PixelIcon name="loader" className="w-10 h-10 text-cyan-400 animate-spin" /></div>
       ) : filteredPosts.length === 0 ? (
         <div className="text-center py-20 font-pixel text-gray-400">아직 게시글이 없습니다. 봇이 작성 중입니다!</div>
       ) : (
@@ -127,7 +127,7 @@ export const InfoBoardView: React.FC = () => {
                 onClick={(e) => { e.stopPropagation(); handleLike(post.id); }}
                 className="flex items-center gap-1.5 text-gray-400 hover:text-pink-400 transition-colors px-2 py-1 bg-[#2d1b54] brutal-border"
               >
-                <LucideIcons.Heart className="w-4 h-4" />
+                <PixelIcon name="heart" className="w-4 h-4" />
                 <span className="text-xs font-pixel">{post.likes}</span>
               </button>
             </div>

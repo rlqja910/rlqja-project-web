@@ -1,5 +1,5 @@
 import React from 'react';
-import * as LucideIcons from 'lucide-react';
+import { PixelIcon } from '../components/PixelIcon';
 
 export const PatchNotesView: React.FC<{
   patchNotes: any[];
@@ -9,7 +9,7 @@ export const PatchNotesView: React.FC<{
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b-[3px] border-[#2d1b54] gap-2">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 bg-[#2d1b54] brutal-border-accent flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.5)]">
-            <LucideIcons.Wrench className="w-6 h-6 text-cyan-400 pixel-icon" />
+            <PixelIcon name="sliders" className="w-6 h-6 text-cyan-400" />
           </div>
           <div>
             <h2 className="text-2xl sm:text-3xl font-pixel pokemon-title drop-shadow-[2px_2px_0_#7c3aed] mb-1 sm:mb-2">패치 노트</h2>
@@ -27,7 +27,7 @@ export const PatchNotesView: React.FC<{
           patchNotes.map((note) => (
             <div key={note.id} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
               <div className="flex items-center justify-center w-10 h-10 brutal-border bg-[#0f0c29] text-cyan-400 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 shadow-[0_0_15px_rgba(6,182,212,0.5)]">
-                <LucideIcons.CheckCircle2 className="w-5 h-5 pixel-icon" />
+                <PixelIcon name="check" className="w-5 h-5" />
               </div>
 
               <div className="w-[calc(100%-3.5rem)] md:w-[calc(50%-2.5rem)] p-5 sm:p-6 bg-[#1a103c] brutal-border brutal-shadow group-hover:-translate-y-1 group-hover:shadow-[0_0_20px_rgba(124,58,237,0.6)] transition-all ml-4 md:ml-0">

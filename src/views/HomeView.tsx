@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { PORTAL_MENUS } from '../config/menu';
 import { useMagaMode } from '../hooks/useMagaMode';
 import { FearGreedGauge } from '../components/FearGreedGauge';
-import * as LucideIcons from 'lucide-react';
+import { PixelIcon } from '../components/PixelIcon';
 
 interface MarketPredict {
   ewy: { current: number; change_amt: number; change_pct: number; };
@@ -96,7 +96,7 @@ export const HomeView: React.FC = () => {
           <div className={`mt-6 max-w-3xl mx-auto retro-panel p-5 sm:p-6 relative flex flex-col items-center gap-5 transition-all duration-500 hover:-translate-y-1`}>
             
             <div className="flex items-center gap-3 text-lg sm:text-xl pokemon-text text-white mt-1">
-              <LucideIcons.Activity className="w-6 h-6 text-cyan-400 pixel-icon animate-pulse" />
+              <PixelIcon name="trending-up" className="w-6 h-6 text-cyan-400 animate-pulse" />
               <span>국장 라이브 스테이터스</span>
             </div>
             
@@ -175,7 +175,7 @@ export const HomeView: React.FC = () => {
             <div className={`mt-2 retro-panel px-6 py-4 flex flex-col sm:flex-row items-center gap-4 cursor-help transition-all group`} title="지정학적 위기(공포)가 커지면 펜타곤 야근이 늘어나 피자 배달이 급증한다는 금융권 밈 지수">
               <div className="flex flex-col items-center sm:items-start">
                 <h3 className="text-xs font-pixel text-purple-400 flex items-center gap-2 mb-1">
-                  <LucideIcons.AlertTriangle className="w-4 h-4" />
+                  <PixelIcon name="alert" className="w-4 h-4" />
                   펜타곤 야근 지수
                   <button 
                     onClick={() => setIsInfoModalOpen(true)}
@@ -234,7 +234,7 @@ export const HomeView: React.FC = () => {
                       <h4 className="text-xs font-bold font-pixel text-purple-400 uppercase tracking-widest mb-3 pl-1 drop-shadow-[1px_1px_0_#000]">{sub.label}</h4>
                       <div className="flex gap-4 sm:gap-5 overflow-x-auto pb-6 custom-scrollbar snap-x snap-mandatory px-1">
                         {readyItems.map((item, iIdx) => {
-                          const IconComponent = (LucideIcons as any)[item.icon] || LucideIcons.HelpCircle;
+                          const iconName = item.icon || 'help';
                           return (
                           <div
                             key={item.id}
@@ -253,7 +253,7 @@ export const HomeView: React.FC = () => {
                             )}
                             
                             <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center transition-all duration-300 ${item.isReady ? 'brutal-border-accent bg-[#2d1b54] shadow-[0_0_15px_rgba(6,182,212,0.4)] group-hover:scale-110 group-hover:rotate-3' : 'bg-gray-800'}`}>
-                              <IconComponent className={`w-8 h-8 sm:w-10 sm:h-10 transition-transform duration-300 ${item.isReady ? 'text-cyan-400 pixel-icon' : 'text-gray-500'}`} />
+                              <PixelIcon name={iconName} className={`w-8 h-8 sm:w-10 sm:h-10 transition-transform duration-300 ${item.isReady ? 'text-cyan-400' : 'text-gray-500'}`} />
                             </div>
                             
                             <div className="w-full mt-2">
@@ -284,7 +284,7 @@ export const HomeView: React.FC = () => {
               X
             </button>
             <h3 className="text-xl font-pixel text-white mb-5 flex items-center gap-2">
-              <LucideIcons.Info className="w-6 h-6 text-cyan-400 pixel-icon" />
+              <PixelIcon name="info-box" className="w-6 h-6 text-cyan-400" />
               지표 가이드
             </h3>
             

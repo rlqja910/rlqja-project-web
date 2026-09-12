@@ -21,7 +21,7 @@ import { LoyalUserModal } from './components/LoyalUserModal';
 import { useMagaMode } from './hooks/useMagaMode';
 import { InfoBoardView } from './views/InfoBoardView';
 import { PatchNotesView } from './views/PatchNotesView';
-import * as LucideIcons from 'lucide-react';
+import { PixelIcon } from './components/PixelIcon';
 
 interface Post {
   id: number;
@@ -338,8 +338,7 @@ function App() {
   }
 
   const renderIcon = (iconName: string) => {
-    const IconComponent = (LucideIcons as any)[iconName];
-    return IconComponent ? <IconComponent className="w-5 h-5 pixel-icon text-cyan-400" /> : <LucideIcons.HelpCircle className="w-5 h-5 text-gray-500" />;
+    return iconName ? <PixelIcon name={iconName} className="w-5 h-5 text-cyan-400" /> : <PixelIcon name="help" className="w-5 h-5 text-gray-500" />;
   };
 
   return (
@@ -360,7 +359,7 @@ function App() {
         <div className="h-20 flex items-center px-8 shrink-0 border-b-[3px] border-[#7c3aed] bg-[#2d1b54]/50">
           <div className="flex items-center gap-3 cursor-pointer select-none" onClick={handleLogoClick}>
             <div className="w-8 h-8 bg-[#0f0c29] brutal-border-accent flex items-center justify-center text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.5)]">
-              <LucideIcons.Gamepad2 className="w-5 h-5" />
+              <PixelIcon name="gamepad" className="w-5 h-5" />
             </div>
             <h1 className="text-xl font-bold pokemon-title">
               KOREKORE
@@ -373,7 +372,7 @@ function App() {
             onClick={() => handleTabChange('home')}
             className={`w-full flex items-center gap-3 px-4 py-3 font-pixel text-sm transition-all brutal-border-accent brutal-shadow-sm ${activeTab === 'home' ? 'bg-[#7c3aed]/40 text-cyan-300' : 'hover:bg-[#2d1b54] text-gray-400 bg-transparent border-transparent'}`}
           >
-            <span className={activeTab === 'home' ? 'text-cyan-400' : ''}><LucideIcons.Home className="w-5 h-5 pixel-icon" /></span> 로비 홈
+            <span className={activeTab === 'home' ? 'text-cyan-400' : ''}><PixelIcon name="home" className="w-5 h-5" /></span> 로비 홈
           </button>
           
           <div className="pt-4 pb-2 px-2">
@@ -396,7 +395,7 @@ function App() {
                     <span className="text-sm">{renderIcon(main.icon)}</span>
                     <span className="text-sm">{main.label}</span>
                   </div>
-                  <LucideIcons.ChevronDown className={`w-4 h-4 transition-transform duration-200 text-cyan-500 ${isExpanded ? 'rotate-180' : ''}`} />
+                  <PixelIcon name="chevron-down" className={`w-4 h-4 transition-transform duration-200 text-cyan-500 ${isExpanded ? 'rotate-180' : ''}`} />
                 </button>
                 <div className={`overflow-hidden transition-all duration-300 ${isExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
                   {main.subCategories.map((sub, idx) => {
@@ -413,7 +412,7 @@ function App() {
                           className="w-full px-4 py-1.5 flex items-center justify-between text-[11px] font-pixel text-purple-400 hover:text-cyan-300 mb-0.5 uppercase tracking-widest transition-colors"
                         >
                           <span className="ml-5">{sub.label}</span>
-                          <LucideIcons.ChevronDown className={`w-3 h-3 transition-transform duration-200 mr-2 ${isSubExpanded ? 'rotate-180' : ''}`} />
+                          <PixelIcon name="chevron-down" className={`w-3 h-3 transition-transform duration-200 mr-2 ${isSubExpanded ? 'rotate-180' : ''}`} />
                         </button>
                         <div className={`overflow-hidden transition-all duration-300 ${isSubExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
                           {readySubItems.map(item => (
@@ -440,7 +439,7 @@ function App() {
         <header className="h-16 sm:h-20 flex items-center justify-between px-4 sm:px-8 border-b-[3px] border-[#7c3aed] bg-[#1a103c]/90 backdrop-blur-md sticky top-0 z-30 shadow-[0_4px_15px_rgba(0,0,0,0.5)]">
           <div className="md:hidden flex items-center gap-2 select-none" onClick={handleLogoClick}>
             <div className="w-6 h-6 bg-[#0f0c29] brutal-border-accent flex items-center justify-center text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.5)]">
-              <LucideIcons.Gamepad2 className="w-4 h-4" />
+              <PixelIcon name="gamepad" className="w-4 h-4" />
             </div>
             <h1 className="text-lg font-bold pokemon-title">
               KOREKORE
@@ -529,21 +528,21 @@ function App() {
           onClick={() => handleTabChange('home')}
           className={`flex flex-col items-center gap-1.5 w-1/3 py-2 transition-all font-pixel ${activeTab === 'home' ? 'text-cyan-400 bg-[#2d1b54] brutal-border-accent brutal-shadow-sm' : 'text-gray-500 hover:text-cyan-300 hover:bg-[#2d1b54]/50 border-[3px] border-transparent'}`}
         >
-          <LucideIcons.Home className={`w-6 h-6 ${activeTab === 'home' ? 'pixel-icon' : ''}`} />
+          <PixelIcon name="home" className={`w-6 h-6 ${activeTab === 'home' ? 'pixel-icon' : ''}`} />
           <span className="text-[11px] font-bold">홈</span>
         </button>
         <button
           onClick={() => handleTabChange('report')}
           className={`flex flex-col items-center gap-1.5 w-1/3 py-2 transition-all font-pixel ${activeTab === 'report' ? 'text-cyan-400 bg-[#2d1b54] brutal-border-accent brutal-shadow-sm' : 'text-gray-500 hover:text-cyan-300 hover:bg-[#2d1b54]/50 border-[3px] border-transparent'}`}
         >
-          <LucideIcons.BarChart2 className={`w-6 h-6 ${activeTab === 'report' ? 'pixel-icon' : ''}`} />
+          <PixelIcon name="chart-bar" className={`w-6 h-6 ${activeTab === 'report' ? 'pixel-icon' : ''}`} />
           <span className="text-[11px] font-bold">리포트</span>
         </button>
         <button
           onClick={() => handleTabChange('patchnotes')}
           className={`flex flex-col items-center gap-1.5 w-1/3 py-2 transition-all font-pixel ${activeTab === 'patchnotes' ? 'text-purple-400 bg-[#2d1b54] brutal-border brutal-shadow-sm' : 'text-gray-500 hover:text-purple-300 hover:bg-[#2d1b54]/50 border-[3px] border-transparent'}`}
         >
-          <LucideIcons.FileText className={`w-6 h-6 ${activeTab === 'patchnotes' ? 'pixel-icon' : ''}`} />
+          <PixelIcon name="article" className={`w-6 h-6 ${activeTab === 'patchnotes' ? 'pixel-icon' : ''}`} />
           <span className="text-[11px] font-bold">패치노트</span>
         </button>
       </div>
