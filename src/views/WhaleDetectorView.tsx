@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import * as LucideIcons from 'lucide-react';
 
 interface WhaleStock {
   ticker: string;
@@ -43,8 +44,9 @@ export const WhaleDetectorView: React.FC = () => {
     <div className="flex-1 w-full max-w-4xl mx-auto p-4 flex flex-col gap-6 relative z-10">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-black text-slate-100 flex items-center gap-2">
-            🐳 세력 포착기 <span className="text-sm font-normal text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-full border border-emerald-400/20">BETA</span>
+          <h2 className="text-3xl font-pixel pokemon-title text-slate-100 flex items-center gap-2 drop-shadow-[2px_2px_0_#7c3aed]">
+            <LucideIcons.Fish className="w-8 h-8 text-cyan-400 pixel-icon" />
+            세력 포착기 <span className="text-sm font-pixel text-emerald-400 bg-emerald-400/10 px-2 py-1 brutal-border shadow-[0_0_10px_rgba(52,211,153,0.5)]">BETA</span>
           </h2>
           <p className="text-slate-400 mt-1 font-medium">
             폭발 전야의 에너지가 응축된 종목을 AI가 매일 장 마감 후 발굴합니다.
@@ -77,15 +79,15 @@ export const WhaleDetectorView: React.FC = () => {
               >
                 {idx === 0 && (
                   <div className="absolute top-0 right-0">
-                    <div className="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg shadow-lg">
-                      🔥 폭발 1순위
+                    <div className="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg shadow-lg flex items-center gap-1">
+                      <LucideIcons.Flame className="w-3.5 h-3.5" /> 폭발 1순위
                     </div>
                   </div>
                 )}
                 
-                <div className="flex justify-between items-start mb-4">
+                <div className="flex items-start justify-between mb-4">
                   <div>
-                    <h3 className="text-xl font-bold text-slate-100 flex items-center gap-2">
+                    <h3 className="text-xl font-pixel text-slate-100 group-hover:text-cyan-300 transition-colors flex items-center gap-2 drop-shadow-[1px_1px_0_#000]">
                       {stock.name}
                       <span className="text-xs font-medium text-slate-500 bg-slate-900/50 px-2 py-0.5 rounded">
                         {stock.ticker}

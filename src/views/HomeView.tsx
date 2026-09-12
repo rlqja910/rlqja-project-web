@@ -74,11 +74,11 @@ export const HomeView: React.FC = () => {
         <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] sm:w-[800px] h-64 ${isMagaMode ? 'bg-red-600/30' : 'bg-purple-600/10'} rounded-[100%] blur-3xl pointer-events-none transition-colors duration-1000`}></div>
         {marketStatus && (
           <div className="flex justify-center gap-4 mb-4">
-            <span className={`px-3 py-1 text-xs font-bold rounded-full ${marketStatus.kr_closed ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-green-500/20 text-green-400 border border-green-500/30'}`}>
-              🇰🇷 한국증시: {marketStatus.kr_closed ? '휴장' : '개장'}
+            <span className={`px-3 py-1 text-xs font-bold rounded-full flex items-center gap-1 ${marketStatus.kr_closed ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-green-500/20 text-green-400 border border-green-500/30'}`}>
+              <span className="font-pixel">KOR: {marketStatus.kr_closed ? '휴장' : '개장'}</span>
             </span>
-            <span className={`px-3 py-1 text-xs font-bold rounded-full ${marketStatus.us_closed ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-green-500/20 text-green-400 border border-green-500/30'}`}>
-              🇺🇸 미국증시: {marketStatus.us_closed ? '휴장' : '개장'}
+            <span className={`px-3 py-1 text-xs font-bold rounded-full flex items-center gap-1 ${marketStatus.us_closed ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-green-500/20 text-green-400 border border-green-500/30'}`}>
+              <span className="font-pixel">USA: {marketStatus.us_closed ? '휴장' : '개장'}</span>
             </span>
           </div>
         )}
@@ -93,95 +93,111 @@ export const HomeView: React.FC = () => {
         </p>
 
         {displayPredictData && (
-          <div className={`mt-6 max-w-3xl mx-auto bg-[#1a103c] brutal-border-accent brutal-shadow-lg p-4 sm:p-5 relative flex flex-col items-center gap-4 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(6,182,212,0.6)]`}>
-            <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-500`}></div>
+          <div className={`mt-6 max-w-3xl mx-auto retro-panel p-5 sm:p-6 relative flex flex-col items-center gap-5 transition-all duration-500 hover:-translate-y-1`}>
             
-            <div className="flex items-center gap-2 text-sm sm:text-base pokemon-text text-white mt-2">
-              <span>🔮 국장 픽셀 라이브 예측</span>
-              <span className="flex h-3 w-3 relative ml-1">
-                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75`}></span>
-                <span className={`relative inline-flex rounded-full h-3 w-3 bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,1)]`}></span>
-              </span>
+            <div className="flex items-center gap-3 text-lg sm:text-xl pokemon-text text-white mt-1">
+              <LucideIcons.Activity className="w-6 h-6 text-cyan-400 pixel-icon animate-pulse" />
+              <span>국장 라이브 스테이터스</span>
             </div>
             
-            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-3 sm:gap-6 text-sm sm:text-base w-full px-1 font-pixel tracking-wider font-bold">
-              <div className="flex items-center gap-1 sm:gap-2 shrink-0 bg-[#2d1b54] px-3 py-1 brutal-border-accent brutal-shadow-sm">
-                <span className="text-gray-300">코스피</span>
-                <span className="text-white">{displayPredictData.kospi.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                <span className={`${displayPredictData.kospi.change_pct >= 0 ? 'text-green-400 drop-shadow-[0_0_5px_rgba(74,222,128,0.8)]' : 'text-red-400 drop-shadow-[0_0_5px_rgba(248,113,113,0.8)]'}`}>
-                  {displayPredictData.kospi.change_pct >= 0 ? '▲' : '▼'}{Math.abs(displayPredictData.kospi.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full font-pixel tracking-wider">
+              <div className="flex items-center justify-between bg-black/60 px-4 py-3 border-2 border-slate-700 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+                <span className="text-gray-400 text-sm">코스피</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-white font-bold">{displayPredictData.kospi.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  <span className={`text-sm ${displayPredictData.kospi.change_pct >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                    {displayPredictData.kospi.change_pct >= 0 ? '▲' : '▼'}{Math.abs(displayPredictData.kospi.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </span>
+                </div>
               </div>
               
-              <div className="flex items-center gap-1 sm:gap-2 shrink-0 bg-[#2d1b54] px-3 py-1 brutal-border-accent brutal-shadow-sm">
-                <span className="text-gray-300">코스닥</span>
-                <span className="text-white">{displayPredictData.kosdaq.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                <span className={`${displayPredictData.kosdaq.change_pct >= 0 ? 'text-green-400 drop-shadow-[0_0_5px_rgba(74,222,128,0.8)]' : 'text-red-400 drop-shadow-[0_0_5px_rgba(248,113,113,0.8)]'}`}>
-                  {displayPredictData.kosdaq.change_pct >= 0 ? '▲' : '▼'}{Math.abs(displayPredictData.kosdaq.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </span>
+              <div className="flex items-center justify-between bg-black/60 px-4 py-3 border-2 border-slate-700 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+                <span className="text-gray-400 text-sm">코스닥</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-white font-bold">{displayPredictData.kosdaq.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  <span className={`text-sm ${displayPredictData.kosdaq.change_pct >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                    {displayPredictData.kosdaq.change_pct >= 0 ? '▲' : '▼'}{Math.abs(displayPredictData.kosdaq.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </span>
+                </div>
               </div>
               
-              <div className="flex items-center gap-1 sm:gap-2 shrink-0 bg-[#2d1b54] px-3 py-1 brutal-border-accent brutal-shadow-sm">
-                <span className="text-gray-300">EWY</span>
-                <span className={`${displayPredictData.ewy.change_pct >= 0 ? 'text-green-400 drop-shadow-[0_0_5px_rgba(74,222,128,0.8)]' : 'text-red-400 drop-shadow-[0_0_5px_rgba(248,113,113,0.8)]'}`}>
+              <div className="flex items-center justify-between bg-black/60 px-4 py-3 border-2 border-slate-700 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+                <span className="text-gray-400 text-sm">EWY</span>
+                <span className={`text-white font-bold ${displayPredictData.ewy.change_pct >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                   {displayPredictData.ewy.change_pct > 0 ? '+' : ''}{displayPredictData.ewy.change_pct}%
                 </span>
               </div>
-              {displayPredictData.usdkrw && (
-                <div className="flex items-center gap-1 sm:gap-2 shrink-0 bg-[#2d1b54] px-3 py-1 brutal-border-accent brutal-shadow-sm">
-                  <span className="text-gray-300">환율</span>
-                  <span className="text-white">{displayPredictData.usdkrw.current.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                  <span className={`${displayPredictData.usdkrw.change_pct >= 0 ? 'text-green-400 drop-shadow-[0_0_5px_rgba(74,222,128,0.8)]' : 'text-red-400 drop-shadow-[0_0_5px_rgba(248,113,113,0.8)]'}`}>
-                    {displayPredictData.usdkrw.change_pct > 0 ? '+' : ''}{displayPredictData.usdkrw.change_pct}%
-                  </span>
+              
+              {displayPredictData.usdkrw ? (
+                <div className="flex items-center justify-between bg-black/60 px-4 py-3 border-2 border-slate-700 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+                  <span className="text-gray-400 text-sm">환율</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-white font-bold">{displayPredictData.usdkrw.current.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    <span className={`text-sm ${displayPredictData.usdkrw.change_pct >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                      {displayPredictData.usdkrw.change_pct > 0 ? '+' : ''}{displayPredictData.usdkrw.change_pct}%
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between bg-black/60 px-4 py-3 border-2 border-slate-700 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+                  <span className="text-gray-400 text-sm">환율</span>
+                  <span className="text-slate-600 font-bold">-</span>
                 </div>
               )}
             </div>
 
             <button 
               onClick={() => window.location.hash = 'kore-live'}
-              className="mt-3 bg-[#7c3aed] hover:bg-[#6d28d9] brutal-border brutal-shadow px-6 py-2 text-sm sm:text-base font-pixel text-white transition-all hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(124,58,237,0.8)] flex items-center gap-2"
+              className="mt-2 retro-button px-8 py-3 text-sm sm:text-base font-pixel w-full sm:w-auto"
             >
-              한국 주식 24h 라이브 입장 <span>›</span>
+              한국 주식 라이브 입장 (ENTER)
             </button>
           </div>
         )}
 
         {displayFearAndGreed && (
           <div className="mt-5 flex flex-col items-center gap-4">
-            <div className="flex flex-wrap justify-center gap-6 w-full">
+            <div className="flex flex-wrap justify-center gap-6 w-full max-w-3xl">
               <FearGreedGauge 
                 value={displayFearAndGreed.us.value} 
                 classification={displayFearAndGreed.us.classification} 
-                title="🦅 미국 (S&P 500)" 
+                title="미국 (S&P 500)" 
               />
               <FearGreedGauge 
                 value={displayFearAndGreed.kr.value} 
                 classification={displayFearAndGreed.kr.classification} 
-                title="🐯 한국 (KOSPI)" 
+                title="한국 (KOSPI)" 
               />
             </div>
 
 
             {/* Pentagon Pizza Index */}
-            <div className={`inline-flex items-center gap-2.5 bg-slate-900/60 border ${isMagaMode ? 'border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.3)]' : 'border-slate-700/50'} rounded-full px-5 py-2.5 shadow-xl backdrop-blur-sm cursor-help transition-all`} title="지정학적 위기(공포)가 커지면 펜타곤 야근이 늘어나 피자 배달이 급증한다는 금융권 밈 지수">
-              <h3 className="text-[10px] font-bold text-slate-400 tracking-tight flex items-center gap-1.5">
-                펜타곤 야근(피자) 지수
-                <button 
-                  onClick={() => setIsInfoModalOpen(true)}
-                  className="w-4 h-4 rounded-full bg-slate-700 flex items-center justify-center hover:bg-cyan-500/80 transition-colors shadow-sm"
-                  title="지표 설명 보기"
-                >
-                  <span className="text-[10px] font-black text-white leading-none">?</span>
-                </button>
-              </h3>
-              <div className="flex gap-0.5 ml-1">
+            <div className={`mt-2 retro-panel px-6 py-4 flex flex-col sm:flex-row items-center gap-4 cursor-help transition-all group`} title="지정학적 위기(공포)가 커지면 펜타곤 야근이 늘어나 피자 배달이 급증한다는 금융권 밈 지수">
+              <div className="flex flex-col items-center sm:items-start">
+                <h3 className="text-xs font-pixel text-purple-400 flex items-center gap-2 mb-1">
+                  <LucideIcons.AlertTriangle className="w-4 h-4" />
+                  펜타곤 야근 지수
+                  <button 
+                    onClick={() => setIsInfoModalOpen(true)}
+                    className="w-4 h-4 bg-slate-700 flex items-center justify-center hover:bg-cyan-500/80 transition-colors shadow-sm"
+                  >
+                    <span className="text-[10px] font-pixel text-white leading-none">?</span>
+                  </button>
+                </h3>
+                <span className="text-[10px] text-gray-400 font-pixel">글로벌 위기 시그널</span>
+              </div>
+              
+              <div className="flex gap-2">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i} className={`text-base transition-all duration-500 ${
+                  <div key={i} className={`w-8 h-8 flex items-center justify-center bg-black border-2 transition-all duration-500 ${
                     i < (displayFearAndGreed.us.value <= 25 ? 5 : displayFearAndGreed.us.value <= 45 ? 3 : displayFearAndGreed.us.value <= 55 ? 2 : 1) 
-                    ? 'opacity-100 scale-110 drop-shadow-[0_0_4px_rgba(239,68,68,0.8)]' 
-                    : 'opacity-20 grayscale'
-                  }`}>🍕</span>
+                    ? 'border-red-500 shadow-[inset_0_0_10px_rgba(239,68,68,0.6)] animate-pulse' 
+                    : 'border-slate-800'
+                  }`}>
+                    {i < (displayFearAndGreed.us.value <= 25 ? 5 : displayFearAndGreed.us.value <= 45 ? 3 : displayFearAndGreed.us.value <= 55 ? 2 : 1) && (
+                      <div className="w-4 h-4 bg-red-500 shadow-[0_0_8px_#ef4444]"></div>
+                    )}
+                  </div>
                 ))}
               </div>
             </div>
@@ -231,8 +247,8 @@ export const HomeView: React.FC = () => {
                             style={{ animationDelay: `${(sIdx * 3 + iIdx) * 40}ms`, animationFillMode: 'both' }}
                           >
                             {!item.isReady && (
-                              <div className="absolute top-0 right-0 bg-red-600 text-white font-pixel text-[9px] px-2 py-1 brutal-border rounded-bl-lg">
-                                준비중
+                              <div className="absolute top-0 right-0 bg-red-600 text-white font-pixel text-[9px] px-2 py-1 brutal-border">
+                                X
                               </div>
                             )}
                             
@@ -259,41 +275,45 @@ export const HomeView: React.FC = () => {
       {/* Information Modal */}
       {isInfoModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsInfoModalOpen(false)}></div>
-          <div className="relative bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-full max-w-sm p-6 animate-in zoom-in-95 duration-200">
+          <div className="absolute inset-0 bg-black/80" onClick={() => setIsInfoModalOpen(false)}></div>
+          <div className="relative retro-panel w-full max-w-sm p-6 animate-in zoom-in-95 duration-200">
             <button 
               onClick={() => setIsInfoModalOpen(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white"
+              className="absolute top-3 right-3 w-8 h-8 bg-black border-2 border-slate-500 text-white font-pixel hover:bg-red-500 hover:border-white transition-colors flex items-center justify-center"
             >
-              ✕
+              X
             </button>
-            <h3 className="text-xl font-bold text-white mb-5">지표 가이드 📖</h3>
+            <h3 className="text-xl font-pixel text-white mb-5 flex items-center gap-2">
+              <LucideIcons.Info className="w-6 h-6 text-cyan-400 pixel-icon" />
+              지표 가이드
+            </h3>
             
-            <div className="space-y-5 text-sm text-slate-300">
+            <div className="space-y-6 text-sm text-gray-300 font-pixel tracking-wider leading-relaxed bg-black/50 p-4 border border-slate-800">
               <div>
-                <h4 className="font-bold text-cyan-400 mb-2">글로벌 위험자산 투심 (Fear & Greed)</h4>
-                <p className="leading-relaxed">
-                  시장의 투자 심리를 0(극단적 공포)부터 100(극단적 탐욕)까지 수치화한 지표입니다. <br/>
-                  <span className="text-red-400">공포</span>일 때는 매도세가, <span className="text-green-400">탐욕</span>일 때는 매수세가 강함을 의미합니다. (공포장이 줍줍 기회이기도 합니다!)
+                <h4 className="text-cyan-400 mb-2 font-bold">[ Fear & Greed ]</h4>
+                <p>
+                  시장의 투자 심리를 0부터 100까지 수치화한 지표입니다.<br/><br/>
+                  <span className="text-red-400">0에 가까울수록 공포</span><br/>
+                  <span className="text-green-400">100에 가까울수록 탐욕</span>
                 </p>
               </div>
               
               <div className="h-px w-full bg-slate-800"></div>
               
               <div>
-                <h4 className="font-bold text-orange-400 mb-2">펜타곤 야근(피자) 지수 🍕</h4>
-                <p className="leading-relaxed">
-                  미국 국방부(펜타곤)에 심야 피자 배달이 급증하면, 수뇌부가 밤샘 비상근무를 하고 있어 <b>'전 세계 어딘가에 큰 위기가 터졌다'</b>는 유명한 월스트리트 밈(Meme)입니다.<br/>
-                  <span className="text-slate-500 text-[11px] block mt-1">* 글로벌 투심(공포도)을 기반으로 재미있게 시각화했습니다.</span>
+                <h4 className="text-orange-400 mb-2 font-bold">[ 펜타곤 야근 지수 ]</h4>
+                <p>
+                  미국 국방부에 야근이 급증하면 글로벌 지정학적 위기가 터졌다는 월스트리트 밈입니다.<br/>
+                  게이지가 높을수록 시장의 공포가 극심함을 의미합니다.
                 </p>
               </div>
             </div>
             
             <button 
               onClick={() => setIsInfoModalOpen(false)}
-              className="mt-6 w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-lg transition-colors border border-slate-700"
+              className="mt-6 w-full retro-button py-3 text-white font-pixel"
             >
-              확인했어요!
+              OK
             </button>
           </div>
         </div>

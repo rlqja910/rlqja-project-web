@@ -67,6 +67,58 @@ body {
   .pixel-icon {
     filter: drop-shadow(1px 1px 0px #000) drop-shadow(-1px -1px 0px #000) drop-shadow(1px -1px 0px #000) drop-shadow(-1px 1px 0px #000);
   }
+  
+  .retro-panel {
+    background: #0f0c29;
+    border: 4px solid #fff;
+    border-radius: 4px;
+    box-shadow: 
+      inset -4px -4px 0px 0px rgba(0, 0, 0, 0.5),
+      inset 4px 4px 0px 0px rgba(255, 255, 255, 0.2),
+      4px 4px 0px 0px rgba(0, 0, 0, 0.8),
+      0 0 15px rgba(124, 58, 237, 0.4);
+    position: relative;
+  }
+  .retro-panel::before {
+    content: '';
+    position: absolute;
+    top: -4px; left: -4px; right: -4px; bottom: -4px;
+    border: 2px solid #7c3aed;
+    pointer-events: none;
+    border-radius: 6px;
+  }
+  
+  .retro-button {
+    background: #7c3aed;
+    border: 4px solid #fff;
+    border-radius: 4px;
+    box-shadow: 
+      inset -4px -4px 0px 0px rgba(0, 0, 0, 0.4),
+      inset 4px 4px 0px 0px rgba(255, 255, 255, 0.4),
+      4px 4px 0px 0px rgba(0, 0, 0, 0.8);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  .retro-button:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+    background: #6d28d9;
+  }
+  
+  .retro-health-bar-container {
+    background: #000;
+    border: 3px solid #fff;
+    box-shadow: 3px 3px 0 0 #000;
+    padding: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+  .retro-health-bar-fill {
+    height: 100%;
+    transition: width 0.3s ease-out, background-color 0.3s;
+    box-shadow: inset 0 -4px 0 rgba(0,0,0,0.3), inset 0 4px 0 rgba(255,255,255,0.3);
+  }
 }
 
 

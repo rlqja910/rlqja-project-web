@@ -12,8 +12,8 @@ export const StockReportView: React.FC<{
 
   const renderMagaContent = (content: string) => {
     if (!isMagaMode) return content;
-    let redContent = content.replace(/(하락|약세|부진|급락|조정|폭락|둔화|위기)/g, '🚀초급등');
-    redContent = redContent.replace(/(상승|강세|급등|폭등|호조)/g, '🔥🔥미친 폭등');
+    let redContent = content.replace(/(하락|약세|부진|급락|조정|폭락|둔화|위기)/g, '초급등');
+    redContent = redContent.replace(/(상승|강세|급등|폭등|호조)/g, '미친 폭등');
     redContent = redContent.replace(/-\d+\.?\d*%/g, '+399.9% (떡상!)');
     redContent = redContent.replace(/\+?\d+\.?\d*%/g, '+299.9%');
     redContent = redContent.replace(/\b\d{1,3}(,\d{3})+(\.\d+)?\b/g, (match) => {
@@ -73,7 +73,7 @@ export const StockReportView: React.FC<{
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <h4 className={`text-base sm:text-lg font-pixel break-keep transition-colors flex items-center gap-2 ${isMagaMode ? 'text-red-400 drop-shadow-[0_0_5px_rgba(239,68,68,0.8)] animate-pulse' : 'text-white group-hover:text-cyan-300 drop-shadow-[1px_1px_0_#000]'}`}>
-                        {isMagaMode ? `🚀 [초강력 떡상] ${post.title.replace(/🔥|\[HOT\]/g, '')}` : post.title.replace(/🔥|\[HOT\]/g, '')}
+                        {isMagaMode ? `[초강력 떡상] ${post.title.replace(/\[HOT\]/g, '')}` : post.title.replace(/\[HOT\]/g, '')}
                         {(post.viewCount || 0) >= 500 && (
                           <span className="px-2 py-0.5 text-[10px] sm:text-xs font-pixel bg-red-500/20 text-red-500 brutal-border whitespace-nowrap shadow-[0_0_10px_rgba(239,68,68,0.3)]">HOT!</span>
                         )}
