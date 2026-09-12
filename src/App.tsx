@@ -337,7 +337,7 @@ function App() {
   }
 
   return (
-    <div className={`min-h-screen flex bg-[#0B0F19] text-slate-300 font-sans selection:bg-purple-500/30 relative ${isMagaMode ? 'border-[8px] border-red-600' : ''}`}>
+    <div className={`min-h-screen flex bg-yellow-50 text-gray-900 font-sans selection:bg-pink-300 relative ${isMagaMode ? 'border-[8px] border-red-600' : ''}`}>
       <PPINoticePopup />
       {isMagaMode && (
         <div className="fixed inset-0 bg-gradient-to-b from-red-900/60 via-red-800/20 to-orange-900/40 mix-blend-color-dodge animate-pulse pointer-events-none z-[100] backdrop-blur-[1px]"></div>
@@ -345,18 +345,18 @@ function App() {
       <div className="fixed top-2 right-2 sm:top-4 sm:right-4 z-[9999]">
         <button 
           onClick={toggleMagaMode}
-          className={`px-4 py-2 rounded-full font-black text-xs sm:text-sm shadow-2xl transition-all border ${isMagaMode ? 'bg-red-600 text-white border-red-400 animate-pulse scale-110 shadow-[0_0_40px_rgba(220,38,38,1)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700 hover:text-white'}`}
+          className={`px-4 py-2 font-pixel text-xs sm:text-sm shadow-2xl transition-all brutal-border ${isMagaMode ? 'bg-red-600 text-white border-black animate-pulse scale-110 shadow-[0_0_40px_rgba(220,38,38,1)]' : 'bg-white text-black hover:bg-gray-200'}`}
         >
           {isMagaMode ? '🧊 찬물 샤워 (현실복귀)' : '🚀 무지성 불장 ON'}
         </button>
       </div>
-      <aside className="w-64 border-r border-slate-800 bg-[#0B0F19] hidden md:flex flex-col shrink-0 h-screen sticky top-0 overflow-y-auto custom-scrollbar">
-        <div className="h-20 flex items-center px-8 shrink-0">
+      <aside className="w-64 border-r-4 border-black bg-cyan-300 hidden md:flex flex-col shrink-0 h-screen sticky top-0 overflow-y-auto custom-scrollbar">
+        <div className="h-20 flex items-center px-8 shrink-0 border-b-4 border-black bg-yellow-300">
           <div className="flex items-center gap-3 cursor-pointer select-none" onClick={handleLogoClick}>
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-400 to-purple-500 flex items-center justify-center font-bold text-white shadow-lg shadow-purple-500/30">
+            <div className="w-8 h-8 bg-white brutal-border brutal-shadow-sm flex items-center justify-center font-bold text-black">
               <span className="text-xl">🏛️</span>
             </div>
-            <h1 className="text-xl font-bold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400">
+            <h1 className="text-xl font-pixel font-bold tracking-widest text-black">
               KOREKORE
             </h1>
           </div>
@@ -365,9 +365,9 @@ function App() {
         <nav className="flex-1 px-4 py-6 space-y-2">
           <button
             onClick={() => handleTabChange('home')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all ${activeTab === 'home' ? 'bg-slate-800/50 text-white border border-slate-700/50' : 'hover:bg-slate-800/30 text-slate-400 border border-transparent'}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 font-pixel text-sm transition-all brutal-border brutal-shadow-sm ${activeTab === 'home' ? 'bg-pink-400 text-black' : 'hover:bg-white text-black bg-yellow-100'}`}
           >
-            <span className={activeTab === 'home' ? 'text-cyan-400' : ''}>🏠</span> 로비 홈
+            <span className={activeTab === 'home' ? 'text-black' : ''}>🏠</span> 로비 홈
           </button>
           
           <div className="pt-4 pb-2 px-2">
@@ -384,14 +384,14 @@ function App() {
               <div key={main.id} className="space-y-1 mb-2">
                 <button 
                   onClick={() => toggleMenu(main.id)}
-                  className="w-full px-2 py-1.5 flex items-center justify-between text-slate-500/80 hover:text-slate-300 font-semibold mb-1 transition-colors rounded-lg hover:bg-slate-800/30"
+                  className="w-full px-2 py-1.5 flex items-center justify-between text-black font-pixel mb-1 transition-colors hover:bg-white/50"
                 >
                   <div className="flex items-center gap-2">
                     <span className="text-sm">{main.icon}</span>
-                    <span className="text-xs">{main.label}</span>
+                    <span className="text-sm">{main.label}</span>
                   </div>
-                  <svg className={`w-3.5 h-3.5 transition-transform duration-200 text-slate-600 ${isExpanded ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                  <svg className={`w-3.5 h-3.5 transition-transform duration-200 text-black ${isExpanded ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
                 <div className={`overflow-hidden transition-all duration-300 ${isExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
@@ -406,11 +406,11 @@ function App() {
                       <div key={idx} className="mb-2">
                         <button
                           onClick={() => toggleSubMenu(subId)}
-                          className="w-full px-4 py-1.5 flex items-center justify-between text-[11px] font-bold text-slate-500 hover:text-slate-300 mb-0.5 uppercase tracking-widest transition-colors"
+                          className="w-full px-4 py-1.5 flex items-center justify-between text-[11px] font-pixel text-gray-700 hover:text-black mb-0.5 uppercase tracking-widest transition-colors"
                         >
                           <span className="ml-5">{sub.label}</span>
-                          <svg className={`w-3 h-3 transition-transform duration-200 text-slate-600 mr-2 ${isSubExpanded ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                          <svg className={`w-3 h-3 transition-transform duration-200 text-gray-700 mr-2 ${isSubExpanded ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
                           </svg>
                         </button>
                         <div className={`overflow-hidden transition-all duration-300 ${isSubExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
@@ -418,9 +418,9 @@ function App() {
                             <button
                               key={item.id}
                               onClick={() => handleTabChange(item.id)}
-                              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all pl-10 ${activeTab === item.id ? 'bg-slate-800/50 text-white border border-slate-700/50' : 'hover:bg-slate-800/30 text-slate-400 border border-transparent'}`}
+                              className={`w-full flex items-center gap-3 px-4 py-2.5 font-pixel text-xs transition-all pl-10 brutal-border brutal-shadow-sm mt-2 ${activeTab === item.id ? 'bg-pink-400 text-black' : 'bg-white text-black hover:bg-yellow-100'}`}
                             >
-                              <span className="text-lg opacity-70">{item.icon}</span> {item.label}
+                              <span className="text-sm">{item.icon}</span> {item.label}
                             </button>
                           ))}
                         </div>
@@ -435,22 +435,22 @@ function App() {
       </aside>
 
       <main className="flex-1 flex flex-col min-h-screen min-w-0 overflow-x-hidden">
-        <header className="h-16 sm:h-20 flex items-center justify-between px-4 sm:px-8 border-b border-slate-800/50 bg-[#0B0F19]/80 backdrop-blur-md sticky top-0 z-30">
+        <header className="h-16 sm:h-20 flex items-center justify-between px-4 sm:px-8 border-b-4 border-black bg-yellow-300 sticky top-0 z-30">
           <div className="md:hidden flex items-center gap-2 select-none" onClick={handleLogoClick}>
-            <div className="w-6 h-6 rounded-md bg-gradient-to-tr from-cyan-400 to-purple-500 flex items-center justify-center font-bold text-white">
+            <div className="w-6 h-6 bg-white brutal-border brutal-shadow-sm flex items-center justify-center font-bold text-black">
               <span className="text-sm">🏛️</span>
             </div>
-            <h1 className="text-lg font-bold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400">
+            <h1 className="text-lg font-pixel font-bold tracking-widest text-black">
               KOREKORE
             </h1>
           </div>
           <div className="hidden md:block"></div>
           
-          <div className="flex items-center gap-4 text-xs sm:text-sm font-medium">
-            <div className="hidden bg-slate-800/40 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl border border-slate-700/30 gap-3 sm:gap-4 text-slate-300">
-              <div>오늘 방문자: <span className="text-cyan-400 font-bold">{visitorStats.todayVisitors}</span></div>
-              <div className="w-px bg-slate-700/50"></div>
-              <div>총 방문자: <span className="text-purple-400 font-bold">{visitorStats.totalVisitors}</span></div>
+          <div className="flex items-center gap-4 text-xs sm:text-sm font-pixel font-bold">
+            <div className="hidden bg-white brutal-border brutal-shadow-sm px-3 sm:px-4 py-1.5 sm:py-2 gap-3 sm:gap-4 text-black">
+              <div>오늘 방문자: <span className="text-blue-600 font-bold">{visitorStats.todayVisitors}</span></div>
+              <div className="w-px bg-black"></div>
+              <div>총 방문자: <span className="text-pink-600 font-bold">{visitorStats.totalVisitors}</span></div>
             </div>
           </div>
         </header>
@@ -522,26 +522,26 @@ function App() {
         </div>
       </main>
 
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-800 z-40 flex justify-around p-2 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]" style={{ paddingBottom: 'max(2rem, env(safe-area-inset-bottom))' }}>
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-cyan-300 border-t-4 border-black z-40 flex justify-around p-2" style={{ paddingBottom: 'max(2rem, env(safe-area-inset-bottom))' }}>
         <button
           onClick={() => handleTabChange('home')}
-          className={`flex flex-col items-center gap-1.5 w-1/3 py-2 rounded-xl transition-all ${activeTab === 'home' ? 'text-cyan-400' : 'text-slate-500 hover:text-slate-400'}`}
+          className={`flex flex-col items-center gap-1.5 w-1/3 py-2 transition-all font-pixel ${activeTab === 'home' ? 'text-black bg-pink-400 brutal-border brutal-shadow-sm' : 'text-gray-800 hover:text-black hover:bg-yellow-100 brutal-border'}`}
         >
-          <span className={`text-2xl ${activeTab === 'home' ? 'drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]' : ''}`}>🏠</span>
+          <span className={`text-2xl`}>🏠</span>
           <span className="text-[11px] font-bold">홈</span>
         </button>
         <button
           onClick={() => handleTabChange('report')}
-          className={`flex flex-col items-center gap-1.5 w-1/3 py-2 rounded-xl transition-all ${activeTab === 'report' ? 'text-cyan-400' : 'text-slate-500 hover:text-slate-400'}`}
+          className={`flex flex-col items-center gap-1.5 w-1/3 py-2 transition-all font-pixel ${activeTab === 'report' ? 'text-black bg-pink-400 brutal-border brutal-shadow-sm' : 'text-gray-800 hover:text-black hover:bg-yellow-100 brutal-border'}`}
         >
-          <span className={`text-2xl ${activeTab === 'report' ? 'drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]' : ''}`}>📊</span>
+          <span className={`text-2xl`}>📊</span>
           <span className="text-[11px] font-bold">리포트</span>
         </button>
         <button
           onClick={() => handleTabChange('patchnotes')}
-          className={`flex flex-col items-center gap-1.5 w-1/3 py-2 rounded-xl transition-all ${activeTab === 'patchnotes' ? 'text-purple-400' : 'text-slate-500 hover:text-slate-400'}`}
+          className={`flex flex-col items-center gap-1.5 w-1/3 py-2 transition-all font-pixel ${activeTab === 'patchnotes' ? 'text-black bg-pink-400 brutal-border brutal-shadow-sm' : 'text-gray-800 hover:text-black hover:bg-yellow-100 brutal-border'}`}
         >
-          <span className={`text-2xl ${activeTab === 'patchnotes' ? 'drop-shadow-[0_0_8px_rgba(192,132,252,0.6)]' : ''}`}>📝</span>
+          <span className={`text-2xl`}>📝</span>
           <span className="text-[11px] font-bold">패치노트</span>
         </button>
       </div>
