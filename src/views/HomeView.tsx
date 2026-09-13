@@ -175,7 +175,7 @@ export const HomeView: React.FC = () => {
             <div className={`mt-2 retro-panel px-6 py-4 flex flex-col sm:flex-row items-center gap-4 cursor-help transition-all group`} title="지정학적 위기(공포)가 커지면 펜타곤 야근이 늘어나 피자 배달이 급증한다는 금융권 밈 지수">
               <div className="flex flex-col items-center sm:items-start">
                 <h3 className="text-xs font-pixel text-purple-400 flex items-center gap-2 mb-1">
-                  <PixelIcon name="alert" className="w-4 h-4" />
+                  <PixelIcon name="warning-diamond" className="w-4 h-4" />
                   펜타곤 야근 지수
                   <button 
                     onClick={() => setIsInfoModalOpen(true)}

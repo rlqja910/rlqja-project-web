@@ -224,7 +224,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 : 'bg-[#0f0c29] text-slate-400 hover:text-red-300'
             }`}
           >
-            <PixelIcon name="alert" className="w-5 h-5 inline mr-1 text-red-500 animate-pulse" /> 푸시 발송
+            <PixelIcon name="warning-diamond" className="w-5 h-5 inline mr-1 text-red-500 animate-pulse" /> 푸시 발송
           </button>
           <button
             onClick={() => setActiveTab('feedbacks')}
@@ -369,11 +369,11 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                                 </button>
                                 {visitor.isSubscribed ? (
                                   <span className="bg-red-500/20 text-red-400 text-[9px] px-1.5 py-0.5 rounded font-bold border border-red-500/30 whitespace-nowrap flex items-center gap-0.5">
-                                    <PixelIcon name="notification" className="w-4 h-4 inline mr-1 text-green-400" /> 푸시 구독 유저
+                                    <PixelIcon name="bell" className="w-4 h-4 inline mr-1 text-green-400" /> 푸시 구독 유저
                                   </span>
                                 ) : (
                                   <span className="bg-slate-700/50 text-slate-500 text-[9px] px-1.5 py-0.5 rounded font-bold whitespace-nowrap flex items-center gap-0.5">
-                                    <PixelIcon name="notification-off" className="w-4 h-4 inline mr-1 text-gray-400" /> 미구독
+                                    <PixelIcon name="bell-off" className="w-4 h-4 inline mr-1 text-gray-400" /> 미구독
                                   </span>
                                 )}
                               </div>
@@ -511,7 +511,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
           <div className="bg-slate-800/40 rounded-2xl border border-red-500/50 overflow-hidden shadow-[0_0_30px_rgba(239,68,68,0.15)] max-w-2xl mx-auto">
             <div className="p-5 border-b border-slate-700/50 bg-red-900/30">
               <h2 className="text-xl font-bold text-red-400 flex items-center gap-2">
-                <PixelIcon name="alert" className="w-5 h-5 inline mr-1 text-red-500 animate-pulse" /> 긴급 푸시 알림 브로드캐스트
+                <PixelIcon name="warning-diamond" className="w-5 h-5 inline mr-1 text-red-500 animate-pulse" /> 긴급 푸시 알림 브로드캐스트
               </h2>
               <p className="text-sm text-slate-400 mt-2">알림 권한을 허용한 모든 유저의 폰으로 실시간 알림을 쏩니다.</p>
             </div>

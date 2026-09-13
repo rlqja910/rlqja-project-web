@@ -460,7 +460,7 @@ function App() {
           <div className="bg-gradient-to-r from-orange-900/40 via-red-900/40 to-orange-900/40 border-b border-orange-500/30 px-4 py-3 relative z-20">
             <div className="max-w-6xl mx-auto flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <PixelIcon name="alert" className="w-6 h-6 text-orange-400 animate-bounce shrink-0" />
+                <PixelIcon name="warning-diamond" className="w-6 h-6 text-orange-400 animate-bounce shrink-0" />
                 <p className="text-sm sm:text-[15px] text-orange-200 font-medium break-keep">
                   <strong className="text-cyan-400">[복구 완료]</strong> {getPostMaintenanceText()}
                   불편을 드려 죄송합니다.. 앞으로는 평일 주말 할 것 없이 끄떡없는 강철 서버로 모시겠습니다! (많관부)

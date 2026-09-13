@@ -281,7 +281,11 @@ export function CompoundCalcView() {
           }`}>
             <div className="flex-1">
               <div className="font-black text-lg mb-1 break-keep">
-                {result.compoundEffectPct! < 0 ? '<PixelIcon name="alert" className="w-5 h-5 inline mr-1 text-red-500 animate-pulse" /> 음의 복리 마술에 당했습니다!' : '<PixelIcon name="sparkles" className="w-4 h-4 inline mr-1 text-yellow-300" /> 양의 복리로 존버 승리!'}
+                {result.compoundEffectPct! < 0 ? (
+                  <><PixelIcon name="warning-diamond" className="w-5 h-5 inline mr-1 text-red-500 animate-pulse" /> 음의 복리 마술에 당했습니다!</>
+                ) : (
+                  <><PixelIcon name="sparkles" className="w-4 h-4 inline mr-1 text-yellow-300" /> 양의 복리로 존버 승리!</>
+                )}
               </div>
               <div className="text-sm opacity-80 break-keep leading-relaxed">
                 {result.compoundEffectPct! < 0 

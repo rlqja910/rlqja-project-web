@@ -62,9 +62,9 @@ export const PPINoticePopup: React.FC = () => {
         {/* Header / Banner */}
         <div className="bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 p-6 text-center relative">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgNDBoNDBMMCAwaC00MHoiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] opacity-50"></div>
-          <span className="text-4xl mb-2 block relative z-10 animate-bounce"><PixelIcon name="alert" className="w-5 h-5 inline mr-1 text-red-500 animate-pulse" /></span>
+          <span className="text-4xl mb-2 block relative z-10 animate-bounce"><PixelIcon name="warning-diamond" className="w-5 h-5 inline mr-1 text-red-500 animate-pulse" /></span>
           <h2 className="text-2xl font-black text-white relative z-10 drop-shadow-lg">
-            {notice.title.replace('<PixelIcon name="alert" className="w-5 h-5 inline mr-1 text-red-500 animate-pulse" />', '').replace('[긴급 속보]', '').replace('[실시간 속보]', '').trim()}
+            {notice.title.replace('🚨', '').replace('[긴급 속보]', '').replace('[실시간 속보]', '').trim()}
           </h2>
           <p className="text-red-100 mt-1 text-sm font-medium relative z-10">
             시장에 엄청난 변동성이 몰려옵니다!
