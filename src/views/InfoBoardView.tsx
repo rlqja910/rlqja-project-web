@@ -57,11 +57,11 @@ export const InfoBoardView: React.FC = () => {
           <PixelIcon name="book-open" className="w-6 h-6 text-cyan-400" />
         </div>
         <div>
-          <h1 className="text-3xl sm:text-4xl pokemon-title drop-shadow-[2px_2px_0_#7c3aed]">
+          <h1 className="text-2xl sm:text-3xl pokemon-title drop-shadow-[2px_2px_0_#7c3aed]">
             증시 꿀팁 / 인사이트
           </h1>
           <p className="text-sm sm:text-base text-gray-300 mt-2 font-pixel tracking-wider bg-[#1a103c] py-1 px-3 inline-block brutal-border">
-            존나 지리는 정보, 세력들의 꿀통을 털어보자.
+            시장의 흐름을 읽는 핵심 정보와 트렌드를 확인해 보세요.
           </p>
         </div>
       </div>
