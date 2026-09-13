@@ -535,7 +535,7 @@ function App() {
           onClick={() => handleTabChange('report')}
           className={`flex flex-col items-center gap-1.5 w-1/3 py-2 transition-all font-pixel ${activeTab === 'report' ? 'text-cyan-400 bg-[#2d1b54] brutal-border-accent brutal-shadow-sm' : 'text-gray-500 hover:text-cyan-300 hover:bg-[#2d1b54]/50 border-[3px] border-transparent'}`}
         >
-          <PixelIcon name="chart-bar" className={`w-6 h-6 ${activeTab === 'report' ? 'pixel-icon' : ''}`} />
+          <PixelIcon name="chart" className={`w-6 h-6 ${activeTab === 'report' ? 'pixel-icon' : ''}`} />
           <span className="text-[11px] font-bold">리포트</span>
         </button>
         <button

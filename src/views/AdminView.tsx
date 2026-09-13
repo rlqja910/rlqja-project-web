@@ -122,8 +122,8 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] font-['Outfit',sans-serif] text-white p-4 sm:p-8 pb-32">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="min-h-screen bg-[#09090b] font-pixel text-slate-200 p-4 sm:p-8 pb-32">
+      <div className="max-w-6xl mx-auto space-y-8 font-pixel text-slate-200">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2 sm:gap-4">
             <h1 className="text-2xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">관리자 대시보드</h1>
@@ -154,7 +154,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   }, 500);
                 }
               }}
-              className="px-2 sm:px-3 py-1 sm:py-1.5 bg-yellow-600 hover:bg-yellow-500 text-white rounded-lg text-xs sm:text-sm font-bold transition-colors"
+              className="px-2 sm:px-3 py-1 sm:py-1.5 bg-yellow-600 hover:bg-yellow-500 text-white rounded-lg text-xs sm:text-sm font-pixel transition-colors"
             >
               <PixelIcon name="delete" className="w-4 h-4 inline mr-1" /> 내 기기 초기화
             </button>
@@ -163,7 +163,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 window.location.hash = 'home';
                 if (onClose) onClose();
               }}
-              className="px-2 sm:px-3 py-1 sm:py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs sm:text-sm font-medium transition-colors"
+              className="px-2 sm:px-3 py-1 sm:py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs sm:text-sm font-pixel transition-colors"
             >
               <PixelIcon name="home" className="w-4 h-4 inline mr-1" /> 홈으로
             </button>
@@ -180,7 +180,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   }
                 }}
                 disabled={isFetching}
-                className="px-2 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 rounded-lg text-[10px] sm:text-sm font-bold shadow-lg transition-colors disabled:opacity-50 flex items-center gap-1 sm:gap-2"
+                className="px-2 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 rounded-lg text-[10px] sm:text-sm font-pixel shadow-lg transition-colors disabled:opacity-50 flex items-center gap-1 sm:gap-2"
               >
                 {isFetching ? '수집 중...' : '수동 포스팅'}
               </button>
@@ -204,7 +204,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 : 'bg-[#0f0c29] text-slate-400 hover:text-white'
             }`}
           >
-            <PixelIcon name="chart-bar" className="w-4 h-4 inline mr-1" /> 통계 요약
+            <PixelIcon name="chart" className="w-4 h-4 inline mr-1" /> 통계 요약
           </button>
           <button
             onClick={() => setActiveTab('logs')}
@@ -253,12 +253,12 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
             {/* 방문자 수 요약 */}
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
               <div className="bg-slate-800/40 p-4 sm:p-6 rounded-2xl border border-slate-700/50 hover:border-cyan-500/30 transition-colors">
-                <h3 className="text-slate-400 text-xs sm:text-sm font-medium mb-1">오늘 방문자</h3>
-                <p className="text-2xl sm:text-4xl font-bold text-white">{stats?.todayVisitors || 0}<span className="text-sm sm:text-lg text-slate-500 ml-1 sm:ml-2">명</span></p>
+                <h3 className="text-slate-400 text-xs sm:text-sm font-pixel mb-1">오늘 방문자</h3>
+                <p className="text-2xl sm:text-4xl font-pixel text-white">{stats?.todayVisitors || 0}<span className="text-sm sm:text-lg text-slate-500 ml-1 sm:ml-2">명</span></p>
               </div>
               <div className="bg-slate-800/40 p-4 sm:p-6 rounded-2xl border border-slate-700/50 hover:border-cyan-500/30 transition-colors">
-                <h3 className="text-slate-400 text-xs sm:text-sm font-medium mb-1">총 방문자</h3>
-                <p className="text-2xl sm:text-4xl font-bold text-cyan-400">{stats?.totalVisitors || 0}<span className="text-sm sm:text-lg text-slate-500 ml-1 sm:ml-2">명</span></p>
+                <h3 className="text-slate-400 text-xs sm:text-sm font-pixel mb-1">총 방문자</h3>
+                <p className="text-2xl sm:text-4xl font-pixel text-cyan-400">{stats?.totalVisitors || 0}<span className="text-sm sm:text-lg text-slate-500 ml-1 sm:ml-2">명</span></p>
               </div>
             </div>
 
@@ -266,7 +266,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               {/* 인기 검색어 */}
               <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1 shadow-lg">
                 <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex items-center justify-between">
-                  <h2 className="text-lg font-bold"><PixelIcon name="fire" className="w-5 h-5 inline mr-1 text-red-500" /> 인기 검색어 TOP 10</h2>
+                  <h2 className="text-lg font-pixel"><PixelIcon name="fire" className="w-5 h-5 inline mr-1 text-red-500" /> 인기 검색어 TOP 10</h2>
                 </div>
                 <div className="p-0">
                   {topSearches.length > 0 ? (
@@ -275,10 +275,10 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                         {(isSearchesExpanded ? topSearches : topSearches.slice(0, 6)).map((search, idx) => (
                           <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
                             <div className="flex items-center gap-3">
-                              <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-yellow-400' : 'text-slate-500'}`}>{idx + 1}</span>
-                              <span className="font-medium text-slate-200">{search.term}</span>
+                              <span className={`w-6 text-center font-pixel ${idx < 3 ? 'text-yellow-400' : 'text-slate-500'}`}>{idx + 1}</span>
+                              <span className="font-pixel text-slate-200">{search.term}</span>
                             </div>
-                            <span className="text-cyan-400 font-bold bg-cyan-900/30 px-3 py-1 rounded-full text-sm">
+                            <span className="text-cyan-400 font-pixel bg-cyan-900/30 px-3 py-1 rounded-full text-sm">
                               {search.count}회
                             </span>
                           </li>
@@ -287,7 +287,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                       {topSearches.length > 6 && (
                         <button 
                           onClick={() => setIsSearchesExpanded(!isSearchesExpanded)}
-                          className="w-full p-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700/30 transition-colors border-t border-slate-700/50"
+                          className="w-full p-3 text-sm font-pixel text-slate-400 hover:text-white hover:bg-slate-700/30 transition-colors border-t border-slate-700/50"
                         >
                           {isSearchesExpanded ? '접기' : '더보기'}
                         </button>
@@ -302,7 +302,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               {/* 인기 페이지 접근 횟수 */}
               <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1 shadow-lg">
                 <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex items-center justify-between">
-                  <h2 className="text-lg font-bold"> 가장 많이 본 페이지</h2>
+                  <h2 className="text-lg font-pixel"> 가장 많이 본 페이지</h2>
                 </div>
                 <div className="p-0">
                   {topPageViews.length > 0 ? (
@@ -311,10 +311,10 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                         {(isPageViewsExpanded ? topPageViews : topPageViews.slice(0, 6)).map((page, idx) => (
                           <li key={idx} className="flex justify-between items-center p-4 hover:bg-slate-700/20 transition-colors">
                             <div className="flex items-center gap-3">
-                              <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-cyan-400' : 'text-slate-500'}`}>{idx + 1}</span>
-                              <span className="font-medium text-slate-200">{page.endpoint}</span>
+                              <span className={`w-6 text-center font-pixel ${idx < 3 ? 'text-cyan-400' : 'text-slate-500'}`}>{idx + 1}</span>
+                              <span className="font-pixel text-slate-200">{page.endpoint}</span>
                             </div>
-                            <span className="text-cyan-400 font-bold bg-cyan-900/30 px-3 py-1 rounded-full text-sm">
+                            <span className="text-cyan-400 font-pixel bg-cyan-900/30 px-3 py-1 rounded-full text-sm">
                               {page.count}회
                             </span>
                           </li>
@@ -323,7 +323,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                       {topPageViews.length > 6 && (
                         <button 
                           onClick={() => setIsPageViewsExpanded(!isPageViewsExpanded)}
-                          className="w-full p-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700/30 transition-colors border-t border-slate-700/50"
+                          className="w-full p-3 text-sm font-pixel text-slate-400 hover:text-white hover:bg-slate-700/30 transition-colors border-t border-slate-700/50"
                         >
                           {isPageViewsExpanded ? '접기' : '더보기'}
                         </button>
@@ -338,7 +338,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               {/* 단골 방문자 Top 10 */}
               <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1 shadow-lg">
                 <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex items-center justify-between">
-                  <h2 className="text-lg font-bold"><PixelIcon name="trophy" className="w-5 h-5 inline mr-1 text-yellow-400" /> 단골 방문자 Top 10</h2>
+                  <h2 className="text-lg font-pixel"><PixelIcon name="trophy" className="w-5 h-5 inline mr-1 text-yellow-400" /> 단골 방문자 Top 10</h2>
                 </div>
                 <div className="p-0">
                   {topReturningVisitors.length > 0 ? (
@@ -347,7 +347,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                         <li key={idx} className="flex flex-col p-4 hover:bg-slate-700/20 transition-colors gap-3">
                           <div className="flex justify-between items-center">
                             <div className="flex items-center gap-3 w-1/2">
-                              <span className={`w-6 text-center font-bold ${idx < 3 ? 'text-purple-400' : 'text-slate-500'}`}>{idx + 1}</span>
+                              <span className={`w-6 text-center font-pixel ${idx < 3 ? 'text-purple-400' : 'text-slate-500'}`}>{idx + 1}</span>
                               <div className="flex flex-col gap-1.5 items-start">
                                 <button 
                                   onClick={() => {
@@ -355,7 +355,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                                     setActiveTab('logs');
                                     fetchAdminData(0, visitor.visitorId);
                                   }}
-                                  className="font-medium text-slate-200 text-xs hover:text-cyan-400 hover:underline text-left flex items-center gap-1.5" 
+                                  className="font-pixel text-slate-200 text-xs hover:text-cyan-400 hover:underline text-left flex items-center gap-1.5" 
                                   title={visitor.visitorId}
                                 >
                                   {visitor.userName ? (
@@ -368,25 +368,25 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                                   )}
                                 </button>
                                 {visitor.isSubscribed ? (
-                                  <span className="bg-red-500/20 text-red-400 text-[9px] px-1.5 py-0.5 rounded font-bold border border-red-500/30 whitespace-nowrap flex items-center gap-0.5">
+                                  <span className="bg-red-500/20 text-red-400 text-[9px] px-1.5 py-0.5 rounded font-pixel border border-red-500/30 whitespace-nowrap flex items-center gap-0.5">
                                     <PixelIcon name="bell" className="w-4 h-4 inline mr-1 text-green-400" /> 푸시 구독 유저
                                   </span>
                                 ) : (
-                                  <span className="bg-slate-700/50 text-slate-500 text-[9px] px-1.5 py-0.5 rounded font-bold whitespace-nowrap flex items-center gap-0.5">
+                                  <span className="bg-slate-700/50 text-slate-500 text-[9px] px-1.5 py-0.5 rounded font-pixel whitespace-nowrap flex items-center gap-0.5">
                                     <PixelIcon name="bell-off" className="w-4 h-4 inline mr-1 text-gray-400" /> 미구독
                                   </span>
                                 )}
                               </div>
                             </div>
                             <div className="flex flex-col items-end gap-1">
-                              <span className="text-purple-400 font-bold bg-purple-900/30 px-2 py-0.5 rounded text-xs">
+                              <span className="text-purple-400 font-pixel bg-purple-900/30 px-2 py-0.5 rounded text-xs">
                                 {visitor.daysVisited}일 접속
                               </span>
                               <span className="text-slate-500 text-[10px]">
                                 총 {visitor.totalActions}회 활동
                               </span>
                               {visitor.lastAccess && (
-                                <span className="text-emerald-400/80 font-medium text-[9px] mt-1 bg-emerald-900/20 px-1.5 py-0.5 rounded">
+                                <span className="text-emerald-400/80 font-pixel text-[9px] mt-1 bg-emerald-900/20 px-1.5 py-0.5 rounded">
                                   {(() => {
                                     const diffMins = Math.floor((new Date().getTime() - new Date(visitor.lastAccess).getTime()) / 60000);
                                     if (diffMins < 1) return '방금 전 접속';
@@ -400,14 +400,14 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                           </div>
                           {visitor.topPages && visitor.topPages.length > 0 && (
                             <div className="pl-9 pr-2">
-                              <div className="text-[10px] text-slate-500 mb-1.5 font-bold">주요 방문 페이지</div>
+                              <div className="text-[10px] text-slate-500 mb-1.5 font-pixel">주요 방문 페이지</div>
                               <div className="flex flex-wrap gap-2">
                                 {visitor.topPages.map((page, pIdx) => (
                                   <div key={pIdx} className="flex items-center gap-1.5 bg-slate-800/80 border border-slate-700/50 rounded-md px-2 py-1">
                                     <span className="text-[10px] text-slate-300 truncate max-w-[150px]" title={page.endpoint}>
                                       {page.endpoint === '/' ? '메인 홈' : page.endpoint}
                                     </span>
-                                    <span className="text-[9px] font-bold text-cyan-400 bg-cyan-900/40 px-1 rounded-sm">{page.count}</span>
+                                    <span className="text-[9px] font-pixel text-cyan-400 bg-cyan-900/40 px-1 rounded-sm">{page.count}</span>
                                   </div>
                                 ))}
                               </div>
@@ -428,7 +428,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
         {activeTab === 'logs' && (
           <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden shadow-lg">
             <div className="p-3 sm:p-5 border-b border-slate-700/50 bg-slate-800/60 flex justify-between items-center flex-wrap gap-2">
-              <h2 className="text-base sm:text-lg font-bold">⏱ 접속 액션 로그 (페이지 {currentPage + 1}/{totalPages || 1})</h2>
+              <h2 className="text-base sm:text-lg font-pixel">⏱ 접속 액션 로그 (페이지 {currentPage + 1}/{totalPages || 1})</h2>
               {filterVisitorId && (
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-slate-400 bg-slate-800 px-2 py-1 rounded border border-slate-700 truncate max-w-[150px] sm:max-w-[200px]" title={filterVisitorId}>
@@ -439,7 +439,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                       setFilterVisitorId('');
                       fetchAdminData(0, '');
                     }}
-                    className="text-xs bg-red-500/20 text-red-400 hover:bg-red-500/30 px-3 py-1.5 rounded font-bold transition-colors"
+                    className="text-xs bg-red-500/20 text-red-400 hover:bg-red-500/30 px-3 py-1.5 rounded font-pixel transition-colors"
                   >
                     필터 해제 ✕
                   </button>
@@ -450,11 +450,11 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               <table className="w-full text-left text-xs sm:text-sm">
                 <thead className="bg-slate-800/80 text-slate-400">
                   <tr>
-                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-medium">시간</th>
-                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-medium">액션</th>
-                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-medium">경로/검색어</th>
-                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-medium">IP 주소</th>
-                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-medium">기기(User-Agent)</th>
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-pixel">시간</th>
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-pixel">액션</th>
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-pixel">경로/검색어</th>
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-pixel">IP 주소</th>
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-pixel">기기(User-Agent)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-700/50">
@@ -464,11 +464,11 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                         {new Date(log.createdAt).toLocaleString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                       </td>
                       <td className="px-2 sm:px-4 py-2 sm:py-3">
-                        <span className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs font-bold ${log.action === 'SEARCH' ? 'bg-purple-500/20 text-purple-400' : 'bg-blue-500/20 text-blue-400'}`}>
+                        <span className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs font-pixel ${log.action === 'SEARCH' ? 'bg-purple-500/20 text-purple-400' : 'bg-blue-500/20 text-blue-400'}`}>
                           {log.action}
                         </span>
                       </td>
-                      <td className="px-2 sm:px-4 py-2 sm:py-3 text-slate-200 font-medium break-all text-[11px] sm:text-sm">{log.endpoint}</td>
+                      <td className="px-2 sm:px-4 py-2 sm:py-3 text-slate-200 font-pixel break-all text-[11px] sm:text-sm">{log.endpoint}</td>
                       <td className="px-2 sm:px-4 py-2 sm:py-3 text-slate-500 text-[10px] sm:text-xs font-mono">{log.ipAddress}</td>
                       <td className="px-2 sm:px-4 py-2 sm:py-3 text-slate-500 text-[10px] sm:text-xs truncate max-w-[100px] sm:max-w-[150px]" title={log.userAgent}>{log.userAgent || '-'}</td>
                     </tr>
@@ -488,17 +488,17 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 <button 
                   onClick={() => fetchAdminData(Math.max(0, currentPage - 1))}
                   disabled={currentPage === 0 || isLoading}
-                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-medium transition-colors"
+                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-pixel transition-colors"
                 >
                   이전
                 </button>
-                <span className="text-slate-400 text-sm font-medium px-4">
+                <span className="text-slate-400 text-sm font-pixel px-4">
                   {currentPage + 1} / {totalPages}
                 </span>
                 <button 
                   onClick={() => fetchAdminData(Math.min(totalPages - 1, currentPage + 1))}
                   disabled={currentPage === totalPages - 1 || isLoading}
-                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-medium transition-colors"
+                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-pixel transition-colors"
                 >
                   다음
                 </button>
@@ -510,14 +510,14 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
         {activeTab === 'push' && (
           <div className="bg-slate-800/40 rounded-2xl border border-red-500/50 overflow-hidden shadow-[0_0_30px_rgba(239,68,68,0.15)] max-w-2xl mx-auto">
             <div className="p-5 border-b border-slate-700/50 bg-red-900/30">
-              <h2 className="text-xl font-bold text-red-400 flex items-center gap-2">
+              <h2 className="text-xl font-pixel text-red-400 flex items-center gap-2">
                 <PixelIcon name="warning-diamond" className="w-5 h-5 inline mr-1 text-red-500 animate-pulse" /> 긴급 푸시 알림 브로드캐스트
               </h2>
               <p className="text-sm text-slate-400 mt-2">알림 권한을 허용한 모든 유저의 폰으로 실시간 알림을 쏩니다.</p>
             </div>
             <div className="p-6 space-y-5">
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">알림 제목</label>
+                <label className="block text-sm font-pixel text-slate-300 mb-2">알림 제목</label>
                 <input 
                   type="text" 
                   value={pushPayload.title}
@@ -526,7 +526,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">알림 내용</label>
+                <label className="block text-sm font-pixel text-slate-300 mb-2">알림 내용</label>
                 <textarea 
                   value={pushPayload.body}
                   onChange={(e) => setPushPayload({...pushPayload, body: e.target.value})}
@@ -536,7 +536,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">클릭 시 이동할 URL</label>
+                <label className="block text-sm font-pixel text-slate-300 mb-2">클릭 시 이동할 URL</label>
                 <input 
                   type="text" 
                   value={pushPayload.url}
@@ -546,7 +546,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               </div>
               <div className="pt-2">
                 <div className="flex items-center justify-between mb-3">
-                  <label className="block text-sm font-medium text-slate-300">대상 유저 선택 (CRM)</label>
+                  <label className="block text-sm font-pixel text-slate-300">대상 유저 선택 (CRM)</label>
                   <span className="text-xs text-slate-400">총 {subscribers.length}명 구독 중</span>
                 </div>
                 
@@ -580,7 +580,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                         }}
                       />
                       <div className="flex flex-col">
-                        <span className="text-sm font-bold text-slate-200">
+                        <span className="text-sm font-pixel text-slate-200">
                           {sub.userName || 'KOREKORE 팬'} <span className="text-xs text-slate-500 font-normal ml-1">님</span>
                         </span>
                         <span className="text-xs text-slate-500">{sub.visitorId}</span>
@@ -595,7 +595,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   )}
                 </div>
                 <div className="flex justify-between items-center mt-2">
-                  <p className="text-xs text-red-400 font-medium">선택 안 하면 전체 발송됩니다.</p>
+                  <p className="text-xs text-red-400 font-pixel">선택 안 하면 전체 발송됩니다.</p>
                   <button 
                     onClick={() => setSelectedSubscribers([])}
                     className="text-xs text-slate-400 hover:text-white"
@@ -607,7 +607,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               <div className="pt-4 relative">
                 {isSendingPush && (
                   <div className="absolute -top-8 left-0 right-0 flex flex-col items-center justify-center">
-                    <p className="text-red-400 text-sm font-bold mb-1 animate-pulse">발송 중... (네트워크 통신 중)</p>
+                    <p className="text-red-400 text-sm font-pixel mb-1 animate-pulse">발송 중... (네트워크 통신 중)</p>
                     <div className="w-full bg-slate-800 rounded-full h-1 overflow-hidden relative">
                       <div className="bg-red-500 h-1 rounded-full absolute top-0 left-0 w-1/3 animate-[ping_1.5s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
                       <div className="bg-red-500 h-1 rounded-full absolute top-0 left-0 w-1/3 animate-[pulse_1s_cubic-bezier(0.4,0,0.6,1)_infinite]" style={{ animationDuration: '0.8s', left: '33%' }}></div>
@@ -662,20 +662,20 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               </div>
               
               <div className="pt-8 border-t border-slate-700 mt-6">
-                <h3 className="text-sm font-bold text-slate-300 mb-4">최근 발송 이력</h3>
+                <h3 className="text-sm font-pixel text-slate-300 mb-4">최근 발송 이력</h3>
                 <div className="space-y-3 max-h-80 overflow-y-auto custom-scrollbar pr-2">
                   {pushLogs.map((log: any) => (
                     <div key={log.id} className="bg-slate-900 border border-slate-700 p-3 rounded-lg flex flex-col gap-2">
                       <div className="flex justify-between items-start">
-                        <span className="text-xs text-slate-500 font-medium">
+                        <span className="text-xs text-slate-500 font-pixel">
                           {new Date(log.createdAt).toLocaleString('ko-KR')}
                         </span>
-                        <span className={`text-xs px-2 py-0.5 rounded-full font-bold ${log.targetType === 'ALL' ? 'bg-blue-900/50 text-blue-400' : 'bg-pink-900/50 text-pink-400'}`}>
+                        <span className={`text-xs px-2 py-0.5 rounded-full font-pixel ${log.targetType === 'ALL' ? 'bg-blue-900/50 text-blue-400' : 'bg-pink-900/50 text-pink-400'}`}>
                           {log.targetType === 'ALL' ? '전체 발송' : '타겟 발송'} ({log.targetCount}명)
                         </span>
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-slate-200">{log.title}</p>
+                        <p className="text-sm font-pixel text-slate-200">{log.title}</p>
                         <p className="text-sm text-slate-400 line-clamp-2 mt-1">{log.content}</p>
                         {log.url && (
                           <a href={log.url} target="_blank" rel="noopener noreferrer" className="text-xs text-cyan-400 hover:underline mt-2 inline-block">
@@ -701,7 +701,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
         {activeTab === 'feedbacks' && (
           <div className="bg-slate-800/40 rounded-2xl border border-emerald-500/30 overflow-hidden shadow-lg max-w-4xl mx-auto">
             <div className="p-5 border-b border-slate-700/50 bg-emerald-900/20 flex justify-between items-center">
-              <h2 className="text-xl font-bold text-emerald-400 flex items-center gap-2">
+              <h2 className="text-xl font-pixel text-emerald-400 flex items-center gap-2">
                 <PixelIcon name="mail" className="w-4 h-4 inline mr-1" /> 유저 건의함
               </h2>
               <span className="text-sm text-slate-400 bg-slate-800 px-3 py-1 rounded-full">
@@ -716,7 +716,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                       <span className="text-xs text-slate-400 font-mono">
                         ID: {fb.visitorId}
                       </span>
-                      <span className="text-xs text-slate-500 font-medium bg-slate-800 px-2 py-1 rounded">
+                      <span className="text-xs text-slate-500 font-pixel bg-slate-800 px-2 py-1 rounded">
                         {new Date(fb.createdAt).toLocaleString('ko-KR')}
                       </span>
                     </div>
@@ -739,7 +739,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
         {activeTab === 'scheduler' && (
           <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden shadow-lg max-w-5xl mx-auto">
             <div className="p-3 sm:p-5 border-b border-slate-700/50 bg-slate-800/60 flex justify-between items-center">
-              <h2 className="text-base sm:text-lg font-bold text-amber-400 flex items-center gap-2">
+              <h2 className="text-base sm:text-lg font-pixel text-amber-400 flex items-center gap-2">
                 ⏳ 자동화 봇 & 스케줄러 실행 이력
               </h2>
               <button onClick={() => fetchSchedulerHistory(schedulerPage)} className="text-xs bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded transition-colors">새로고침</button>
@@ -748,11 +748,11 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               <table className="w-full text-left text-xs sm:text-sm">
                 <thead className="bg-slate-800/80 text-slate-400">
                   <tr>
-                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-medium">시간</th>
-                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-medium">작업명 (Job Name)</th>
-                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-medium text-center">결과</th>
-                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-medium text-right">소요 시간</th>
-                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-medium w-1/3">비고 / 에러</th>
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-pixel">시간</th>
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-pixel">작업명 (Job Name)</th>
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-pixel text-center">결과</th>
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-pixel text-right">소요 시간</th>
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 font-pixel w-1/3">비고 / 에러</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-700/50">
@@ -761,11 +761,11 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                       <td className="px-2 sm:px-4 py-2 sm:py-3 text-slate-400 whitespace-nowrap">
                         {new Date(log.executionTime).toLocaleString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                       </td>
-                      <td className="px-2 sm:px-4 py-2 sm:py-3 font-bold text-slate-200">
+                      <td className="px-2 sm:px-4 py-2 sm:py-3 font-pixel text-slate-200">
                         {log.jobName}
                       </td>
                       <td className="px-2 sm:px-4 py-2 sm:py-3 text-center">
-                        <span className={`px-2 py-1 rounded text-xs font-bold ${log.status === 'SUCCESS' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
+                        <span className={`px-2 py-1 rounded text-xs font-pixel ${log.status === 'SUCCESS' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
                           {log.status === 'SUCCESS' ? '성공' : '실패'}
                         </span>
                       </td>
@@ -794,17 +794,17 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 <button 
                   onClick={() => fetchSchedulerHistory(Math.max(0, schedulerPage - 1))}
                   disabled={schedulerPage === 0}
-                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-medium transition-colors"
+                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-pixel transition-colors"
                 >
                   이전
                 </button>
-                <span className="text-slate-400 text-sm font-medium px-4">
+                <span className="text-slate-400 text-sm font-pixel px-4">
                   {schedulerPage + 1} / {schedulerTotalPages}
                 </span>
                 <button 
                   onClick={() => fetchSchedulerHistory(Math.min(schedulerTotalPages - 1, schedulerPage + 1))}
                   disabled={schedulerPage === schedulerTotalPages - 1}
-                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-medium transition-colors"
+                  className="px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-sm font-pixel transition-colors"
                 >
                   다음
                 </button>
