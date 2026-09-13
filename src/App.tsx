@@ -352,7 +352,7 @@ function App() {
           onClick={toggleMagaMode}
           className={`px-4 py-2 font-pixel text-xs sm:text-sm shadow-2xl transition-all brutal-border-accent ${isMagaMode ? 'bg-red-600 text-white border-black animate-pulse scale-110 shadow-[0_0_40px_rgba(220,38,38,1)]' : 'bg-[#1a103c] text-cyan-400 hover:bg-[#2d1b54]'}`}
         >
-          {isMagaMode ? <><PixelIcon name="drop" className="w-4 h-4 inline mr-1 text-blue-400" /> 찬물 샤워 (현실복귀)</> : <><PixelIcon name="fire" className="w-4 h-4 inline mr-1 text-yellow-300 animate-pulse" /> 무지성 불장 ON</>}
+          {isMagaMode ? <><PixelIcon name="moon" className="w-4 h-4 inline mr-1 text-blue-400" /> 찬물 샤워 (현실복귀)</> : <><PixelIcon name="fire" className="w-4 h-4 inline mr-1 text-yellow-300 animate-pulse" /> 무지성 불장 ON</>}
         </button>
       </div>
       <aside className="w-64 border-r-[3px] border-[#7c3aed] bg-[#1a103c]/80 backdrop-blur-md hidden md:flex flex-col shrink-0 h-screen sticky top-0 overflow-y-auto custom-scrollbar shadow-[4px_0_15px_rgba(0,0,0,0.5)]">
