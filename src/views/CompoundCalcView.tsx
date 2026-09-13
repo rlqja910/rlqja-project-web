@@ -1,3 +1,4 @@
+import { PixelIcon } from '../components/PixelIcon';
 import { useState } from 'react';
 import {
   LineChart,
@@ -120,10 +121,10 @@ export function CompoundCalcView() {
       <div className="text-center space-y-4 mb-12 relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <h1 className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500 tracking-tight drop-shadow-sm relative z-10 break-keep">
-          🎢 야수의 심장 계좌 엑스레이
+          <PixelIcon name="zap" className="w-4 h-4 inline mr-1 text-red-400" /> 야수의 심장 계좌 엑스레이
         </h1>
         <p className="text-slate-400 text-[13px] sm:text-sm font-medium relative z-10">
-          내 계좌가 얼마나 녹아내렸을까? 레버리지 롤러코스터 탑승 시뮬레이터 🐯🔥
+          내 계좌가 얼마나 녹아내렸을까? 레버리지 롤러코스터 탑승 시뮬레이터 <PixelIcon name="fire" className="w-5 h-5 inline mr-1 text-red-500" />
         </p>
       </div>
 
@@ -199,7 +200,7 @@ export function CompoundCalcView() {
           disabled={isLoading}
           className="w-full bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-black text-lg py-4 rounded-xl shadow-[0_0_20px_rgba(220,38,38,0.3)] transition-all hover:shadow-[0_0_30px_rgba(220,38,38,0.5)] transform hover:-translate-y-1 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed break-keep"
         >
-          {isLoading ? '계좌 스캔 중... ⏳' : '내 계좌 엑스레이 찍기 💥'}
+          {isLoading ? '계좌 스캔 중... ⏳' : '내 계좌 엑스레이 찍기 '}
         </button>
       </div>
 
@@ -259,7 +260,7 @@ export function CompoundCalcView() {
           {result.isUsStock && result.currency === 'KRW' && result.fxImpactPct !== undefined && (
             <div className="relative z-10 rounded-xl p-5 border flex flex-col justify-center bg-slate-800/80 border-slate-700 mt-4">
               <div className="text-slate-400 text-xs font-bold mb-1 flex items-center justify-between">
-                <span>🌍 환율 변동 효과 (FX Impact)</span>
+                <span><PixelIcon name="earth" className="w-4 h-4 inline mr-1 text-blue-400" /> 환율 변동 효과 (FX Impact)</span>
                 <span className="text-slate-500 font-normal">
                   매수시: {result.initialFx?.toLocaleString()}원 ➔ 현재: {result.currentFx?.toLocaleString()}원
                 </span>
@@ -280,7 +281,7 @@ export function CompoundCalcView() {
           }`}>
             <div className="flex-1">
               <div className="font-black text-lg mb-1 break-keep">
-                {result.compoundEffectPct! < 0 ? '🚨 음의 복리 마술에 당했습니다!' : '✨ 양의 복리로 존버 승리!'}
+                {result.compoundEffectPct! < 0 ? '<PixelIcon name="alert" className="w-5 h-5 inline mr-1 text-red-500 animate-pulse" /> 음의 복리 마술에 당했습니다!' : '<PixelIcon name="sparkles" className="w-4 h-4 inline mr-1 text-yellow-300" /> 양의 복리로 존버 승리!'}
               </div>
               <div className="text-sm opacity-80 break-keep leading-relaxed">
                 {result.compoundEffectPct! < 0 
@@ -289,8 +290,8 @@ export function CompoundCalcView() {
               </div>
               {result.ticker && !/(2X|3X|BULL|BEAR|SOXL|TQQQ|SQQQ|SOXS|BOIL|KOLD|FAS|FAZ|YINN|YANG|UPRO|SPXU|BULZ|FNGU|FNGD|LABU|LABD)/i.test(result.ticker) && (
                 <div className="text-xs text-slate-300 mt-3 p-3 bg-slate-900/60 rounded-lg border border-slate-700 shadow-inner break-keep leading-relaxed">
-                  💡 <strong>앗! 일반 주식(1X 본주)을 검색하셨나요?</strong><br />
-                  일반 주식은 레버리지(2X/3X)처럼 <strong>음의 복리(변동성 끌림)</strong> 효과가 크지 않아서 단순 합산과 큰 차이가 없을 수 있습니다. 진정한 야수의 심장 테스트를 원하시면 <code>SOXL</code>이나 <code>TQQQ</code>를 입력해보세요! 🎢
+                  <PixelIcon name="lightbulb" className="w-4 h-4 inline mr-1 text-yellow-300" /> <strong>앗! 일반 주식(1X 본주)을 검색하셨나요?</strong><br />
+                  일반 주식은 레버리지(2X/3X)처럼 <strong>음의 복리(변동성 끌림)</strong> 효과가 크지 않아서 단순 합산과 큰 차이가 없을 수 있습니다. 진정한 야수의 심장 테스트를 원하시면 <code>SOXL</code>이나 <code>TQQQ</code>를 입력해보세요! 
                 </div>
               )}
             </div>
@@ -350,7 +351,7 @@ export function CompoundCalcView() {
           </div>
 
           <div className="mt-12 bg-slate-800/40 p-5 rounded-xl text-slate-400 text-xs sm:text-sm border border-slate-700/50 relative z-10">
-            <h3 className="font-bold text-slate-200 mb-3 text-base">🤔 어떻게 계산된 결과인가요?</h3>
+            <h3 className="font-bold text-slate-200 mb-3 text-base"><PixelIcon name="help" className="w-4 h-4 inline mr-1 text-gray-400" /> 어떻게 계산된 결과인가요?</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li><strong className="text-slate-300">단순 기대 수익:</strong> 매일매일의 등락률(+5%, -3% 등)을 단순히 더했을 때 내가 기대하는 이론적인 수익률입니다.</li>
               <li><strong className="text-slate-300">실제 내 계좌 수익:</strong> 복리 효과가 적용되어 내 계좌에 실제로 찍혀있는 최종 수익률입니다.</li>

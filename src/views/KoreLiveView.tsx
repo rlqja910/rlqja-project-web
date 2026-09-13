@@ -177,7 +177,7 @@ export const KoreLiveView: React.FC = () => {
           <p className="text-slate-400 text-[13px] sm:text-sm font-medium leading-relaxed max-w-2xl">
             글로벌 금융 시장의 심장 박동을 실시간으로 추적합니다.<br />
             <span className="inline-flex items-center gap-1.5 mt-2 bg-slate-800/60 border border-slate-700/50 text-slate-300 px-3 py-1.5 rounded-lg text-xs shadow-inner">
-              <span className="text-cyan-400">💡</span> 한국 주식 야간 추정가는 미국 및 글로벌 시황을 종합하여 실시간으로 계산됩니다.
+              <span className="text-cyan-400"></span> 한국 주식 야간 추정가는 미국 및 글로벌 시황을 종합하여 실시간으로 계산됩니다.
             </span>
           </p>
         </div>
@@ -214,12 +214,12 @@ export const KoreLiveView: React.FC = () => {
         </div>
       ) : data ? (
         <div className="space-y-6 relative z-10">
-          {renderSection("한국 주식 (추정가)", data.kr_stocks, "₩", "🇰🇷")}
-          {renderSection("글로벌 지수", data.indices, "", "📈")}
-          {renderSection("미국 주식", data.us_stocks, "$", "🇺🇸")}
-          {renderSection("주요 ETF", data.etf, "$", "📊")}
-          {renderSection("환율 및 원자재", data.fx_commodities, "", "💱")}
-          {renderSection("가상화폐", data.crypto, "$", "🪙")}
+          {renderSection("한국 주식 (추정가)", data.kr_stocks, "₩", "")}
+          {renderSection("글로벌 지수", data.indices, "", "")}
+          {renderSection("미국 주식", data.us_stocks, "$", "")}
+          {renderSection("주요 ETF", data.etf, "$", "")}
+          {renderSection("환율 및 원자재", data.fx_commodities, "", "")}
+          {renderSection("가상화폐", data.crypto, "$", "")}
         </div>
       ) : (
         <div className="flex flex-col justify-center items-center h-64 space-y-3">

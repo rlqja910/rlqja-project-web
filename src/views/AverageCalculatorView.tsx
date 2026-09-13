@@ -1,3 +1,4 @@
+import { PixelIcon } from '../components/PixelIcon';
 import React, { useState, useEffect } from 'react';
 
 export const AverageCalculatorView: React.FC = () => {
@@ -37,7 +38,7 @@ export const AverageCalculatorView: React.FC = () => {
     // 현재가의 1% 수익을 탈출 평단가로 설정
     const escapePrice = Math.floor(numMarketPrice * 1.01);
     setTargetAvgPrice(formatNumber(escapePrice));
-    alert('🫘 선두 섭취 완료!\n목표 평단가가 현재가(+1%) 수준으로 자동 셋팅되었습니다.\n반등장에 본전만 건지고 탈출하세요!');
+    alert(' 선두 섭취 완료!\n목표 평단가가 현재가(+1%) 수준으로 자동 셋팅되었습니다.\n반등장에 본전만 건지고 탈출하세요!');
   };
 
   const calculateResult = () => {
@@ -185,7 +186,7 @@ export const AverageCalculatorView: React.FC = () => {
       <div className="text-center space-y-4 mb-12 relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <h2 className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 tracking-tight drop-shadow-sm relative z-10">
-          🔮 원기옥 물타기 계산기
+          <PixelIcon name="eye" className="w-4 h-4 inline mr-1 text-purple-400" /> 원기옥 물타기 계산기
         </h2>
         <p className="text-slate-400 text-[13px] sm:text-sm font-medium relative z-10">네 평단가를 구출하기 위해 우주의 기(현금)를 모아라.</p>
       </div>
@@ -246,7 +247,7 @@ export const AverageCalculatorView: React.FC = () => {
             <div className="flex justify-between items-end">
               <label className="text-sm font-bold text-cyan-400">목표 평단가 (₩)</label>
               <button onClick={handleSenzu} className="text-[10px] font-bold bg-green-500/20 text-green-400 px-2 py-1 rounded-md hover:bg-green-500/30 transition-colors flex items-center gap-1">
-                <span>🫘</span> 본전 탈출 (선두)
+                <span></span> 본전 탈출 (선두)
               </button>
             </div>
             <input 
@@ -303,7 +304,7 @@ export const AverageCalculatorView: React.FC = () => {
             onClick={() => setIsTimeChamber(true)} 
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-sm sm:text-base font-bold rounded-xl transition-all border border-slate-700 hover:border-slate-500 shadow-sm"
           >
-            <span>💸</span> 물탈 돈조차 없다면? (강제 존버)
+            <span><PixelIcon name="coin" className="w-4 h-4 inline mr-1 text-yellow-400" /></span> 물탈 돈조차 없다면? (강제 존버)
           </button>
         </div>
       </div>

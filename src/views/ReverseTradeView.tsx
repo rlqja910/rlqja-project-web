@@ -1,3 +1,4 @@
+import { PixelIcon } from '../components/PixelIcon';
 import React, { useState, useEffect } from 'react';
 
 type IngooRecord = {
@@ -47,7 +48,7 @@ export const ReverseTradeView: React.FC = () => {
 
           <div className="text-center space-y-3 mb-2 mt-2 relative z-10">
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-yellow-500/20 border border-yellow-500/50 mb-1 shadow-lg shadow-yellow-500/20">
-              <span className="text-2xl">🤖</span>
+              <span className="text-2xl"><PixelIcon name="robot" className="w-5 h-5 inline mr-1 text-gray-400" /></span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white break-keep tracking-tight">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500">인구신 AI</span> 자동 스캐너
@@ -63,7 +64,7 @@ export const ReverseTradeView: React.FC = () => {
             </div>
 
             <div className="mt-4 inline-flex items-center gap-3 bg-black/40 px-4 py-2.5 rounded-xl border border-yellow-500/30 backdrop-blur-sm shadow-inner">
-              <span className="text-lg">🔥</span>
+              <span className="text-lg"><PixelIcon name="fire" className="w-5 h-5 inline mr-1 text-red-500" /></span>
               <div className="text-left">
                 <div className="text-[10px] sm:text-xs text-yellow-500 font-bold tracking-wide">인구신과 반대로 가서 지옥에서 살아남은 자들</div>
                 <div className="text-white font-black text-sm sm:text-base tabular-nums">
@@ -79,7 +80,7 @@ export const ReverseTradeView: React.FC = () => {
         <div className="flex items-center justify-between px-2">
           <h3 className="text-xl font-bold text-white">최근 반대매매 타점</h3>
           <button onClick={fetchRecords} className="text-sm text-slate-400 hover:text-white transition-colors">
-            새로고침 🔄
+            새로고침 <PixelIcon name="refresh" className="w-4 h-4 inline mr-1" />
           </button>
         </div>
 
@@ -104,7 +105,7 @@ export const ReverseTradeView: React.FC = () => {
                   
                   <div className="flex items-center justify-between mb-4">
                     <a href={`https://www.youtube.com/watch?v=${record.videoId}`} target="_blank" rel="noreferrer" className="text-base sm:text-lg font-bold text-white hover:text-yellow-400 transition-colors line-clamp-2">
-                      🎬 {record.videoTitle}
+                      <PixelIcon name="video" className="w-4 h-4 inline mr-1 text-red-400" /> {record.videoTitle}
                     </a>
                   </div>
 
@@ -122,7 +123,7 @@ export const ReverseTradeView: React.FC = () => {
                         : 'border-slate-500 bg-slate-500/10 text-slate-400'
                       }`}>
                         <span className="font-black tracking-wider text-sm sm:text-base">
-                          {record.actionType === 'SHORT' ? '📉 공매도 추천' : record.actionType === 'LONG' ? '🚀 풀매수 추천' : '🤷‍♂️ 관망'}
+                          {record.actionType === 'SHORT' ? '<PixelIcon name="trending-down" className="w-5 h-5 inline mr-1 text-red-400" /> 공매도 추천' : record.actionType === 'LONG' ? '<PixelIcon name="zap" className="w-5 h-5 inline mr-1 text-purple-500" /> 풀매수 추천' : '<PixelIcon name="help" className="w-4 h-4 inline mr-1" /> 관망'}
                         </span>
                       </div>
                     </div>

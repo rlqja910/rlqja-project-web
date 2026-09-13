@@ -1,3 +1,4 @@
+import { PixelIcon } from './PixelIcon';
 import React, { useState } from 'react';
 
 export const LoyalUserModal: React.FC<{ 
@@ -45,7 +46,7 @@ export const LoyalUserModal: React.FC<{
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 via-cyan-500 to-blue-500"></div>
 
         <div className="w-20 h-20 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl border border-slate-700/50 relative">
-          <span className="text-4xl animate-bounce absolute">🎉</span>
+          <span className="text-4xl animate-bounce absolute"><PixelIcon name="star" className="w-5 h-5 text-yellow-400" /></span>
         </div>
         
         <h2 className="text-2xl font-extrabold text-white mb-2 break-keep">
@@ -78,7 +79,7 @@ export const LoyalUserModal: React.FC<{
         </button>
         
         <p className="mt-4 text-xs text-slate-500">
-          (입력 전에는 창을 닫을 수 없습니다 😜)
+          (입력 전에는 창을 닫을 수 없습니다 )
         </p>
       </div>
     </div>

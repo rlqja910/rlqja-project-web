@@ -1,3 +1,4 @@
+import { PixelIcon } from './PixelIcon';
 import React, { useState, useEffect } from 'react';
 
 export const NoticePopup: React.FC = () => {
@@ -36,7 +37,7 @@ export const NoticePopup: React.FC = () => {
         {/* Header / Banner */}
         <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-6 text-center relative">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgNDBoNDBMMCAwaC00MHoiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] opacity-50"></div>
-          <span className="text-4xl mb-2 block relative z-10">🚀</span>
+          <span className="text-4xl mb-2 block relative z-10"><PixelIcon name="zap" className="w-5 h-5 inline mr-1 text-purple-500" /></span>
           <h2 className="text-2xl font-black text-white relative z-10 drop-shadow-lg">
             KOREKORE 업데이트 소식
           </h2>
@@ -53,7 +54,7 @@ export const NoticePopup: React.FC = () => {
             className="w-full group text-left bg-slate-800/50 hover:bg-slate-800 border border-slate-700 hover:border-cyan-500/50 p-4 rounded-2xl transition-all flex items-start gap-4"
           >
             <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 border border-cyan-500/20 group-hover:scale-110 transition-transform">
-              <span className="text-2xl">🐳</span>
+              <span className="text-2xl"><PixelIcon name="target" className="w-5 h-5 inline mr-1 text-cyan-400" /></span>
             </div>
             <div>
               <h3 className="font-bold text-white text-lg flex items-center gap-2">
@@ -70,7 +71,7 @@ export const NoticePopup: React.FC = () => {
             className="w-full group text-left bg-slate-800/50 hover:bg-slate-800 border border-slate-700 hover:border-yellow-500/50 p-4 rounded-2xl transition-all flex items-start gap-4"
           >
             <div className="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center shrink-0 border border-yellow-500/20 group-hover:scale-110 transition-transform">
-              <span className="text-2xl">🤖</span>
+              <span className="text-2xl"><PixelIcon name="robot" className="w-5 h-5 inline mr-1 text-gray-400" /></span>
             </div>
             <div>
               <h3 className="font-bold text-white text-lg flex items-center gap-2">
@@ -87,7 +88,7 @@ export const NoticePopup: React.FC = () => {
             className="w-full group text-left bg-slate-800/50 hover:bg-slate-800 border border-slate-700 hover:border-orange-500/50 p-4 rounded-2xl transition-all flex items-start gap-4"
           >
             <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center shrink-0 border border-orange-500/20 group-hover:scale-110 transition-transform">
-              <span className="text-2xl">🔥</span>
+              <span className="text-2xl"><PixelIcon name="fire" className="w-5 h-5 inline mr-1 text-red-500" /></span>
             </div>
             <div>
               <h3 className="font-bold text-white text-lg flex items-center gap-2">

@@ -107,13 +107,13 @@ export const InfoBoardView: React.FC = () => {
             </div>
             
             <h2 className="text-lg font-pixel text-white mb-4 group-hover:text-cyan-300 transition-colors drop-shadow-[1px_1px_0_#000]">
-              {post.title.replace(/🔥|📊|💡|\[장전\]/g, '')}
+              {post.title.replace(/|||\[장전\]/g, '')}
             </h2>
             
             <div className="text-sm text-gray-300 font-pixel leading-relaxed mb-6 flex-grow relative z-10 
               [&_img]:brutal-border [&_img]:my-3 [&_img]:w-full [&_img]:max-h-48 [&_img]:object-cover 
               [&_p]:mb-2 [&_h1]:text-base [&_h1]:text-yellow-400 [&_h1]:mb-2 [&_strong]:text-cyan-400">
-              <ReactMarkdown>{post.content.replace(/🔥|📊|💡/g, '')}</ReactMarkdown>
+              <ReactMarkdown>{post.content.replace(/||/g, '')}</ReactMarkdown>
             </div>
             
             <div className="flex items-center justify-between border-t-[3px] border-[#2d1b54] pt-4 mt-auto">

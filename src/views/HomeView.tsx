@@ -62,7 +62,7 @@ export const HomeView: React.FC = () => {
   };
   const handleCardClick = (id: string, isReady: boolean) => {
     if (!isReady) {
-      alert("열심히 개발 중인 기능입니다! 🛠️");
+      alert("열심히 개발 중인 기능입니다!");
       return;
     }
     window.location.hash = id;

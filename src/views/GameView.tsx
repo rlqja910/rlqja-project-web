@@ -1,3 +1,4 @@
+import { PixelIcon } from '../components/PixelIcon';
 import { useState, useEffect } from 'react';
 
 interface GameUpdate {
@@ -46,7 +47,7 @@ export default function GameView() {
     <div className="w-full max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center space-y-4">
         <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 tracking-tight">
-          클래식 게임 핫이슈 🎮
+          클래식 게임 핫이슈 <PixelIcon name="gamepad" className="w-5 h-5 text-purple-400" />
         </h1>
         <p className="text-slate-400 text-lg">바람의나라 클래식 & 메이플랜드 최신 패치노트 타임라인</p>
       </div>
@@ -60,7 +61,7 @@ export default function GameView() {
               : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
           }`}
         >
-          🌪️ 바람의나라 클래식
+          바람의나라 클래식
         </button>
         <button
           onClick={() => setActiveGame('darkness')}
@@ -70,14 +71,14 @@ export default function GameView() {
               : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
           }`}
         >
-          🦇 넥슨 어둠의전설
+          넥슨 어둠의전설
         </button>
 
       </div>
 
       {loading ? (
         <div className="flex justify-center py-20">
-          <div className="animate-spin text-4xl">🎲</div>
+          <div className="animate-spin text-4xl"><PixelIcon name="dice" className="w-8 h-8 text-purple-400" /></div>
         </div>
       ) : (
         <div className="space-y-4">
@@ -98,7 +99,7 @@ export default function GameView() {
                   <div className="flex items-center space-x-3">
                     {update.isHot && (
                       <span className="px-2 py-1 rounded-md bg-red-500/20 text-red-400 text-xs font-bold border border-red-500/30">
-                        HOT 🔥
+                        HOT <PixelIcon name="fire" className="w-5 h-5 inline mr-1 text-red-500" />
                       </span>
                     )}
                     <h3 className="text-xl font-semibold text-white group-hover:text-indigo-300 transition-colors">

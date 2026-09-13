@@ -1,3 +1,4 @@
+import { PixelIcon } from './PixelIcon';
 import React, { useState, useEffect } from 'react';
 
 interface UrgentNotice {
@@ -61,9 +62,9 @@ export const PPINoticePopup: React.FC = () => {
         {/* Header / Banner */}
         <div className="bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 p-6 text-center relative">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgNDBoNDBMMCAwaC00MHoiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] opacity-50"></div>
-          <span className="text-4xl mb-2 block relative z-10 animate-bounce">🚨</span>
+          <span className="text-4xl mb-2 block relative z-10 animate-bounce"><PixelIcon name="alert" className="w-5 h-5 inline mr-1 text-red-500 animate-pulse" /></span>
           <h2 className="text-2xl font-black text-white relative z-10 drop-shadow-lg">
-            {notice.title.replace('🚨', '').replace('[긴급 속보]', '').replace('[실시간 속보]', '').trim()}
+            {notice.title.replace('<PixelIcon name="alert" className="w-5 h-5 inline mr-1 text-red-500 animate-pulse" />', '').replace('[긴급 속보]', '').replace('[실시간 속보]', '').trim()}
           </h2>
           <p className="text-red-100 mt-1 text-sm font-medium relative z-10">
             시장에 엄청난 변동성이 몰려옵니다!
@@ -82,7 +83,7 @@ export const PPINoticePopup: React.FC = () => {
             className="w-full group text-left bg-slate-800/50 hover:bg-slate-800 border border-cyan-500/30 hover:border-cyan-500 p-4 rounded-2xl transition-all flex items-start gap-4 shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
           >
             <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 border border-cyan-500/20 group-hover:scale-110 transition-transform">
-              <span className="text-2xl">🔥</span>
+              <span className="text-2xl"><PixelIcon name="fire" className="w-5 h-5 inline mr-1 text-red-500" /></span>
             </div>
             <div>
               <h3 className="font-bold text-white text-lg flex items-center gap-2">

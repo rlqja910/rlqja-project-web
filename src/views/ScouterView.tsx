@@ -1,3 +1,4 @@
+import { PixelIcon } from '../components/PixelIcon';
 import React, { useState, useEffect } from 'react';
 
 interface ScouterData {
@@ -255,7 +256,7 @@ export const ScouterView: React.FC = () => {
       <div className="text-center mb-10 relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <h2 className="relative text-3xl sm:text-4xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 tracking-tight drop-shadow-sm">
-          🔥 주식 전투력 측정기
+          <PixelIcon name="fire" className="w-5 h-5 inline mr-1 text-red-500" /> 주식 전투력 측정기
         </h2>
         <p className="relative text-slate-400 text-[13px] sm:text-sm font-medium">종목명(한글/영문)을 입력하면 AI 스카우터가 팩폭과 함께 매수 매력도를 측정해 드립니다.</p>
       </div>
@@ -353,7 +354,7 @@ export const ScouterView: React.FC = () => {
                 </div>
               ) : (
                 <div className="text-gray-500">
-                  <div className="text-6xl mb-4 opacity-50">🐉</div>
+                  <div className="text-6xl mb-4 opacity-50"><PixelIcon name="bug" className="w-8 h-8 inline text-green-500" /></div>
                   <p>캐릭터 매칭 중...</p>
                 </div>
               )}
@@ -362,20 +363,20 @@ export const ScouterView: React.FC = () => {
             {result.goodNews && result.badNews && result.goodNews !== "-" && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                 <div className="bg-green-500/10 border border-green-500/20 rounded-2xl p-5">
-                  <div className="text-green-400 font-bold mb-3 flex items-center gap-2 text-lg"><span>📈</span> 요약 호재</div>
+                  <div className="text-green-400 font-bold mb-3 flex items-center gap-2 text-lg"><span><PixelIcon name="trending-up" className="w-5 h-5 inline mr-1 text-green-400" /></span> 요약 호재</div>
                   <p className="text-gray-300 text-sm break-keep leading-relaxed">{result.goodNews}</p>
                 </div>
                 <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-5">
-                  <div className="text-red-400 font-bold mb-3 flex items-center gap-2 text-lg"><span>📉</span> 요약 악재</div>
+                  <div className="text-red-400 font-bold mb-3 flex items-center gap-2 text-lg"><span><PixelIcon name="trending-down" className="w-5 h-5 inline mr-1 text-red-400" /></span> 요약 악재</div>
                   <p className="text-gray-300 text-sm break-keep leading-relaxed">{result.badNews}</p>
                 </div>
               </div>
             )}
 
             <div className="bg-gradient-to-br from-red-500/10 to-transparent border border-red-500/20 rounded-2xl p-6 md:p-8 relative">
-              <div className="absolute top-4 right-4 text-4xl opacity-10">💬</div>
+              <div className="absolute top-4 right-4 text-4xl opacity-10"><PixelIcon name="message-text" className="w-5 h-5 inline mr-1 text-blue-400" /></div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-2xl">🤖</span>
+                <span className="text-2xl"><PixelIcon name="robot" className="w-5 h-5 inline mr-1 text-gray-400" /></span>
                 <div className="text-red-400 font-black text-lg">스카우터 AI 팩폭 코멘트</div>
               </div>
               <p className="text-gray-300 leading-relaxed font-medium whitespace-pre-wrap text-base md:text-lg break-keep">{result.comment}</p>

@@ -1,3 +1,4 @@
+import { PixelIcon } from '../components/PixelIcon';
 import React, { useState, useEffect } from 'react';
 
 type Buyback = {
@@ -85,7 +86,7 @@ export const BuybackTrackerView: React.FC = () => {
           <p className="text-slate-400 text-[13px] sm:text-sm font-medium leading-relaxed max-w-2xl mb-6">
             한국 주식 시장의 주주환원(자사주 취득 및 소각) 현황을 실시간으로 추적합니다.<br />
             <span className="inline-flex items-center gap-1.5 mt-2 bg-slate-800/60 border border-slate-700/50 text-slate-300 px-3 py-1.5 rounded-lg text-xs shadow-inner">
-              <span className="text-orange-400">💡</span> 진도율 100% 달성 시 명예의 전당으로 이동합니다.
+              <span className="text-orange-400"><PixelIcon name="lightbulb" className="w-4 h-4 inline mr-1 text-yellow-300" /></span> 진도율 100% 달성 시 명예의 전당으로 이동합니다.
             </span>
           </p>
 
@@ -117,9 +118,9 @@ export const BuybackTrackerView: React.FC = () => {
               onChange={(e) => setSortBy(e.target.value as any)}
               className="w-full md:w-auto bg-slate-900 text-white px-3 py-2 text-sm rounded-xl border border-slate-700 outline-none cursor-pointer"
             >
-              <option value="targetValue">🔥 규모 큰 순</option>
-              <option value="progress">📈 진행률 높은 순</option>
-              <option value="newest">✨ 최신 순</option>
+              <option value="targetValue"><PixelIcon name="fire" className="w-5 h-5 inline mr-1 text-red-500" /> 규모 큰 순</option>
+              <option value="progress"><PixelIcon name="trending-up" className="w-5 h-5 inline mr-1 text-green-400" /> 진행률 높은 순</option>
+              <option value="newest"><PixelIcon name="sparkles" className="w-4 h-4 inline mr-1 text-yellow-300" /> 최신 순</option>
             </select>
           </div>
 
@@ -129,13 +130,13 @@ export const BuybackTrackerView: React.FC = () => {
                 onClick={() => setShowHallOfFame(false)}
                 className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${!showHallOfFame ? 'bg-orange-600 text-white shadow-[0_0_15px_rgba(234,88,12,0.4)]' : 'text-slate-400 hover:text-white'}`}
               >
-                🔥 소각 진행 중
+                <PixelIcon name="fire" className="w-5 h-5 inline mr-1 text-red-500" /> 소각 진행 중
               </button>
               <button 
                 onClick={() => setShowHallOfFame(true)}
                 className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${showHallOfFame ? 'bg-yellow-500 text-black shadow-[0_0_15px_rgba(234,179,8,0.4)]' : 'text-slate-400 hover:text-white'}`}
               >
-                👑 명예의 전당
+                <PixelIcon name="star" className="w-5 h-5 inline text-yellow-400" /> 명예의 전당
               </button>
             </div>
           </div>
@@ -144,7 +145,7 @@ export const BuybackTrackerView: React.FC = () => {
 
       <div className="space-y-6">
         {isLoading ? (
-          <div className="text-center py-20 text-orange-500/50 animate-pulse font-bold text-lg">🔥 용광로 온도 올리는 중...</div>
+          <div className="text-center py-20 text-orange-500/50 animate-pulse font-bold text-lg"><PixelIcon name="fire" className="w-5 h-5 inline mr-1 text-red-500" /> 용광로 온도 올리는 중...</div>
         ) : (
           (() => {
             const displayList = filteredAndSortedBuybacks.filter(bb => {
@@ -183,7 +184,7 @@ export const BuybackTrackerView: React.FC = () => {
                               {bb.companyName}
                               {isCompleted && (
                                 <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 whitespace-nowrap">
-                                  👑 완료
+                                  <PixelIcon name="star" className="w-5 h-5 inline text-yellow-400" /> 완료
                                 </span>
                               )}
                             </h3>
@@ -221,7 +222,7 @@ export const BuybackTrackerView: React.FC = () => {
                       </div>
 
                       <div className={`absolute top-2 right-4 transition-opacity pointer-events-none ${isCompleted ? 'opacity-20 drop-shadow-[0_0_10px_rgba(234,179,8,1)]' : 'opacity-5 group-hover:opacity-10'}`}>
-                        <span className="text-6xl">{isCompleted ? '👑' : '🔥'}</span>
+                        <span className="text-6xl">{isCompleted ? '<PixelIcon name="star" className="w-5 h-5 inline text-yellow-400" />' : '<PixelIcon name="fire" className="w-5 h-5 inline mr-1 text-red-500" />'}</span>
                       </div>
                     </div>
                   );

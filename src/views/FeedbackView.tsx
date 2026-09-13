@@ -1,3 +1,4 @@
+import { PixelIcon } from '../components/PixelIcon';
 import React, { useState } from 'react';
 
 export const FeedbackView: React.FC = () => {
@@ -23,7 +24,7 @@ export const FeedbackView: React.FC = () => {
         setMessage('');
         setTimeout(() => setIsSuccess(false), 3000);
       } else if (response.status === 429) {
-        alert('워워.. 대표님(노예) 숨 좀 고릅시다! 😡\n너무 많은 건의를 보냈습니다. 나중에 다시 시도해주세요.');
+        alert('워워.. 대표님(노예) 숨 좀 고릅시다! \n너무 많은 건의를 보냈습니다. 나중에 다시 시도해주세요.');
       } else {
         alert('전송에 실패했습니다 ㅠㅠ 다시 시도해주세요.');
       }
@@ -39,7 +40,7 @@ export const FeedbackView: React.FC = () => {
       
       <div className="text-center space-y-4 mb-10 mt-6">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg shadow-purple-500/20 mb-2">
-          <span className="text-3xl">📮</span>
+          <span className="text-3xl"><PixelIcon name="mail" className="w-8 h-8 text-red-400" /></span>
         </div>
         <h2 className="text-3xl sm:text-4xl font-extrabold text-white break-keep">
           사용자 <span className="text-purple-400">건의 게시판</span>
@@ -47,7 +48,7 @@ export const FeedbackView: React.FC = () => {
         <p className="text-slate-400 text-sm sm:text-base break-keep px-4">
           개발자(직장인/노예)에게 바라는 점, 새로운 기능 아이디어, <br className="hidden sm:block"/>
           또는 응원의 메시지를 마음껏 적어주세요!<br/>
-          <span className="text-purple-400 font-bold">건의 내용은 대표님만 비밀리에 확인할 수 있습니다. 🤫</span>
+          <span className="text-purple-400 font-bold">건의 내용은 대표님만 비밀리에 확인할 수 있습니다. <PixelIcon name="lock" className="w-5 h-5 text-purple-400" /></span>
         </p>
       </div>
 
@@ -55,7 +56,7 @@ export const FeedbackView: React.FC = () => {
         
         {isSuccess && (
           <div className="absolute inset-0 z-10 bg-slate-900/95 backdrop-blur-md flex flex-col items-center justify-center animate-in fade-in zoom-in duration-300">
-            <span className="text-6xl mb-4">🎉</span>
+            <span className="text-6xl mb-4"><PixelIcon name="star" className="w-5 h-5 text-yellow-400" /></span>
             <h3 className="text-2xl font-bold text-white mb-2">접수 완료!</h3>
             <p className="text-slate-400">대표님(노예)에게 성공적으로 전달되었습니다.</p>
           </div>
@@ -82,7 +83,7 @@ export const FeedbackView: React.FC = () => {
             disabled={isSubmitting || !message.trim()}
             className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-lg shadow-[0_0_20px_rgba(147,51,234,0.3)] hover:shadow-[0_0_30px_rgba(147,51,234,0.5)] transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
           >
-            {isSubmitting ? '종이비행기 접어서 날리는 중... ✈️' : '의견 보내기 (익명 보장) 🚀'}
+            {isSubmitting ? '종이비행기 접어서 날리는 중... ' : '의견 보내기 (익명 보장) <PixelIcon name="zap" className="w-5 h-5 inline mr-1 text-purple-500" />'}
           </button>
         </form>
       </div>

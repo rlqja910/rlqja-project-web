@@ -8,36 +8,36 @@ const PRESETS = [
 ];
 
 const getSavageComment = (pct: number) => {
-  if (pct >= 1000) return { text: "이때 샀으면 이미 퇴사하고 하와이에서 모히또 마시고 있을텐데 🍹", color: "text-emerald-300" };
-  if (pct >= 500) return { text: "강남에 집 사고 람보르기니 뽑았을 텐데... 🏎️", color: "text-emerald-300" };
-  if (pct >= 300) return { text: "지금쯤 포르쉐 계약하러 갔을텐데... 🚙", color: "text-emerald-400" };
-  if (pct >= 200) return { text: "이때 전재산 몰빵했으면 인생이 달라졌을텐데 💸", color: "text-emerald-400" };
-  if (pct >= 150) return { text: "아... 그때 샀으면 벤츠 E클래스 뽑았을텐데... 🚗", color: "text-green-300" };
-  if (pct >= 100) return { text: "두 배라니... 내 월급이 몇 달치야 이게 😭", color: "text-green-300" };
-  if (pct >= 80) return { text: "명품백 몇 개가 날아간거냐... 👜", color: "text-green-400" };
-  if (pct >= 60) return { text: "이번 달 카드값 걱정은 안 해도 됐을텐데 💳", color: "text-green-400" };
-  if (pct >= 40) return { text: "최신형 아이폰이랑 맥북 풀옵션 샀을텐데 💻", color: "text-green-500" };
-  if (pct >= 30) return { text: "호캉스 한 달 내내 가도 남았을텐데 🏨", color: "text-green-500" };
-  if (pct >= 25) return { text: "한 달 생활비는 거뜬히 벌었을텐데 💵", color: "text-green-500" };
-  if (pct >= 20) return { text: "오마카세 몇 번을 공짜로 먹을 수 있었는데 🍣", color: "text-green-500" };
-  if (pct >= 15) return { text: "소고기 1++ 투뿔 회식을 몇 번을 하는데 🥩", color: "text-green-500" };
-  if (pct >= 10) return { text: "치킨이 도대체 몇 마리야... 🍗", color: "text-green-500" };
-  if (pct >= 5) return { text: "국밥 몇 그릇이 허공으로 날아갔네 🍲", color: "text-green-500" };
-  if (pct > 0) return { text: "땅 파면 십원 한 장 나오냐... 그래도 아깝다 🪙", color: "text-green-500" };
-  if (pct === 0) return { text: "본전치기... 아무 일도 일어나지 않았다 😑", color: "text-slate-400" };
+  if (pct >= 1000) return { text: "이때 샀으면 이미 퇴사하고 하와이에서 모히또 마시고 있을텐데 ", color: "text-emerald-300" };
+  if (pct >= 500) return { text: "강남에 집 사고 람보르기니 뽑았을 텐데... ️", color: "text-emerald-300" };
+  if (pct >= 300) return { text: "지금쯤 포르쉐 계약하러 갔을텐데... ", color: "text-emerald-400" };
+  if (pct >= 200) return { text: "이때 전재산 몰빵했으면 인생이 달라졌을텐데 ", color: "text-emerald-400" };
+  if (pct >= 150) return { text: "아... 그때 샀으면 벤츠 E클래스 뽑았을텐데... ", color: "text-green-300" };
+  if (pct >= 100) return { text: "두 배라니... 내 월급이 몇 달치야 이게 ", color: "text-green-300" };
+  if (pct >= 80) return { text: "명품백 몇 개가 날아간거냐... ", color: "text-green-400" };
+  if (pct >= 60) return { text: "이번 달 카드값 걱정은 안 해도 됐을텐데 ", color: "text-green-400" };
+  if (pct >= 40) return { text: "최신형 아이폰이랑 맥북 풀옵션 샀을텐데 ", color: "text-green-500" };
+  if (pct >= 30) return { text: "호캉스 한 달 내내 가도 남았을텐데 ", color: "text-green-500" };
+  if (pct >= 25) return { text: "한 달 생활비는 거뜬히 벌었을텐데 ", color: "text-green-500" };
+  if (pct >= 20) return { text: "오마카세 몇 번을 공짜로 먹을 수 있었는데 ", color: "text-green-500" };
+  if (pct >= 15) return { text: "소고기 1++ 투뿔 회식을 몇 번을 하는데 ", color: "text-green-500" };
+  if (pct >= 10) return { text: "치킨이 도대체 몇 마리야... ", color: "text-green-500" };
+  if (pct >= 5) return { text: "국밥 몇 그릇이 허공으로 날아갔네 ", color: "text-green-500" };
+  if (pct > 0) return { text: "땅 파면 십원 한 장 나오냐... 그래도 아깝다 ", color: "text-green-500" };
+  if (pct === 0) return { text: "본전치기... 아무 일도 일어나지 않았다 ", color: "text-slate-400" };
   
-  if (pct > -5) return { text: "뭐 이정도면 점심값 날린 셈 치자 🍔", color: "text-blue-300" };
-  if (pct > -10) return { text: "아... 안 사길 잘했네 국밥값 굳었다 😋", color: "text-blue-300" };
-  if (pct > -15) return { text: "치킨 파티 취소될 뻔했네 다행이다 😮‍💨", color: "text-blue-400" };
-  if (pct > -20) return { text: "오마카세 돈 주고 내상입을 뻔했네 🤮", color: "text-blue-400" };
+  if (pct > -5) return { text: "뭐 이정도면 점심값 날린 셈 치자 ", color: "text-blue-300" };
+  if (pct > -10) return { text: "아... 안 사길 잘했네 국밥값 굳었다 ", color: "text-blue-300" };
+  if (pct > -15) return { text: "치킨 파티 취소될 뻔했네 다행이다 ‍", color: "text-blue-400" };
+  if (pct > -20) return { text: "오마카세 돈 주고 내상입을 뻔했네 ", color: "text-blue-400" };
   if (pct > -25) return { text: "한 달 생활비가 삭제될 뻔했습니다 ✂️", color: "text-blue-400" };
   if (pct > -30) return { text: "휴... 안 사길 다행이다 ☠️ (압도적 감사)", color: "text-blue-500" };
-  if (pct > -40) return { text: "지금 샀으면 한강물 온도 재고 있을 뻔... 🥶", color: "text-blue-500" };
-  if (pct > -50) return { text: "진짜 큰일날 뻔했네 ㄷㄷ 명의도용 당할 뻔 😨", color: "text-red-300" };
-  if (pct > -60) return { text: "와... 이거 샀으면 지금쯤 파산했네 📉", color: "text-red-400" };
-  if (pct > -80) return { text: "반의 반토막... 조상님이 도왔다! 모니터에 절 한번 하십쇼 🙇‍♂️", color: "text-red-500" };
-  if (pct > -95) return { text: "상장폐지 수준... 지옥에서 돌아온 것을 환영합니다 👹", color: "text-red-600" };
-  return { text: "이건 주식이 아니라 휴지조각입니다 🧻", color: "text-red-600" };
+  if (pct > -40) return { text: "지금 샀으면 한강물 온도 재고 있을 뻔... ", color: "text-blue-500" };
+  if (pct > -50) return { text: "진짜 큰일날 뻔했네 ㄷㄷ 명의도용 당할 뻔 ", color: "text-red-300" };
+  if (pct > -60) return { text: "와... 이거 샀으면 지금쯤 파산했네 ", color: "text-red-400" };
+  if (pct > -80) return { text: "반의 반토막... 조상님이 도왔다! 모니터에 절 한번 하십쇼 ‍♂️", color: "text-red-500" };
+  if (pct > -95) return { text: "상장폐지 수준... 지옥에서 돌아온 것을 환영합니다 ", color: "text-red-600" };
+  return { text: "이건 주식이 아니라 휴지조각입니다 ", color: "text-red-600" };
 };
 
 
@@ -87,13 +87,13 @@ export default function FomoView() {
         {/* Header */}
         <div className="text-center space-y-4">
           <div className="inline-flex items-center justify-center p-3 bg-purple-500/20 rounded-2xl border border-purple-500/30 mb-2">
-            <span className="text-4xl">🕰️</span>
+            <span className="text-4xl">️</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 tracking-tight">
             FOMO 타임머신
           </h1>
           <p className="text-slate-400 text-lg">
-            "아... 그때 그걸 샀더라면..." 지금 바로 뼈 맞아보세요 🦴
+            "아... 그때 그걸 샀더라면..." 지금 바로 뼈 맞아보세요 
           </p>
         </div>
 
@@ -133,7 +133,7 @@ export default function FomoView() {
                 placeholder="예: 삼성전자, 테슬라, 엔비디아, 비트코인"
                 className="w-full bg-slate-900/50 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all placeholder:text-slate-500"
               />
-              <p className="text-xs text-slate-500 pl-1">AI가 찰떡같이 알아서 종목(티커)을 찾아줍니다 🤖</p>
+              <p className="text-xs text-slate-500 pl-1">AI가 찰떡같이 알아서 종목(티커)을 찾아줍니다 </p>
             </div>
 
             {/* 금액 입력 */}
@@ -166,11 +166,11 @@ export default function FomoView() {
           >
             {loading ? (
               <>
-                <span className="animate-spin text-xl">🌀</span> 타임머신 가동 중...
+                <span className="animate-spin text-xl"></span> 타임머신 가동 중...
               </>
             ) : (
               <>
-                🚀 과거로 돌아가기
+                 과거로 돌아가기
               </>
             )}
           </button>
@@ -193,7 +193,7 @@ export default function FomoView() {
             
             {/* Background Icon */}
             <div className="absolute -right-10 -top-10 opacity-10 text-9xl">
-              {isProfit ? '💸' : '🌧️'}
+              {isProfit ? '' : '️'}
             </div>
 
             <div className="relative z-10 space-y-6 text-center">
@@ -237,12 +237,12 @@ export default function FomoView() {
               
               {result.profit_pct >= 1000 && (
                 <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden mix-blend-screen opacity-30">
-                   <div className="text-9xl animate-pulse">🚀🤑🚀</div>
+                   <div className="text-9xl animate-pulse"></div>
                 </div>
               )}
               {result.profit_pct <= -50 && (
                 <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden mix-blend-screen opacity-20">
-                   <div className="text-9xl animate-pulse">💀📉💀</div>
+                   <div className="text-9xl animate-pulse"></div>
                 </div>
               )}
             </div>

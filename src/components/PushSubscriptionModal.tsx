@@ -1,3 +1,4 @@
+import { PixelIcon } from './PixelIcon';
 import React, { useState, useEffect } from 'react';
 
 const VAPID_PUBLIC_KEY = 'BJVoBxmb9z4AK0ejeNA-tccW9W5yP8gEL940DKZw9hI1aKNt2EKJiBojfqSdjVqrYRnYn_dWwDrbZNgeBVDfLX8';
@@ -112,7 +113,7 @@ export const PushSubscriptionModal: React.FC = () => {
       
       // 즉시 모달 닫고 성공 알림 띄우기 (체감 속도 0초)
       dismiss();
-      alert('푸시 알림 설정이 완료되었습니다! 🔔');
+      alert('푸시 알림 설정이 완료되었습니다! ');
 
       // 서버 연동은 백그라운드에서 비동기 처리
       (async () => {
@@ -164,7 +165,7 @@ export const PushSubscriptionModal: React.FC = () => {
       <div className="relative bg-slate-900 border border-slate-700 shadow-2xl w-full max-w-md rounded-2xl p-6 animate-in zoom-in-95 duration-300">
         <div className="p-8 text-center">
           <div className="w-16 h-16 bg-gradient-to-tr from-purple-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg rotate-3">
-            <span className="text-3xl">🤫</span>
+            <span className="text-3xl"><PixelIcon name="lock" className="w-5 h-5 text-purple-400" /></span>
           </div>
           
           <h2 className="text-2xl font-extrabold text-white mb-4 break-keep">

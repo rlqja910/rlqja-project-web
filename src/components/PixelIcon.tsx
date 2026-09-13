@@ -12,11 +12,11 @@ export const PixelIcon: React.FC<PixelIconProps> = ({ name, className = '', titl
       className={`inline-block bg-current ${className}`}
       title={title}
       style={{
-        WebkitMaskImage: `url(https://unpkg.com/pixelarticons@1.8.1/svg/${name}.svg)`,
+        WebkitMaskImage: `url(https://unpkg.com/pixelarticons@2.4.1/svg/${name}.svg)`,
         WebkitMaskSize: 'contain',
         WebkitMaskRepeat: 'no-repeat',
         WebkitMaskPosition: 'center',
-        maskImage: `url(https://unpkg.com/pixelarticons@1.8.1/svg/${name}.svg)`,
+        maskImage: `url(https://unpkg.com/pixelarticons@2.4.1/svg/${name}.svg)`,
         maskSize: 'contain',
         maskRepeat: 'no-repeat',
         maskPosition: 'center',

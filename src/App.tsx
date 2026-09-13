@@ -46,10 +46,10 @@ const getMaintenanceText = () => {
   const hour = now.getHours();
   const isWeekend = day === 0 || day === 6;
 
-  if (isWeekend) return "개발자가 주말이라 기력 방전으로 뻗어 있어서, 서버 복구 쿨타임이 제법 길게 돌 수 있습니다 💀";
-  if (hour >= 9 && hour < 18) return "개발자가 현생(회사)에서 상사 눈치 보며 몰래 고쳐야 하므로, 복구가 스릴 넘치게 지연될 수 있습니다 🥷";
-  if (hour >= 18 && hour <= 23) return "개발자가 퇴근 후 너덜너덜해진 멘탈로 키보드 샷건 치며 땜빵 중이라 시간이 좀 걸릴 수 있습니다 🤬";
-  return "개발자가 새벽에 비상 알람 맞고 좀비처럼 일어난 상태라, 눈 감고 코딩하느라 복구가 더딜 수 있습니다 🧟‍♂️";
+  if (isWeekend) return "개발자가 주말이라 기력 방전으로 뻗어 있어서, 서버 복구 쿨타임이 제법 길게 돌 수 있습니다 (털썩)";
+  if (hour >= 9 && hour < 18) return "개발자가 현생(회사)에서 상사 눈치 보며 몰래 고쳐야 하므로, 복구가 스릴 넘치게 지연될 수 있습니다 (눈치)";
+  if (hour >= 18 && hour <= 23) return "개발자가 퇴근 후 너덜너덜해진 멘탈로 키보드 샷건 치며 땜빵 중이라 시간이 좀 걸릴 수 있습니다 (분노)";
+  return "개발자가 새벽에 비상 알람 맞고 좀비처럼 일어난 상태라, 눈 감고 코딩하느라 복구가 더딜 수 있습니다 (비몽사몽)";
 };
 
 const getPostMaintenanceText = () => {
@@ -58,10 +58,10 @@ const getPostMaintenanceText = () => {
   const hour = now.getHours();
   const isWeekend = day === 0 || day === 6;
 
-  if (isWeekend) return "주말에 쉬지도 못하고 기절했던 서버 멱살 잡고 살려왔어요 🚀";
-  if (hour >= 9 && hour < 18) return "회사에서 월급루팡하며 기절했던 서버 멱살 잡고 살려왔어요 🚀";
-  if (hour >= 18 && hour <= 23) return "퇴근 후 피곤한 몸 이끌고 기절했던 서버 멱살 잡고 살려왔어요 🚀";
-  return "새벽에 자다 깨서 눈 비비며 기절했던 서버 멱살 잡고 살려왔어요 🚀";
+  if (isWeekend) return "주말에 쉬지도 못하고 기절했던 서버 멱살 잡고 살려왔어요!";
+  if (hour >= 9 && hour < 18) return "회사에서 월급루팡하며 기절했던 서버 멱살 잡고 살려왔어요!";
+  if (hour >= 18 && hour <= 23) return "퇴근 후 피곤한 몸 이끌고 기절했던 서버 멱살 잡고 살려왔어요!";
+  return "새벽에 자다 깨서 눈 비비며 기절했던 서버 멱살 잡고 살려왔어요!";
 };
 
 function App() {
@@ -316,13 +316,13 @@ function App() {
       <div className="min-h-screen bg-[#0B0F19] text-slate-300 font-sans flex items-center justify-center p-4">
         <div className="text-center space-y-6">
           <div className="w-24 h-24 bg-slate-800/50 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-slate-700/50 shadow-2xl">
-            <span className="text-5xl animate-bounce">🛠️</span>
+            <PixelIcon name="tools" className="w-12 h-12 text-cyan-400 animate-bounce" />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">서버가 잠시 기절했습니다 💦</h1>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">서버가 잠시 기절했습니다</h1>
           <p className="text-slate-400 max-w-md mx-auto leading-relaxed text-sm sm:text-base">
-            앗! 접속량이 폭발해서 서버가 잠시 로그아웃해버렸어요 😱<br />
+            앗! 접속량이 폭발해서 서버가 잠시 로그아웃해버렸어요 (비상)<br />
             <strong>{getMaintenanceText()}</strong><br />
-            빛의 속도로 심폐소생술 중이니 조금만 기다려 주시면 <strong>압도적 감사!!</strong> 🙏
+            빛의 속도로 심폐소생술 중이니 조금만 기다려 주시면 <strong>압도적 감사!!</strong>
           </p>
           <div className="pt-8">
             <button 
@@ -352,7 +352,7 @@ function App() {
           onClick={toggleMagaMode}
           className={`px-4 py-2 font-pixel text-xs sm:text-sm shadow-2xl transition-all brutal-border-accent ${isMagaMode ? 'bg-red-600 text-white border-black animate-pulse scale-110 shadow-[0_0_40px_rgba(220,38,38,1)]' : 'bg-[#1a103c] text-cyan-400 hover:bg-[#2d1b54]'}`}
         >
-          {isMagaMode ? '🧊 찬물 샤워 (현실복귀)' : '🚀 무지성 불장 ON'}
+          {isMagaMode ? <><PixelIcon name="drop" className="w-4 h-4 inline mr-1 text-blue-400" /> 찬물 샤워 (현실복귀)</> : <><PixelIcon name="fire" className="w-4 h-4 inline mr-1 text-yellow-300 animate-pulse" /> 무지성 불장 ON</>}
         </button>
       </div>
       <aside className="w-64 border-r-[3px] border-[#7c3aed] bg-[#1a103c]/80 backdrop-blur-md hidden md:flex flex-col shrink-0 h-screen sticky top-0 overflow-y-auto custom-scrollbar shadow-[4px_0_15px_rgba(0,0,0,0.5)]">
@@ -448,7 +448,7 @@ function App() {
           <div className="hidden md:block"></div>
           
           <div className="flex items-center gap-4 text-xs sm:text-sm font-pixel font-bold">
-            <div className="hidden bg-[#2d1b54]/50 brutal-border-accent px-3 sm:px-4 py-1.5 sm:py-2 gap-3 sm:gap-4 text-gray-300 shadow-[inset_0_0_10px_rgba(124,58,237,0.3)]">
+            <div className="hidden md:flex bg-[#2d1b54]/50 brutal-border-accent px-3 sm:px-4 py-1.5 sm:py-2 gap-3 sm:gap-4 text-gray-300 shadow-[inset_0_0_10px_rgba(124,58,237,0.3)]">
               <div>오늘 방문자: <span className="text-cyan-400 font-bold drop-shadow-[1px_1px_0_#000]">{visitorStats.todayVisitors}</span></div>
               <div className="w-px bg-[#7c3aed]"></div>
               <div>총 방문자: <span className="text-purple-400 font-bold drop-shadow-[1px_1px_0_#000]">{visitorStats.totalVisitors}</span></div>
@@ -460,10 +460,10 @@ function App() {
           <div className="bg-gradient-to-r from-orange-900/40 via-red-900/40 to-orange-900/40 border-b border-orange-500/30 px-4 py-3 relative z-20">
             <div className="max-w-6xl mx-auto flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className="text-2xl animate-bounce">🥵</span>
+                <PixelIcon name="alert" className="w-6 h-6 text-orange-400 animate-bounce shrink-0" />
                 <p className="text-sm sm:text-[15px] text-orange-200 font-medium break-keep">
-                  <strong className="text-cyan-400">🎉 [복구 완료]</strong> {getPostMaintenanceText()}
-                  불편을 드려 뎨송합니다.. 🥲 앞으로는 평일 주말 할 것 없이 끄떡없는 강철 서버로 모시겠습니다! (많관부 💙)
+                  <strong className="text-cyan-400">[복구 완료]</strong> {getPostMaintenanceText()}
+                  불편을 드려 죄송합니다.. 앞으로는 평일 주말 할 것 없이 끄떡없는 강철 서버로 모시겠습니다! (많관부)
                 </p>
               </div>
               <button 
@@ -483,7 +483,7 @@ function App() {
           {activeTab === 'admin' && isAdminUnlocked && <AdminView onForceFetch={() => handleForceFetch(true)} isFetching={isFetching} />}
           {activeTab === 'admin' && !isAdminUnlocked && (
              <div className="text-center py-32 text-slate-400">
-               <div className="text-6xl mb-6">🔒</div>
+               <div className="mb-6 flex justify-center"><PixelIcon name="lock" className="w-16 h-16 text-slate-500" /></div>
                <h2 className="text-2xl font-bold text-red-500 mb-2">ACCESS DENIED</h2>
                <p>권한이 없습니다.</p>
              </div>
@@ -515,7 +515,7 @@ function App() {
           
           {activeTab !== 'home' && activeTab !== 'whale' && activeTab !== 'report' && activeTab !== 'patchnotes' && activeTab !== 'scouter' && activeTab !== 'calc-avg' && activeTab !== 'calc-compound' && activeTab !== 'fomo' && activeTab !== 'admin-secret-2026' && activeTab !== 'kore-live' && activeTab !== 'fortune' && activeTab !== 'admin' && activeTab !== 'reverse-trade' && activeTab !== 'buyback' && activeTab !== 'feedback' && activeTab !== 'classic-games' && activeTab !== 'info-board' && (
              <div className="text-center py-32 text-slate-400">
-               <div className="text-6xl mb-6">🚧</div>
+               <div className="mb-6 flex justify-center"><PixelIcon name="tools" className="w-16 h-16 text-slate-500" /></div>
                <h2 className="text-2xl font-bold text-white mb-2">공사 중입니다</h2>
                <p>곧 멋진 기능으로 찾아오겠습니다!</p>
              </div>

@@ -1,3 +1,4 @@
+import { PixelIcon } from '../components/PixelIcon';
 import { useState, useEffect } from 'react';
 
 interface StatData {
@@ -155,7 +156,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               }}
               className="px-2 sm:px-3 py-1 sm:py-1.5 bg-yellow-600 hover:bg-yellow-500 text-white rounded-lg text-xs sm:text-sm font-bold transition-colors"
             >
-              🧹 내 기기 초기화
+              <PixelIcon name="delete" className="w-4 h-4 inline mr-1" /> 내 기기 초기화
             </button>
             <button 
               onClick={() => {
@@ -164,7 +165,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               }}
               className="px-2 sm:px-3 py-1 sm:py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs sm:text-sm font-medium transition-colors"
             >
-              🏠 홈으로
+              <PixelIcon name="home" className="w-4 h-4 inline mr-1" /> 홈으로
             </button>
           </div>
           <div className="flex gap-2 sm:gap-3">
@@ -181,7 +182,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 disabled={isFetching}
                 className="px-2 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 rounded-lg text-[10px] sm:text-sm font-bold shadow-lg transition-colors disabled:opacity-50 flex items-center gap-1 sm:gap-2"
               >
-                {isFetching ? '수집 중...' : '🚀 수동 포스팅'}
+                {isFetching ? '수집 중...' : '수동 포스팅'}
               </button>
             )}
             <button 
@@ -197,53 +198,53 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
         <div className="flex gap-2 sm:gap-4 border-b-2 border-slate-800 pb-4 mb-8 overflow-x-auto custom-scrollbar scroll-smooth">
           <button
             onClick={() => setActiveTab('stats')}
-            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition-all whitespace-nowrap shadow-lg flex-1 ${
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-pixel text-xs sm:text-sm transition-all whitespace-nowrap flex-1 brutal-border ${
               activeTab === 'stats' 
-                ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-[0_0_15px_rgba(34,211,238,0.4)] scale-[1.02]' 
-                : 'bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-700/50'
+                ? 'bg-[#2d1b54] text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.4)] scale-105' 
+                : 'bg-[#0f0c29] text-slate-400 hover:text-white'
             }`}
           >
-            📊 통계 요약
+            <PixelIcon name="chart-bar" className="w-4 h-4 inline mr-1" /> 통계 요약
           </button>
           <button
             onClick={() => setActiveTab('logs')}
-            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition-all whitespace-nowrap shadow-lg flex-1 ${
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-pixel text-xs sm:text-sm transition-all whitespace-nowrap flex-1 brutal-border ${
               activeTab === 'logs' 
-                ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-[0_0_15px_rgba(192,132,252,0.4)] scale-[1.02]' 
-                : 'bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-700/50'
+                ? 'bg-[#2d1b54] text-purple-400 shadow-[0_0_15px_rgba(192,132,252,0.4)] scale-105' 
+                : 'bg-[#0f0c29] text-slate-400 hover:text-white'
             }`}
           >
-            📋 시스템 로그
+            <PixelIcon name="script" className="w-4 h-4 inline mr-1" /> 시스템 로그
           </button>
           <button
             onClick={() => setActiveTab('push')}
-            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition-all whitespace-nowrap shadow-lg flex-1 ${
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-pixel text-xs sm:text-sm transition-all whitespace-nowrap flex-1 brutal-border ${
               activeTab === 'push' 
-                ? 'bg-gradient-to-r from-red-600 to-orange-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] scale-[1.02]' 
-                : 'bg-slate-800/50 text-slate-400 hover:text-red-300 hover:bg-slate-700/50'
+                ? 'bg-[#2d1b54] text-red-400 shadow-[0_0_15px_rgba(239,68,68,0.4)] scale-105' 
+                : 'bg-[#0f0c29] text-slate-400 hover:text-red-300'
             }`}
           >
-            🚨 푸시 발송
+            <PixelIcon name="alert" className="w-5 h-5 inline mr-1 text-red-500 animate-pulse" /> 푸시 발송
           </button>
           <button
             onClick={() => setActiveTab('feedbacks')}
-            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition-all whitespace-nowrap shadow-lg flex-1 ${
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-pixel text-xs sm:text-sm transition-all whitespace-nowrap flex-1 brutal-border ${
               activeTab === 'feedbacks' 
-                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)] scale-[1.02]' 
-                : 'bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-700/50'
+                ? 'bg-[#2d1b54] text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.4)] scale-105' 
+                : 'bg-[#0f0c29] text-slate-400 hover:text-white'
             }`}
           >
-            📬 건의함
+            <PixelIcon name="mail" className="w-4 h-4 inline mr-1" /> 건의함
           </button>
           <button
             onClick={() => setActiveTab('scheduler')}
-            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-bold text-xs sm:text-sm rounded-xl transition-all whitespace-nowrap shadow-lg flex-1 ${
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 font-pixel text-xs sm:text-sm transition-all whitespace-nowrap flex-1 brutal-border ${
               activeTab === 'scheduler' 
-                ? 'bg-gradient-to-r from-amber-600 to-yellow-600 text-white shadow-[0_0_15px_rgba(245,158,11,0.4)] scale-[1.02]' 
-                : 'bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-700/50'
+                ? 'bg-[#2d1b54] text-yellow-400 shadow-[0_0_15px_rgba(245,158,11,0.4)] scale-105' 
+                : 'bg-[#0f0c29] text-slate-400 hover:text-white'
             }`}
           >
-            ⏳ 스케줄러 이력
+            <PixelIcon name="clock" className="w-4 h-4 inline mr-1" /> 스케줄러 이력
           </button>
         </div>
 
@@ -265,7 +266,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               {/* 인기 검색어 */}
               <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1 shadow-lg">
                 <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex items-center justify-between">
-                  <h2 className="text-lg font-bold">🔥 인기 검색어 TOP 10</h2>
+                  <h2 className="text-lg font-bold"><PixelIcon name="fire" className="w-5 h-5 inline mr-1 text-red-500" /> 인기 검색어 TOP 10</h2>
                 </div>
                 <div className="p-0">
                   {topSearches.length > 0 ? (
@@ -301,7 +302,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               {/* 인기 페이지 접근 횟수 */}
               <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1 shadow-lg">
                 <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex items-center justify-between">
-                  <h2 className="text-lg font-bold">📄 가장 많이 본 페이지</h2>
+                  <h2 className="text-lg font-bold"> 가장 많이 본 페이지</h2>
                 </div>
                 <div className="p-0">
                   {topPageViews.length > 0 ? (
@@ -337,7 +338,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
               {/* 단골 방문자 Top 10 */}
               <div className="bg-slate-800/40 rounded-2xl border border-slate-700/50 overflow-hidden lg:col-span-1 shadow-lg">
                 <div className="p-5 border-b border-slate-700/50 bg-slate-800/60 flex items-center justify-between">
-                  <h2 className="text-lg font-bold">🏆 단골 방문자 Top 10</h2>
+                  <h2 className="text-lg font-bold"><PixelIcon name="trophy" className="w-5 h-5 inline mr-1 text-yellow-400" /> 단골 방문자 Top 10</h2>
                 </div>
                 <div className="p-0">
                   {topReturningVisitors.length > 0 ? (
@@ -368,11 +369,11 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                                 </button>
                                 {visitor.isSubscribed ? (
                                   <span className="bg-red-500/20 text-red-400 text-[9px] px-1.5 py-0.5 rounded font-bold border border-red-500/30 whitespace-nowrap flex items-center gap-0.5">
-                                    🔔 푸시 구독 유저
+                                    <PixelIcon name="notification" className="w-4 h-4 inline mr-1 text-green-400" /> 푸시 구독 유저
                                   </span>
                                 ) : (
                                   <span className="bg-slate-700/50 text-slate-500 text-[9px] px-1.5 py-0.5 rounded font-bold whitespace-nowrap flex items-center gap-0.5">
-                                    🔕 미구독
+                                    <PixelIcon name="notification-off" className="w-4 h-4 inline mr-1 text-gray-400" /> 미구독
                                   </span>
                                 )}
                               </div>
@@ -510,7 +511,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
           <div className="bg-slate-800/40 rounded-2xl border border-red-500/50 overflow-hidden shadow-[0_0_30px_rgba(239,68,68,0.15)] max-w-2xl mx-auto">
             <div className="p-5 border-b border-slate-700/50 bg-red-900/30">
               <h2 className="text-xl font-bold text-red-400 flex items-center gap-2">
-                🚨 긴급 푸시 알림 브로드캐스트
+                <PixelIcon name="alert" className="w-5 h-5 inline mr-1 text-red-500 animate-pulse" /> 긴급 푸시 알림 브로드캐스트
               </h2>
               <p className="text-sm text-slate-400 mt-2">알림 권한을 허용한 모든 유저의 폰으로 실시간 알림을 쏩니다.</p>
             </div>
@@ -640,7 +641,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                         })
                       });
                       if (res.ok) {
-                        alert('발송 명령이 서버에 전달되었습니다! 🚀\n실제 발송 성공 여부는 3초 후 하단의 "최근 발송 이력"에서 확인해주세요.');
+                        alert('발송 명령이 서버에 전달되었습니다! \n실제 발송 성공 여부는 3초 후 하단의 "최근 발송 이력"에서 확인해주세요.');
                         setPushPayload({...pushPayload, body: ''});
                         setSelectedSubscribers([]);
                         // 3초 후 데이터 새로고침
@@ -656,7 +657,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                   disabled={isSendingPush}
                   className="w-full py-4 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-black rounded-xl shadow-[0_0_20px_rgba(239,68,68,0.4)] disabled:opacity-50 transition-all text-lg"
                 >
-                  {isSendingPush ? '발송 중...' : (selectedSubscribers.length > 0 ? '선택 유저에게 쏘기 🎯' : '전체 유저에게 푸시 쏘기 💥')}
+                  {isSendingPush ? '발송 중...' : (selectedSubscribers.length > 0 ? '선택 유저에게 쏘기 ' : '전체 유저에게 푸시 쏘기 ')}
                 </button>
               </div>
               
@@ -678,7 +679,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                         <p className="text-sm text-slate-400 line-clamp-2 mt-1">{log.content}</p>
                         {log.url && (
                           <a href={log.url} target="_blank" rel="noopener noreferrer" className="text-xs text-cyan-400 hover:underline mt-2 inline-block">
-                            🔗 {log.url}
+                            <PixelIcon name="link" className="w-3 h-3 inline mr-1" /> {log.url}
                           </a>
                         )}
                       </div>
@@ -701,7 +702,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
           <div className="bg-slate-800/40 rounded-2xl border border-emerald-500/30 overflow-hidden shadow-lg max-w-4xl mx-auto">
             <div className="p-5 border-b border-slate-700/50 bg-emerald-900/20 flex justify-between items-center">
               <h2 className="text-xl font-bold text-emerald-400 flex items-center gap-2">
-                📬 유저 건의함
+                <PixelIcon name="mail" className="w-4 h-4 inline mr-1" /> 유저 건의함
               </h2>
               <span className="text-sm text-slate-400 bg-slate-800 px-3 py-1 rounded-full">
                 총 {feedbacks.length}개의 건의
@@ -726,7 +727,7 @@ export function AdminView({ onForceFetch, isFetching, onClose }: { onForceFetch?
                 ))}
                 {feedbacks.length === 0 && (
                   <div className="text-center py-10 text-slate-500">
-                    <span className="text-4xl block mb-4">📭</span>
+                    <span className="text-4xl block mb-4"><PixelIcon name="mail" className="w-8 h-8 mx-auto text-gray-500" /></span>
                     아직 등록된 건의사항이 없습니다.
                   </div>
                 )}
