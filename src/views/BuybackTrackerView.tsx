@@ -222,7 +222,7 @@ export const BuybackTrackerView: React.FC = () => {
                       </div>
 
                       <div className={`absolute top-2 right-4 transition-opacity pointer-events-none ${isCompleted ? 'opacity-20 drop-shadow-[0_0_10px_rgba(234,179,8,1)]' : 'opacity-5 group-hover:opacity-10'}`}>
-                        <span className="text-6xl">{isCompleted ? '<PixelIcon name="star" className="w-5 h-5 inline text-yellow-400" />' : '<PixelIcon name="fire" className="w-5 h-5 inline mr-1 text-red-500" />'}</span>
+                        <span className="text-6xl">{isCompleted ? <><PixelIcon name="star" className="w-5 h-5 inline text-yellow-400" /></> : <><PixelIcon name="fire" className="w-5 h-5 inline mr-1 text-red-500" /></>}</span>
                       </div>
                     </div>
                   );

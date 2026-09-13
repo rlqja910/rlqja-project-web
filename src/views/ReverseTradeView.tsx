@@ -123,7 +123,7 @@ export const ReverseTradeView: React.FC = () => {
                         : 'border-slate-500 bg-slate-500/10 text-slate-400'
                       }`}>
                         <span className="font-black tracking-wider text-sm sm:text-base">
-                          {record.actionType === 'SHORT' ? '<PixelIcon name="trending-down" className="w-5 h-5 inline mr-1 text-red-400" /> 공매도 추천' : record.actionType === 'LONG' ? '<PixelIcon name="zap" className="w-5 h-5 inline mr-1 text-purple-500" /> 풀매수 추천' : '<PixelIcon name="help" className="w-4 h-4 inline mr-1" /> 관망'}
+                          {record.actionType === 'SHORT' ? <><PixelIcon name="trending-down" className="w-5 h-5 inline mr-1 text-red-400" /> 공매도 추천</> : record.actionType === 'LONG' ? <><PixelIcon name="zap" className="w-5 h-5 inline mr-1 text-purple-500" /> 풀매수 추천</> : <><PixelIcon name="help" className="w-4 h-4 inline mr-1" /> 관망</>}
                         </span>
                       </div>
                     </div>

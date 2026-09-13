@@ -54,7 +54,7 @@ export const InfoBoardView: React.FC = () => {
       {/* Header Section */}
       <div className="mb-8 relative flex items-center gap-3">
         <div className="w-12 h-12 bg-[#2d1b54] brutal-border-accent flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.5)]">
-          <PixelIcon name="book" className="w-6 h-6 text-cyan-400" />
+          <PixelIcon name="book-open" className="w-6 h-6 text-cyan-400" />
         </div>
         <div>
           <h1 className="text-3xl sm:text-4xl pokemon-title drop-shadow-[2px_2px_0_#7c3aed]">
