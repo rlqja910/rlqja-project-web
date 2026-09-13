@@ -27,7 +27,7 @@ export const PORTAL_MENUS: MainCategory[] = [
         label: '주식',
         items: [
           { id: 'whale', label: '세력 포착기 (스마트머니)', icon: 'trending-up', isReady: true },
-          { id: 'report', label: '실시간 시황 리포트', icon: 'chart-bar', isReady: true },
+          { id: 'report', label: '실시간 시황 리포트', icon: 'chart', isReady: true },
           { id: 'scouter', label: '주식 전투력 측정기', icon: 'target', isReady: true },
           { id: 'fortune', label: '주식 포춘쿠키 (운세)', icon: 'sparkles', isReady: true },
           { id: 'reverse-trade', label: '인구신 AI 스캐너', icon: 'robot', isReady: true },
@@ -58,7 +58,7 @@ export const PORTAL_MENUS: MainCategory[] = [
       {
         label: '텍스트 도구',
         items: [
-          { id: 'spell-check', label: 'AI 맞춤법 검사기', icon: 'text-format', isReady: false },
+          { id: 'spell-check', label: 'AI 맞춤법 검사기', icon: 'text-wrap', isReady: false },
           { id: 'translator', label: '글자 수 세기 / 번역', icon: 'text-wrap', isReady: false }
         ]
       },
@@ -92,7 +92,7 @@ export const PORTAL_MENUS: MainCategory[] = [
       {
         label: '사이트 소식',
         items: [
-          { id: 'patchnotes', label: 'KOREKORE 패치 노트', icon: 'pin', isReady: true },
+          { id: 'patchnotes', label: 'KOREKORE 패치 노트', icon: 'map-pin', isReady: true },
           { id: 'feedback', label: '사용자 건의 게시판', icon: 'message-text', isReady: true }
         ]
       }

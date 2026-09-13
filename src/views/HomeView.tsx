@@ -216,7 +216,7 @@ export const HomeView: React.FC = () => {
                 onClick={() => toggleCategory(main.id)}
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl transition-transform group-hover:scale-110">{main.icon}</span>
+                  <span className="text-2xl transition-transform group-hover:scale-110"><PixelIcon name={main.icon} className="w-6 h-6" /></span>
                   <h3 className="text-lg font-bold text-slate-200 group-hover:text-cyan-400 transition-colors">{main.label}</h3>
                 </div>
                 <svg className={`w-5 h-5 text-slate-500 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
