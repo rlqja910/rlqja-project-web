@@ -367,7 +367,7 @@ export const ScouterView: React.FC = () => {
                   <p className="text-gray-300 text-sm break-keep leading-relaxed">{result.goodNews}</p>
                 </div>
                 <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-5">
-                  <div className="text-red-400 font-bold mb-3 flex items-center gap-2 text-lg"><span><PixelIcon name="trending-down" className="w-5 h-5 inline mr-1 text-red-400" /></span> 요약 악재</div>
+                  <div className="text-red-400 font-bold mb-3 flex items-center gap-2 text-lg"><span><PixelIcon name="arrow-down" className="w-5 h-5 inline mr-1 text-red-400" /></span> 요약 악재</div>
                   <p className="text-gray-300 text-sm break-keep leading-relaxed">{result.badNews}</p>
                 </div>
               </div>
