@@ -16,11 +16,11 @@ export const FearGreedGauge: React.FC<FearGreedGaugeProps> = ({ value, title }) 
   };
 
   const getStatusText = (val: number) => {
-    if (val <= 25) return 'PANIC';
-    if (val <= 45) return 'FEAR';
-    if (val <= 55) return 'NEUTRAL';
-    if (val <= 75) return 'GREED';
-    return 'CRAZY';
+    if (val <= 25) return '극심한 공포';
+    if (val <= 45) return '공포';
+    if (val <= 55) return '중립';
+    if (val <= 75) return '탐욕';
+    return '극심한 탐욕';
   };
 
   const color = getColor(value);
@@ -45,7 +45,7 @@ export const FearGreedGauge: React.FC<FearGreedGaugeProps> = ({ value, title }) 
       </div>
       
       <div className="flex justify-between items-center px-1">
-        <span className="text-[10px] sm:text-xs font-pixel text-gray-400">LVL 1</span>
+        <span className="text-[10px] sm:text-xs font-pixel text-gray-400">현재 상태</span>
         <span className="text-xs sm:text-sm font-pixel text-white">
           INDEX <span style={{ color }}>{value}</span> / 100
         </span>

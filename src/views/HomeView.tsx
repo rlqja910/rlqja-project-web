@@ -93,43 +93,43 @@ export const HomeView: React.FC = () => {
         </p>
 
         {displayPredictData && (
-          <div className={`mt-6 max-w-3xl mx-auto retro-panel p-5 sm:p-6 relative flex flex-col items-center gap-5 transition-all duration-500 hover:-translate-y-1`}>
+          <div className={`mt-6 max-w-3xl mx-auto retro-panel p-3 sm:p-4 relative flex flex-col items-center gap-4 transition-all duration-500 hover:-translate-y-1`}>
             
-            <div className="flex items-center gap-3 text-lg sm:text-xl pokemon-text text-white mt-1">
-              <PixelIcon name="trending-up" className="w-6 h-6 text-cyan-400 animate-pulse" />
-              <span>국장 라이브 스테이터스</span>
+            <div className="flex items-center gap-2 text-base sm:text-lg pokemon-text text-white mt-1">
+              <PixelIcon name="trending-up" className="w-5 h-5 text-cyan-400 animate-pulse" />
+              <span>KOREKORE 종합 시황</span>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full font-pixel tracking-wider">
-              <div className="flex items-center justify-between bg-black/60 px-4 py-3 border-2 border-slate-700 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full font-pixel tracking-wider">
+              <div className="flex items-center justify-between bg-black/60 px-3 py-2 border-2 border-slate-700 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
                 <span className="text-gray-400 text-sm">코스피</span>
                 <div className="flex items-center gap-2">
                   <span className="text-white font-bold">{displayPredictData.kospi.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   <span className={`text-sm ${displayPredictData.kospi.change_pct >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                    {displayPredictData.kospi.change_pct >= 0 ? '▲' : '▼'}{Math.abs(displayPredictData.kospi.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    {displayPredictData.kospi.change_pct > 0 ? '+' : ''}{displayPredictData.kospi.change_pct}%
                   </span>
                 </div>
               </div>
               
-              <div className="flex items-center justify-between bg-black/60 px-4 py-3 border-2 border-slate-700 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+              <div className="flex items-center justify-between bg-black/60 px-3 py-2 border-2 border-slate-700 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
                 <span className="text-gray-400 text-sm">코스닥</span>
                 <div className="flex items-center gap-2">
                   <span className="text-white font-bold">{displayPredictData.kosdaq.predicted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   <span className={`text-sm ${displayPredictData.kosdaq.change_pct >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                    {displayPredictData.kosdaq.change_pct >= 0 ? '▲' : '▼'}{Math.abs(displayPredictData.kosdaq.change_amt).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    {displayPredictData.kosdaq.change_pct > 0 ? '+' : ''}{displayPredictData.kosdaq.change_pct}%
                   </span>
                 </div>
               </div>
               
-              <div className="flex items-center justify-between bg-black/60 px-4 py-3 border-2 border-slate-700 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
-                <span className="text-gray-400 text-sm">EWY</span>
-                <span className={`text-white font-bold ${displayPredictData.ewy.change_pct >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+              <div className="flex items-center justify-between bg-black/60 px-3 py-2 border-2 border-slate-700 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+                <span className="text-gray-400 text-[11px] sm:text-xs">MSCI 한국 ETF (EWY)</span>
+                <span className={`text-white font-bold text-sm ${displayPredictData.ewy.change_pct >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                   {displayPredictData.ewy.change_pct > 0 ? '+' : ''}{displayPredictData.ewy.change_pct}%
                 </span>
               </div>
               
               {displayPredictData.usdkrw ? (
-                <div className="flex items-center justify-between bg-black/60 px-4 py-3 border-2 border-slate-700 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+                <div className="flex items-center justify-between bg-black/60 px-3 py-2 border-2 border-slate-700 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
                   <span className="text-gray-400 text-sm">환율</span>
                   <div className="flex items-center gap-2">
                     <span className="text-white font-bold">{displayPredictData.usdkrw.current.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
@@ -139,7 +139,7 @@ export const HomeView: React.FC = () => {
                   </div>
                 </div>
               ) : (
-                <div className="flex items-center justify-between bg-black/60 px-4 py-3 border-2 border-slate-700 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+                <div className="flex items-center justify-between bg-black/60 px-3 py-2 border-2 border-slate-700 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
                   <span className="text-gray-400 text-sm">환율</span>
                   <span className="text-slate-600 font-bold">-</span>
                 </div>
@@ -148,9 +148,9 @@ export const HomeView: React.FC = () => {
 
             <button 
               onClick={() => window.location.hash = 'kore-live'}
-              className="mt-2 retro-button px-8 py-3 text-sm sm:text-base font-pixel w-full sm:w-auto"
+              className="mt-2 retro-button px-6 py-2.5 text-sm sm:text-base font-pixel w-full sm:w-auto"
             >
-              한국 주식 라이브 입장 (ENTER)
+              글로벌 증시 라이브 입장 (ENTER)
             </button>
           </div>
         )}
