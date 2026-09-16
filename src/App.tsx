@@ -450,11 +450,7 @@ function App() {
           <div className="hidden md:block"></div>
           
           <div className="flex items-center gap-4 text-xs sm:text-sm font-pixel font-bold">
-            <div className="hidden md:flex bg-[#2d1b54]/50 brutal-border-accent px-3 sm:px-4 py-1.5 sm:py-2 gap-3 sm:gap-4 text-gray-300 shadow-[inset_0_0_10px_rgba(124,58,237,0.3)]">
-              <div>오늘 방문자: <span className="text-cyan-400 font-bold drop-shadow-[1px_1px_0_#000]">{visitorStats.todayVisitors}</span></div>
-              <div className="w-px bg-[#7c3aed]"></div>
-              <div>총 방문자: <span className="text-purple-400 font-bold drop-shadow-[1px_1px_0_#000]">{visitorStats.totalVisitors}</span></div>
-            </div>
+            {/* 방문자 수 표시 제거됨 */}
           </div>
         </header>
 
