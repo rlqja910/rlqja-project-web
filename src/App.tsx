@@ -13,6 +13,8 @@ import { CompoundCalcView } from './views/CompoundCalcView';
 import { BuybackTrackerView } from './views/BuybackTrackerView';
 import { FeedbackView } from './views/FeedbackView';
 import { WhaleDetectorView } from './views/WhaleDetectorView';
+import RetailRadarView from './views/RetailRadarView';
+import ShortSqueezeView from './views/ShortSqueezeView';
 import GameView from './views/GameView';
 import FomoView from './views/FomoView';
 import { PushSubscriptionModal } from './components/PushSubscriptionModal';
@@ -513,8 +515,10 @@ function App() {
           {activeTab === 'classic-games' && <GameView />}
           {activeTab === 'info-board' && <InfoBoardView />}
           
-          {activeTab !== 'home' && activeTab !== 'whale' && activeTab !== 'report' && activeTab !== 'patchnotes' && activeTab !== 'scouter' && activeTab !== 'calc-avg' && activeTab !== 'calc-compound' && activeTab !== 'fomo' && activeTab !== 'admin-secret-2026' && activeTab !== 'kore-live' && activeTab !== 'fortune' && activeTab !== 'admin' && activeTab !== 'reverse-trade' && activeTab !== 'buyback' && activeTab !== 'feedback' && activeTab !== 'classic-games' && activeTab !== 'info-board' && (
-             <div className="text-center py-32 text-slate-400">
+          {activeTab === 'retail-radar' && <RetailRadarView />}
+          {activeTab === 'short-squeeze' && <ShortSqueezeView />}
+          {activeTab !== 'home' && activeTab !== 'whale' && activeTab !== 'report' && activeTab !== 'patchnotes' && activeTab !== 'scouter' && activeTab !== 'calc-avg' && activeTab !== 'calc-compound' && activeTab !== 'fomo' && activeTab !== 'admin-secret-2026' && activeTab !== 'kore-live' && activeTab !== 'fortune' && activeTab !== 'admin' && activeTab !== 'reverse-trade' && activeTab !== 'buyback' && activeTab !== 'feedback' && activeTab !== 'classic-games' && activeTab !== 'info-board' && activeTab !== 'retail-radar' && activeTab !== 'short-squeeze' && (
+            <div className="flex flex-col items-center justify-center py-20 text-center animate-in fade-in duration-500">
                <div className="mb-6 flex justify-center"><PixelIcon name="tools" className="w-16 h-16 text-slate-500" /></div>
                <h2 className="text-2xl font-bold text-white mb-2">공사 중입니다</h2>
                <p>곧 멋진 기능으로 찾아오겠습니다!</p>

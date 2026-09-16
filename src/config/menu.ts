@@ -30,6 +30,8 @@ export const PORTAL_MENUS: MainCategory[] = [
           { id: 'report', label: '실시간 시황 리포트', icon: 'chart', isReady: true },
           { id: 'scouter', label: '주식 전투력 측정기', icon: 'target', isReady: true },
           { id: 'fortune', label: '주식 포춘쿠키 (운세)', icon: 'sparkles', isReady: true },
+          { id: 'retail-radar', label: '개미 무덤 탐지기', icon: 'skull', isReady: true },
+          { id: 'short-squeeze', label: '숏 스퀴즈 레이더', icon: 'fire', isReady: true },
           { id: 'reverse-trade', label: '인구신 AI 스캐너', icon: 'robot', isReady: true },
           { id: 'buyback', label: '기업 소각장 (자사주)', icon: 'zap', isReady: true }
         ]
