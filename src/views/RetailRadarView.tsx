@@ -66,7 +66,7 @@ export default function RetailRadarView() {
             </p>
           </div>
           <div className="flex items-center gap-3 bg-red-500/10 px-4 py-2 rounded-lg border border-red-500/30">
-            <PixelIcon name="sync" className={`w-4 h-4 text-red-400 ${countdown === 0 ? 'animate-spin' : ''}`} />
+            <PixelIcon name="reload" className={`w-4 h-4 text-red-400 ${countdown === 0 ? 'animate-spin' : ''}`} />
             <span className="text-red-400 font-mono text-sm font-bold">{countdown}초 후 갱신</span>
           </div>
         </div>

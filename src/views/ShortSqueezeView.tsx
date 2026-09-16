@@ -59,7 +59,7 @@ export default function ShortSqueezeView() {
             </p>
           </div>
           <div className="flex items-center gap-3 bg-orange-500/10 px-4 py-2 rounded-lg border border-orange-500/30 shadow-[0_0_15px_rgba(249,115,22,0.2)]">
-            <PixelIcon name="sync" className={`w-4 h-4 text-orange-400 ${countdown === 0 ? 'animate-spin' : ''}`} />
+            <PixelIcon name="reload" className={`w-4 h-4 text-orange-400 ${countdown === 0 ? 'animate-spin' : ''}`} />
             <span className="text-orange-400 font-mono text-sm font-bold">{countdown}s</span>
           </div>
         </div>
