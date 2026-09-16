@@ -150,7 +150,6 @@ function App() {
     try {
       const res = await fetch('/api/logs/stats?t=' + new Date().getTime(), { cache: 'no-store' });
       if (res.ok) {
-        const data = await res.json();
         // 서버 복구 감지 로직: 이전에 터진 걸 목격한 유저라면 띠배너 노출
         if (localStorage.getItem('korekore_experienced_downtime') === 'true') {
           setShowNotice(true);
