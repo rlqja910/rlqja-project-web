@@ -110,7 +110,7 @@ export default function ShortSqueezeView() {
                           {item.priceChange > 0 ? '+' : ''}{item.priceChange}%
                         </span>
                         <span className="text-xs text-orange-200/60 bg-orange-900/40 px-2 py-0.5 rounded-full border border-orange-500/20">
-                          잔고 {item.shortRatio}%
+                          공매도 잔고율 {item.shortRatio}%
                         </span>
                       </div>
                     </div>

@@ -102,8 +102,8 @@ export default function RetailRadarView() {
                         <span className="text-xs text-slate-500 font-mono">{item.symbol}</span>
                       </h3>
                       <div className={`text-sm font-bold ${item.priceChange >= 0 ? 'text-red-400' : 'text-blue-400'}`}>
-                        {item.priceChange > 0 ? '+' : ''}{item.priceChange}% 
-                        <span className="text-slate-500 ml-2 text-xs">Vol: {(item.volume / 10000).toFixed(0)}만</span>
+                        등락률 {item.priceChange > 0 ? '+' : ''}{item.priceChange}% 
+                        <span className="text-slate-500 ml-2 text-xs">거래량 {(item.volume / 10000).toFixed(0)}만</span>
                       </div>
                     </div>
                   </div>
