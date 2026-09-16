@@ -113,7 +113,6 @@ function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [adminPassword, setAdminPassword] = useState('');
   const [visibleCount, setVisibleCount] = useState(5);
-  const [visitorStats, setVisitorStats] = useState({ totalVisitors: 0, todayVisitors: 0 });
   const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
   // 점검 후 공지 배너 (평소엔 false, 점검 직후에만 true로 활성화)
   const [showNotice, setShowNotice] = useState(false);
@@ -152,7 +151,6 @@ function App() {
       const res = await fetch('/api/logs/stats?t=' + new Date().getTime(), { cache: 'no-store' });
       if (res.ok) {
         const data = await res.json();
-        setVisitorStats(data);
         // 서버 복구 감지 로직: 이전에 터진 걸 목격한 유저라면 띠배너 노출
         if (localStorage.getItem('korekore_experienced_downtime') === 'true') {
           setShowNotice(true);
