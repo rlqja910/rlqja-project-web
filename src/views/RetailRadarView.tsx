@@ -56,7 +56,7 @@ export default function RetailRadarView() {
           />
         </div>
         
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
           <div>
             <h1 className="text-3xl font-black text-red-500 tracking-tight flex items-center gap-3">
               <PixelIcon name="skull" className="w-8 h-8" /> 개미 무덤 탐지기
@@ -69,6 +69,16 @@ export default function RetailRadarView() {
             <PixelIcon name="reload" className={`w-4 h-4 text-red-400 ${countdown === 0 ? 'animate-spin' : ''}`} />
             <span className="text-red-400 font-mono text-sm font-bold">{countdown}초 후 갱신</span>
           </div>
+        </div>
+
+        <div className="bg-red-950/20 border border-red-500/20 rounded-lg p-4 mb-6">
+          <h4 className="text-red-400 font-bold mb-2 flex items-center gap-2">
+            <PixelIcon name="info-box" className="w-4 h-4" /> 지표 설명
+          </h4>
+          <ul className="text-sm text-red-200/70 space-y-1 ml-6 list-disc marker:text-red-500">
+            <li><strong className="text-red-300">과열도 (Overheat):</strong> 대중의 관심이 비정상적으로 집중된 정도를 나타냅니다. 100%에 가까울수록 기관/외인 물량을 개인투자자가 고점에서 전부 받아내고 있을 확률이 매우 높습니다.</li>
+            <li><strong className="text-red-300">코멘트:</strong> 스마트머니의 시각에서 해당 종목에 진입한 개인투자자들의 심리와 현재 상황을 분석한 실시간 코멘트입니다.</li>
+          </ul>
         </div>
 
         {loading ? (

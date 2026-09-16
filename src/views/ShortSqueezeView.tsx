@@ -49,7 +49,7 @@ export default function ShortSqueezeView() {
     <div className="w-full max-w-5xl mx-auto space-y-6 animate-in fade-in duration-500 pb-12">
       <div className="bg-[#1a103c] border-2 border-orange-500/50 rounded-xl p-6 relative overflow-hidden brutal-shadow">
         
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 border-b border-orange-500/20 pb-4">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <div>
             <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400 flex items-center gap-3">
               <PixelIcon name="fire" className="w-8 h-8 text-orange-500" /> 숏 스퀴즈 레이더
@@ -62,6 +62,16 @@ export default function ShortSqueezeView() {
             <PixelIcon name="reload" className={`w-4 h-4 text-orange-400 ${countdown === 0 ? 'animate-spin' : ''}`} />
             <span className="text-orange-400 font-mono text-sm font-bold">{countdown}s</span>
           </div>
+        </div>
+
+        <div className="bg-orange-950/20 border border-orange-500/20 rounded-lg p-4 mb-6">
+          <h4 className="text-orange-400 font-bold mb-2 flex items-center gap-2">
+            <PixelIcon name="info-box" className="w-4 h-4" /> 지표 설명
+          </h4>
+          <ul className="text-sm text-orange-200/70 space-y-1 ml-6 list-disc marker:text-orange-500">
+            <li><strong className="text-orange-300">기관 피눈물 게이지 (Squeeze Score):</strong> 공매도 잔고가 높은 상태에서 비정상적인 거래량 급등과 상승 흐름이 겹칠 때 상승합니다. 게이지가 80 이상이면 기관의 강제 숏커버링(환매수)이 폭발하기 직전일 수 있습니다.</li>
+            <li><strong className="text-orange-300">거래량 급등률 (Volume Surge):</strong> 최근 평균 거래량 대비 현재 거래량이 얼마나 폭증했는지를 나타냅니다. 숏 스퀴즈의 가장 중요한 선행 지표입니다.</li>
+          </ul>
         </div>
 
         {loading ? (
@@ -84,7 +94,7 @@ export default function ShortSqueezeView() {
                   {isHighSqueeze && (
                     <div className="absolute top-0 right-0 p-2">
                       <span className="animate-pulse flex items-center gap-1 text-xs font-bold bg-orange-500 text-white px-2 py-0.5 rounded shadow-[0_0_10px_rgba(249,115,22,0.5)]">
-                        <PixelIcon name="warning" className="w-3 h-3" /> SQUEEZE
+                        <PixelIcon name="warning-diamond" className="w-3 h-3" /> SQUEEZE
                       </span>
                     </div>
                   )}
