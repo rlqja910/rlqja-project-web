@@ -78,7 +78,7 @@ export default function GameView() {
 
       {loading ? (
         <div className="flex justify-center py-20">
-          <div className="animate-spin text-4xl"><PixelIcon name="dice" className="w-8 h-8 text-purple-400" /></div>
+          <div className="animate-spin text-4xl"><PixelIcon name="loader" className="w-8 h-8 text-purple-400" /></div>
         </div>
       ) : (
         <div className="space-y-4">
