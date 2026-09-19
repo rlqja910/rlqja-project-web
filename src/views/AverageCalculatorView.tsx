@@ -304,7 +304,7 @@ export const AverageCalculatorView: React.FC = () => {
             onClick={() => setIsTimeChamber(true)} 
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-sm sm:text-base font-bold rounded-xl transition-all border border-slate-700 hover:border-slate-500 shadow-sm"
           >
-            <span><PixelIcon name="coin" className="w-4 h-4 inline mr-1 text-yellow-400" /></span> 물탈 돈조차 없다면? (강제 존버)
+            <span><PixelIcon name="coins" className="w-4 h-4 inline mr-1 text-yellow-400" /></span> 물탈 돈조차 없다면? (강제 존버)
           </button>
         </div>
       </div>

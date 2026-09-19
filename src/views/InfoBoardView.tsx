@@ -14,7 +14,7 @@ interface InfoPost {
 
 export const InfoBoardView: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('전체');
-  const categories = ['전체', '매크로', '트레이딩', '가치투자', '코인', '마인드셋'];
+  const categories = ['전체', ...Array.from(new Set(posts.map(p => p.category)))];
   const [posts, setPosts] = useState<InfoPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
